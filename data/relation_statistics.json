@@ -1,0 +1,654 @@
+{
+  "corpus": {
+    "total_documents": 100,
+    "d20_count": 20,
+    "d50_count": 50,
+    "d100_count": 100,
+    "nested_condition_passed": true,
+    "total_chunks": 2862
+  },
+  "graph_topology": {
+    "full_graph": {
+      "nodes": 3234,
+      "edges": 12645,
+      "structural_edges": 11248
+    },
+    "routing_graph_pure": {
+      "nodes": 3234,
+      "knowledge_edges": 1397,
+      "edge_breakdown": {
+        "SUPERSEDES": 11,
+        "AMENDS": 23,
+        "BASED_ON": 33,
+        "REFERENCES": 840
+      }
+    },
+    "hub_metrics": {
+      "populations": {
+        "nonleaf_routing_nodes": {
+          "population_size": 445,
+          "fanout": {
+            "mean": 2.92,
+            "p50": 0.0,
+            "p75": 4.0,
+            "p90": 11.0,
+            "p95": 12.0,
+            "max": 35,
+            "threshold": 11,
+            "hub_count": 51,
+            "hub_ratio_pct": 11.46
+          },
+          "total_degree": {
+            "mean": 6.04,
+            "p50": 3.0,
+            "p75": 8.0,
+            "p90": 13.0,
+            "p95": 18.0,
+            "max": 74,
+            "threshold": 13,
+            "hub_count": 46,
+            "hub_ratio_pct": 10.34
+          }
+        },
+        "active_routing_nodes": {
+          "population_size": 553,
+          "fanout": {
+            "mean": 2.53,
+            "p50": 1.0,
+            "p75": 3.0,
+            "p90": 10.0,
+            "p95": 12.0,
+            "max": 35,
+            "threshold": 10,
+            "hub_count": 61,
+            "hub_ratio_pct": 11.03
+          },
+          "total_degree": {
+            "mean": 5.05,
+            "p50": 2.0,
+            "p75": 6.0,
+            "p90": 12.0,
+            "p95": 17.0,
+            "max": 74,
+            "threshold": 12,
+            "hub_count": 57,
+            "hub_ratio_pct": 10.31
+          }
+        },
+        "all_nodes": {
+          "population_size": 3234,
+          "fanout": {
+            "mean": 0.43,
+            "p50": 0.0,
+            "p75": 0.0,
+            "p90": 0.0,
+            "p95": 2.0,
+            "max": 35,
+            "threshold": 6,
+            "hub_count": 89,
+            "hub_ratio_pct": 2.75
+          },
+          "total_degree": {
+            "mean": 0.86,
+            "p50": 0.0,
+            "p75": 0.0,
+            "p90": 2.0,
+            "p95": 4.0,
+            "max": 74,
+            "threshold": 6,
+            "hub_count": 155,
+            "hub_ratio_pct": 4.79
+          }
+        }
+      },
+      "fanout_hubs": [
+        {
+          "node": "doc026",
+          "name": "卫生部关于中医执业的14个批复",
+          "type": "DOCUMENT",
+          "fan_out": 35,
+          "fan_in": 0,
+          "total_routing_degree": 35
+        },
+        {
+          "node": "doc010",
+          "name": "医疗机构管理条例实施细则",
+          "type": "DOCUMENT",
+          "fan_out": 18,
+          "fan_in": 40,
+          "total_routing_degree": 58
+        },
+        {
+          "node": "doc048",
+          "name": "关于取得助产士（师）资格人员不能认定执业医师资格的批复",
+          "type": "DOCUMENT",
+          "fan_out": 18,
+          "fan_in": 0,
+          "total_routing_degree": 18
+        },
+        {
+          "node": "doc060",
+          "name": "关于对《医疗机构管理条例》执行中有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 18,
+          "fan_in": 0,
+          "total_routing_degree": 18
+        },
+        {
+          "node": "doc060#c001",
+          "name": "关于对《医疗机构管理条例》执行中有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 18,
+          "fan_in": 0,
+          "total_routing_degree": 18
+        },
+        {
+          "node": "doc045",
+          "name": "关于医疗美容的七个批复文件",
+          "type": "DOCUMENT",
+          "fan_out": 17,
+          "fan_in": 0,
+          "total_routing_degree": 17
+        },
+        {
+          "node": "doc054",
+          "name": "关于中蒙医（骨科副主任医师）执业医师类别开展骨科手术事宜的批复",
+          "type": "DOCUMENT",
+          "fan_out": 17,
+          "fan_in": 0,
+          "total_routing_degree": 17
+        },
+        {
+          "node": "doc057",
+          "name": "关于医疗广告审查中有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 17,
+          "fan_in": 0,
+          "total_routing_degree": 17
+        },
+        {
+          "node": "doc058",
+          "name": "卫生部：关于医疗广告审查中有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 17,
+          "fan_in": 0,
+          "total_routing_degree": 17
+        },
+        {
+          "node": "doc054#c001",
+          "name": "关于中蒙医（骨科副主任医师）执业医师类别开展骨科手术事宜的批复",
+          "type": "CHUNK",
+          "fan_out": 17,
+          "fan_in": 0,
+          "total_routing_degree": 17
+        },
+        {
+          "node": "doc068",
+          "name": "关于乳腺外科手术项目相关执业登记事宜的批复",
+          "type": "DOCUMENT",
+          "fan_out": 16,
+          "fan_in": 0,
+          "total_routing_degree": 16
+        },
+        {
+          "node": "doc057#c002",
+          "name": "关于医疗广告审查中有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 16,
+          "fan_in": 0,
+          "total_routing_degree": 16
+        },
+        {
+          "node": "doc058#c002",
+          "name": "卫生部：关于医疗广告审查中有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 16,
+          "fan_in": 0,
+          "total_routing_degree": 16
+        },
+        {
+          "node": "doc068#c001",
+          "name": "关于乳腺外科手术项目相关执业登记事宜的批复",
+          "type": "CHUNK",
+          "fan_out": 16,
+          "fan_in": 0,
+          "total_routing_degree": 16
+        },
+        {
+          "node": "doc052",
+          "name": "关于打击非法行医专项行动中有关中医监督问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 15,
+          "fan_in": 0,
+          "total_routing_degree": 15
+        },
+        {
+          "node": "doc052#c001",
+          "name": "关于打击非法行医专项行动中有关中医监督问题的批复",
+          "type": "CHUNK",
+          "fan_out": 15,
+          "fan_in": 0,
+          "total_routing_degree": 15
+        },
+        {
+          "node": "doc067",
+          "name": "关于医疗机构执业登记有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 14,
+          "fan_in": 6,
+          "total_routing_degree": 20
+        },
+        {
+          "node": "doc073",
+          "name": "关于药品经营机构中办医疗机构有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 14,
+          "fan_in": 6,
+          "total_routing_degree": 20
+        },
+        {
+          "node": "doc067#c001",
+          "name": "关于医疗机构执业登记有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 14,
+          "fan_in": 0,
+          "total_routing_degree": 14
+        },
+        {
+          "node": "doc073#c001",
+          "name": "关于药品经营机构中办医疗机构有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 14,
+          "fan_in": 0,
+          "total_routing_degree": 14
+        },
+        {
+          "node": "doc053",
+          "name": "关于住院医师规范化培训期间医师执业注册有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 13,
+          "fan_in": 0,
+          "total_routing_degree": 13
+        },
+        {
+          "node": "doc049",
+          "name": "关于对非法采供血液和单采血浆、非法行医专项整治工作中有关法律适用问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 12,
+          "fan_in": 0,
+          "total_routing_degree": 12
+        },
+        {
+          "node": "doc051",
+          "name": "卫生部关于超范围执业认定的五个批复",
+          "type": "DOCUMENT",
+          "fan_out": 12,
+          "fan_in": 0,
+          "total_routing_degree": 12
+        },
+        {
+          "node": "doc056",
+          "name": "关于取得医师资格但未经执业注册的人员开展医师执业活动有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 12,
+          "fan_in": 22,
+          "total_routing_degree": 34
+        },
+        {
+          "node": "doc069",
+          "name": "卫生部：关于医疗机构药品使用监督管理权限的批复",
+          "type": "DOCUMENT",
+          "fan_out": 12,
+          "fan_in": 0,
+          "total_routing_degree": 12
+        },
+        {
+          "node": "doc070",
+          "name": "关于医疗机构命名有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 12,
+          "fan_in": 6,
+          "total_routing_degree": 18
+        },
+        {
+          "node": "doc075",
+          "name": "关于中医类别医师可以从事急救工作的批复",
+          "type": "DOCUMENT",
+          "fan_out": 12,
+          "fan_in": 2,
+          "total_routing_degree": 14
+        },
+        {
+          "node": "doc056#c001",
+          "name": "关于取得医师资格但未经执业注册的人员开展医师执业活动有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 12,
+          "fan_in": 0,
+          "total_routing_degree": 12
+        },
+        {
+          "node": "doc069#c001",
+          "name": "卫生部：关于医疗机构药品使用监督管理权限的批复",
+          "type": "CHUNK",
+          "fan_out": 12,
+          "fan_in": 0,
+          "total_routing_degree": 12
+        },
+        {
+          "node": "doc070#c001",
+          "name": "关于医疗机构命名有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 12,
+          "fan_in": 0,
+          "total_routing_degree": 12
+        },
+        {
+          "node": "doc075#c001",
+          "name": "关于中医类别医师可以从事急救工作的批复",
+          "type": "CHUNK",
+          "fan_out": 12,
+          "fan_in": 0,
+          "total_routing_degree": 12
+        },
+        {
+          "node": "doc042",
+          "name": "卫生部关于乡村医生执业的六个批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc062",
+          "name": "关于对农村非法行医依法监督工作中有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc063",
+          "name": "关于执业助理医师能否设置个体诊所问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 10,
+          "total_routing_degree": 21
+        },
+        {
+          "node": "doc064",
+          "name": "关于重庆市卫生计生委康复按摩活动定性有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 8,
+          "total_routing_degree": 19
+        },
+        {
+          "node": "doc065",
+          "name": "关于取得医师执业证书的医师在家中擅自诊疗病人造成死亡适用法律有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 10,
+          "total_routing_degree": 21
+        },
+        {
+          "node": "doc076",
+          "name": "关于非法行医有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 2,
+          "total_routing_degree": 13
+        },
+        {
+          "node": "doc080",
+          "name": "关于心内科医师从事超声心动图检查有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc082",
+          "name": "关于对穴位按摩治疗近视等有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc084",
+          "name": "关于对使用医疗器械开展理疗活动有关定性问题的批复",
+          "type": "DOCUMENT",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc045#c002",
+          "name": "关于医疗美容的七个批复文件",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc053#c001",
+          "name": "关于住院医师规范化培训期间医师执业注册有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc062#c001",
+          "name": "关于对农村非法行医依法监督工作中有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc063#c001",
+          "name": "关于执业助理医师能否设置个体诊所问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc064#c001",
+          "name": "关于重庆市卫生计生委康复按摩活动定性有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc065#c001",
+          "name": "关于取得医师执业证书的医师在家中擅自诊疗病人造成死亡适用法律有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc076#c001",
+          "name": "关于非法行医有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc080#c001",
+          "name": "关于心内科医师从事超声心动图检查有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc082#c001",
+          "name": "关于对穴位按摩治疗近视等有关问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "doc084#c001",
+          "name": "关于对使用医疗器械开展理疗活动有关定性问题的批复",
+          "type": "CHUNK",
+          "fan_out": 11,
+          "fan_in": 0,
+          "total_routing_degree": 11
+        },
+        {
+          "node": "prefix:国务院关于修改部分行政法规的决定",
+          "name": "国务院关于修改部分行政法规的决定",
+          "type": "ROUTE_PREFIX",
+          "fan_out": 11,
+          "fan_in": 11,
+          "total_routing_degree": 22
+        }
+      ],
+      "aggregation_hubs": [
+        {
+          "node": "doc033",
+          "name": "医疗机构管理条例",
+          "type": "DOCUMENT",
+          "fan_in": 71,
+          "fan_out": 3,
+          "total_routing_degree": 74
+        },
+        {
+          "node": "prefix:医疗机构执业许可证",
+          "name": "医疗机构执业许可证",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 60,
+          "fan_out": 0,
+          "total_routing_degree": 60
+        },
+        {
+          "node": "doc010",
+          "name": "医疗机构管理条例实施细则",
+          "type": "DOCUMENT",
+          "fan_in": 40,
+          "fan_out": 18,
+          "total_routing_degree": 58
+        },
+        {
+          "node": "prefix:中华人民共和国执业医师法",
+          "name": "中华人民共和国执业医师法",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 39,
+          "fan_out": 0,
+          "total_routing_degree": 39
+        },
+        {
+          "node": "prefix:执业医师法",
+          "name": "执业医师法",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 36,
+          "fan_out": 0,
+          "total_routing_degree": 36
+        },
+        {
+          "node": "doc061",
+          "name": "关于打击非法行医专项行动中有关中医监督问题的批复",
+          "type": "DOCUMENT",
+          "fan_in": 26,
+          "fan_out": 8,
+          "total_routing_degree": 34
+        },
+        {
+          "node": "doc056",
+          "name": "关于取得医师资格但未经执业注册的人员开展医师执业活动有关问题的批复",
+          "type": "DOCUMENT",
+          "fan_in": 22,
+          "fan_out": 12,
+          "total_routing_degree": 34
+        },
+        {
+          "node": "prefix:关于医学生毕业后暂未取得医师资格从事诊疗活动有关问题的批复",
+          "name": "关于医学生毕业后暂未取得医师资格从事诊疗活动有关问题的批复",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 22,
+          "fan_out": 0,
+          "total_routing_degree": 22
+        },
+        {
+          "node": "prefix:关于医师执业注册中执业范围的暂行规定",
+          "name": "关于医师执业注册中执业范围的暂行规定",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 21,
+          "fan_out": 0,
+          "total_routing_degree": 21
+        },
+        {
+          "node": "doc025",
+          "name": "乡村医生从业管理条例",
+          "type": "DOCUMENT",
+          "fan_in": 20,
+          "fan_out": 1,
+          "total_routing_degree": 21
+        },
+        {
+          "node": "prefix:关于审理非法行医刑事案件具体应用法律若干问题的解释",
+          "name": "关于审理非法行医刑事案件具体应用法律若干问题的解释",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 20,
+          "fan_out": 0,
+          "total_routing_degree": 20
+        },
+        {
+          "node": "prefix:卫生行政处罚程序",
+          "name": "卫生行政处罚程序",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 18,
+          "fan_out": 0,
+          "total_routing_degree": 18
+        },
+        {
+          "node": "doc015",
+          "name": "医疗事故处理条例",
+          "type": "DOCUMENT",
+          "fan_in": 16,
+          "fan_out": 4,
+          "total_routing_degree": 20
+        },
+        {
+          "node": "prefix:医疗机构投诉管理办法",
+          "name": "医疗机构投诉管理办法",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 16,
+          "fan_out": 0,
+          "total_routing_degree": 16
+        },
+        {
+          "node": "prefix:关于美容中医科开展整形美容手术是否认定超范围执业的批复",
+          "name": "关于美容中医科开展整形美容手术是否认定超范围执业的批复",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 16,
+          "fan_out": 0,
+          "total_routing_degree": 16
+        },
+        {
+          "node": "prefix:盲人医疗按摩管理办法",
+          "name": "盲人医疗按摩管理办法",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 14,
+          "fan_out": 0,
+          "total_routing_degree": 14
+        },
+        {
+          "node": "prefix:关于中医推拿按摩等活动管理中有关问题的通知",
+          "name": "关于中医推拿按摩等活动管理中有关问题的通知",
+          "type": "ROUTE_PREFIX",
+          "fan_in": 14,
+          "fan_out": 0,
+          "total_routing_degree": 14
+        }
+      ]
+    }
+  }
+}

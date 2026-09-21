@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # 1. Qdrant Vector Database
+  # Supports doc_id payload filtering, persistent disk storage, Web UI at http://localhost:6333/dashboard
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: knowledge-routing-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - ./data/qdrant_storage:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__ENABLE_STATIC_CONTENT=true
+
+  # 2. Local Open-Source Embedding Service (OpenAI-Compatible API)
+  # Provides http://localhost:8000/v1/embeddings
+  # Supports Apple Silicon (ARM64) & CPU inference for BAAI/bge-large-zh-v1.5
+  embedding:
+    image: michaelfeil/infinity:latest
+    container_name: knowledge-routing-embedding
+    restart: unless-stopped
+    ports:
+      - "8000:7997"
+    environment:
+      - INFINITY_MODEL_ID=BAAI/bge-large-zh-v1.5
+      - INFINITY_BATCH_SIZE=32
+    volumes:
+      - ./data/model_cache:/root/.cache/huggingface
+    command: v2 --model-id BAAI/bge-large-zh-v1.5 --port 7997 --batch-size 32

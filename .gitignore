@@ -1,0 +1,34 @@
+# Environment & Secrets
+.env
+.env.local
+*.key
+
+# Python & UV
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+uv.lock
+
+# Docker & Vector Storage
+data/qdrant_storage/
+data/model_cache/
+*.sqlite
+*.sqlite-journal
+
+# Raw Proprietary / Copyrighted Data (Only commit manifests & hashes per Plan §30)
+# data/documents/*.txt
+# data/documents/*.md
+
+# Experiment Runs & Outputs (keep .gitkeep in runs/)
+runs/*
+!runs/.gitkeep
+
+# Reports & Visualizations
+reports/*.csv
+reports/*.png
+reports/*.svg
+!reports/final_report.md
+
+# macOS
+.DS_Store

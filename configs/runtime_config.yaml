@@ -1,0 +1,79 @@
+# ==============================================================================
+# Knowledge Routing RAG v0 - Unified Runtime Configuration
+# Reference: 实验方案.md Section 7, 8, 9, 13, 18, 19
+# ==============================================================================
+
+experiment:
+  name: "knowledge-routing-rag-v0"
+  random_seed: 42
+  corpora: ["D20", "D50", "D100"]
+  split:
+    dev_count: 24
+    test_count: 96
+    stratified_by: ["hop_count", "tags"]
+
+# Shared Baseline & Generator Settings (Plan §9)
+generator:
+  provider: "deepseek"
+  model: "deepseek-flash"
+  temperature: 0.0
+  max_evidence_tokens: 4000  # Evidence budget upper limit; no system can exceed this
+
+# Retrieval & Hybrid Parameters (Plan §8, 18)
+retrieval:
+  vector_top_k: 5
+  fts_top_k: 5
+  final_seed_k: 5
+  hybrid_vector_weight: 0.6
+  hybrid_fts_weight: 0.4
+
+# Knowledge Routing Budget (Plan §18 - Locked across D20, D50, D100)
+routing_budget:
+  seed_top_k: 5
+  max_branch_per_node: 2
+  max_hops: 3
+  max_paths: 6
+  max_final_evidence: 6
+  max_active_fallbacks: 2
+
+# Hub Isolation & Protection Rules (Plan §12, §13)
+hub_protection:
+  min_degree_threshold: 6
+  degree_percentile: 90
+  allow_expand_all: false
+  allowed_operations: ["scope_route", "typed_expand"]
+
+# Step Cost Matrix for Path Finding (Plan §19)
+routing_cost:
+  explicit_reference: 1
+  hierarchy: 1
+  version: 1
+  definition: 1
+  validated_soft_edge: 2
+  semantic_fallback: 3
+  hub_crossing: 4
+  cross_scope: 4
+
+# Knowledge SIDs for SRv6 Segment Planner (Plan §16)
+segment_vocabulary:
+  - "RESOLVE_VERSION"
+  - "FOLLOW_REFERENCE"
+  - "FOLLOW_BASIS"
+  - "FIND_DEFINITION"
+  - "FIND_IMPLEMENTATION"
+  - "CHECK_EXCEPTION"
+  - "CHECK_SCOPE"
+  - "CHECK_AUTHORITY"
+  - "VERIFY"
+
+# Statistical Testing & Metrics Configuration (Plan §21, §26)
+evaluation:
+  bootstrap_ci_samples: 1000
+  bootstrap_confidence: 0.95
+  significance_test: "mcnemar_exact"
+  hub_stress_bins:
+    - [0, 4]
+    - [5, 10]
+    - [11, 20]
+    - [21, 50]
+    - [51, 9999]
