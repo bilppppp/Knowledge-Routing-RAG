@@ -3,3 +3,4 @@ C1,B0,"Vector Entrance + Scope Narrowing + Feasibility Routing + Soft Hub + Targ
 C2,C1,"Hierarchical Scope Routing + Diversity Admission Gate (Cap 2/doc) + Confidence Fast Path",68.52,-3.70,-2.78,6,14,-8,0.213,29.6,85.8,3327,1496,FAILED
 C3,C1,"Intent-Gated Relational Routing + 4 Guaranteed B0 Anchors + B0 Fast Path",73.15,+0.93,+1.85,2,0,+2,0.246,34.3,83.1,95,1420,CANDIDATE / NEW INCUMBENT
 C4,C3,"Relation-Specific Lanes (Temporal/Composite) + Conservative Evidence Admission",74.54,+2.31,+1.39,5,0,+5,0.250,34.3,82.8,126,1414,CANDIDATE / NEW INCUMBENT
+C5,C4,"Hierarchical Next-Hop Resolution (Recursive Parent Lift + Targeted Descent)",75.93,+3.70,+1.39,8,0,+8,0.251,35.6,82.7,121,1420,CANDIDATE / NEW INCUMBENT

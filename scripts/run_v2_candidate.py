@@ -35,6 +35,7 @@ from src.routing.c1_router import C1RouterSystem
 from src.routing.c2_router import C2RouterSystem
 from src.routing.c3_router import C3RouterSystem
 from src.routing.c4_router import C4RouterSystem
+from src.routing.c5_router import C5RouterSystem
 
 BENCHMARK_DIR = PROJECT_ROOT / "benchmark"
 RUNS_V2_DIR = PROJECT_ROOT / "runs" / "v2"
@@ -113,6 +114,18 @@ def get_candidate_system(candidate_id: str, search: SearchService, llm: LLMServi
     elif candidate_id == "C4":
         b0_traces = load_b0_traces()
         return C4RouterSystem(
+            search_service=search,
+            llm_service=llm,
+            lsdb=lsdb,
+            b0_traces=b0_traces,
+            top_k=5,
+            max_hops=2,
+            max_replacements=2,
+            max_evidence_tokens=4000
+        )
+    elif candidate_id == "C5":
+        b0_traces = load_b0_traces()
+        return C5RouterSystem(
             search_service=search,
             llm_service=llm,
             lsdb=lsdb,
@@ -220,7 +233,18 @@ def run_candidate(candidate_id: str, concurrency: int = 5):
             "total_latency_ms": trace.total_latency_ms,
             "input_tokens": trace.input_tokens,
             "output_tokens": trace.output_tokens,
-            "llm_calls": trace.llm_calls
+            "llm_calls": trace.llm_calls,
+            "routing_steps": [
+                {
+                    "step_num": s.step_num,
+                    "action": s.action,
+                    "current_node": s.current_node,
+                    "candidates": s.candidates,
+                    "selected_next": s.selected_next,
+                    "reason": s.reason
+                }
+                for s in trace.routing_steps
+            ]
         }
 
         with open(trace_file, "w", encoding="utf-8") as f:
@@ -328,6 +352,10 @@ def evaluate_candidate_vs_b0(
         parent = "C3"
         main_change = "Relation-Specific Lanes (Temporal/Composite) + Conservative Evidence Admission"
         parent_acc = 0.7315
+    elif candidate_id == "C5":
+        parent = "C4"
+        main_change = "Hierarchical Next-Hop Resolution (Recursive Parent Lift + Targeted Descent)"
+        parent_acc = 0.7454
     else:
         parent = "B0"
         main_change = candidate_id

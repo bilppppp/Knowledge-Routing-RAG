@@ -24,11 +24,18 @@ B0 Vector RAG (Anchor Baseline)
 │           [Zero-Regression Architecture: Selectively engages routing only on cross-statute tasks]
 │           │
 │           └── C4 Relation-Specific Lanes (Temporal/Composite) + Conservative Evidence Admission
-│                 Accuracy: 74.54% (+2.31pp vs B0, +1.39pp vs C3) | CANDIDATE / NEW INCUMBENT ★
+│                 Accuracy: 74.54% (+2.31pp vs B0, +1.39pp vs C3) | SUPERSEDED BY C5
 │                 Net Rescue: +5 (5 Rescues, 0 Regressions)
 │                 Evidence F1: 0.250 | Chain Comp: 34.3%
 │                 Latency P50: 126 ms | CPR: 82.8%
 │                 [High-Precision Architecture: Specialized Micro-Programs + Strict 5-chunk Budget Replacement]
+│                 │
+│                 └── C5 Hierarchical Next-Hop Resolution (Recursive Parent Lift + Targeted Descent)
+│                       Accuracy: 75.93% (+3.70pp vs B0, +1.39pp vs C4) | CANDIDATE / NEW INCUMBENT ★
+│                       Net Rescue: +8 (8 Rescues, 0 Regressions)
+│                       Evidence F1: 0.251 | Chain Comp: 35.6%
+│                       Latency P50: 121 ms | CPR: 82.7%
+│                       [Recursive Architecture: Lift only to resolve; descend immediately to retrieve]
 ```
 
-**Current Champion**: `C4` (Accuracy: **74.54%**, Net Rescue: **+5**, Regressions: **0**)
+**Current Champion**: `C5` (Accuracy: **75.93%**, Net Rescue: **+8**, Regressions: **0**)

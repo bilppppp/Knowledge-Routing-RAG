@@ -131,5 +131,39 @@ Prior to formulating C1, a systematic question-level transition analysis was per
   - **Fast Path (N=172)**: 134/172 correct (77.9%), 0 rescues, 0 regressions.
   - **Temporal Lane (N=25)**: 17/25 correct (68.0%), 0 regressions, pruned 23 irrelevant foreign chunks across multi-statute queries.
   - **Composite Lane (N=19)**: Jumped from 5/19 (26.3% in B0) $\to$ 7/19 (36.8% in C3) $\to$ **10/19 (52.6% in C4)**, generating all 5 net rescues.
-- **Verdict**: **PROMOTED TO NEW INCUMBENT ★**. Sets new benchmark high score of 74.54% with zero regressions.
+- **Verdict**: **PROMOTED TO INCUMBENT** (Superseded by C5). Sets high score of 74.54% with zero regressions.
+
+---
+
+## Experiment 5: Candidate C5 (Hierarchical Next-Hop Resolution)
+
+- **Candidate ID**: C5
+- **Parent Candidate**: C4
+- **Status**: **CANDIDATE / NEW INCUMBENT ★** (Promoted!)
+- **Architecture**: Hierarchical Next-Hop Resolution (Recursive Next-Hop: Parent Lift $\to$ Doc Relation Resolve $\to$ Targeted Descent $\to$ Conservative Admission)
+  - **Philosophy**: *"Lift only to resolve; descend immediately to retrieve."*
+  - **Recursive Next-Hop Mechanism**:
+    - When chunk-level routing cannot resolve an explicitly required typed relation (`BASED_ON` or `REFERENCES`):
+      1. **PARENT_LIFT**: Temporarily elevate source chunk to its parent document node in LSDB.
+      2. **DOC_RELATION_RESOLVE**: Query only the required typed relation in the document navigation graph (`max_target_documents = 1`, or 2 if question asks "两部/两项").
+      3. **TARGETED_DESCENT**: Immediately descend into the target document using `fts_search_in_doc(cleaned_slot, tgt_doc)` to retrieve candidate chunks satisfying the unresolved obligation slot.
+      4. **CONSERVATIVE_ADMISSION**: Evaluated by C4's strict replacement gate (5-chunk budget cap, top 1~3 seeds locked).
+    - **Fast Path Preservation**: 172/216 single-scope queries bypass routing completely and reuse frozen B0 baseline traces.
+- **Empirical Metrics (N=216)**:
+  - Accuracy: **75.93% (164/216)** (vs B0 72.22%, $\Delta = \mathbf{+3.70\text{pp}}$; vs C4 74.54%, $\Delta = \mathbf{+1.39\text{pp}}$)
+  - Rescues (Base- $\to$ C+): **8** (`Q014 D100`, `Q016 D50`, `Q016 D100`, `Q048 D20`, `Q076 D50`, `Q076 D100`, `Q089 D50`, `Q089 D100`)
+  - Regressions (Base+ $\to$ C-): **0** (Zero regressions maintained across all 216 instances!)
+  - Net Rescue: **+8**
+  - Chain Completion: **35.6% (77/216)**
+  - Evidence F1: **0.251** (vs B0 0.244, C4 0.250)
+  - CPR: **82.7%**
+  - Latency P50 / P95: **121 / 4332 ms**
+  - Mean Tokens: **1420**
+- **Trigger & Route Auditing**:
+  - Hierarchical Resolution triggered in exactly **8 instances** (3.7% of benchmark).
+  - Target Document resolution accuracy: **8/8 (100%)** (`doc019 -> doc005`, `doc013 -> doc001`, `doc038 -> doc005`).
+  - Target Chunk retrieval accuracy: **8/8 (100%)** (`doc005#c030`, `doc001#c001`, `doc005#c049`).
+  - Successfully unlocked `Q014 D100` via `doc019 --BASED_ON--> doc005#c030`, and solidified `Q016 D50 / D100`.
+- **Verdict**: **PROMOTED TO NEW INCUMBENT ★**. First architecture to surpass 75.9% accuracy with zero regressions.
+
 
