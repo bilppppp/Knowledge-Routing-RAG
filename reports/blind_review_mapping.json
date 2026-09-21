@@ -1,0 +1,405 @@
+{
+  "REV-001": {
+    "review_id": "REV-001",
+    "qid": "Q001",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K2",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-002": {
+    "review_id": "REV-002",
+    "qid": "Q001",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-003": {
+    "review_id": "REV-003",
+    "qid": "Q009",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K2",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-004": {
+    "review_id": "REV-004",
+    "qid": "Q009",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-005": {
+    "review_id": "REV-005",
+    "qid": "Q009",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K2",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-006": {
+    "review_id": "REV-006",
+    "qid": "Q016",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K4",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-007": {
+    "review_id": "REV-007",
+    "qid": "Q022",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K2",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-008": {
+    "review_id": "REV-008",
+    "qid": "Q022",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-009": {
+    "review_id": "REV-009",
+    "qid": "Q025",
+    "corpus": "D20",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-010": {
+    "review_id": "REV-010",
+    "qid": "Q032",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-011": {
+    "review_id": "REV-011",
+    "qid": "Q033",
+    "corpus": "D20",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-012": {
+    "review_id": "REV-012",
+    "qid": "Q035",
+    "corpus": "D20",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K4",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-013": {
+    "review_id": "REV-013",
+    "qid": "Q035",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-014": {
+    "review_id": "REV-014",
+    "qid": "Q048",
+    "corpus": "D20",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K2",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-015": {
+    "review_id": "REV-015",
+    "qid": "Q048",
+    "corpus": "D20",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K4",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-016": {
+    "review_id": "REV-016",
+    "qid": "Q050",
+    "corpus": "D20",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K4",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-017": {
+    "review_id": "REV-017",
+    "qid": "Q062",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K2",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-018": {
+    "review_id": "REV-018",
+    "qid": "Q062",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K4",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-019": {
+    "review_id": "REV-019",
+    "qid": "Q062",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K2",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-020": {
+    "review_id": "REV-020",
+    "qid": "Q062",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-021": {
+    "review_id": "REV-021",
+    "qid": "Q064",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K4",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-022": {
+    "review_id": "REV-022",
+    "qid": "Q068",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K2",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-023": {
+    "review_id": "REV-023",
+    "qid": "Q068",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-024": {
+    "review_id": "REV-024",
+    "qid": "Q068",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-025": {
+    "review_id": "REV-025",
+    "qid": "Q076",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K2",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-026": {
+    "review_id": "REV-026",
+    "qid": "Q076",
+    "corpus": "D50",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K4",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-027": {
+    "review_id": "REV-027",
+    "qid": "Q089",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K2",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-028": {
+    "review_id": "REV-028",
+    "qid": "Q101",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "B0",
+    "output_b_system": "K2",
+    "auto_judge_initial": {
+      "A": true,
+      "B": false
+    }
+  },
+  "REV-029": {
+    "review_id": "REV-029",
+    "qid": "Q105",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K2",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K2",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-030": {
+    "review_id": "REV-030",
+    "qid": "Q105",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K4",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  },
+  "REV-031": {
+    "review_id": "REV-031",
+    "qid": "Q116",
+    "corpus": "D100",
+    "comparison_type": "B0_vs_K4",
+    "trigger_reason": "disagreement",
+    "output_a_system": "K4",
+    "output_b_system": "B0",
+    "auto_judge_initial": {
+      "A": false,
+      "B": true
+    }
+  }
+}

@@ -1,0 +1,343 @@
+[
+  {
+    "review_id": "REV-001",
+    "qid": "Q001",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-002",
+    "qid": "Q001",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-003",
+    "qid": "Q009",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-004",
+    "qid": "Q009",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-005",
+    "qid": "Q009",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-006",
+    "qid": "Q016",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-007",
+    "qid": "Q022",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-008",
+    "qid": "Q022",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-009",
+    "qid": "Q025",
+    "corpus": "D20",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-010",
+    "qid": "Q032",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-011",
+    "qid": "Q033",
+    "corpus": "D20",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-012",
+    "qid": "Q035",
+    "corpus": "D20",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-013",
+    "qid": "Q035",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-014",
+    "qid": "Q048",
+    "corpus": "D20",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-015",
+    "qid": "Q048",
+    "corpus": "D20",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-016",
+    "qid": "Q050",
+    "corpus": "D20",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-017",
+    "qid": "Q062",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-018",
+    "qid": "Q062",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-019",
+    "qid": "Q062",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-020",
+    "qid": "Q062",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-021",
+    "qid": "Q064",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-022",
+    "qid": "Q068",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-023",
+    "qid": "Q068",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-024",
+    "qid": "Q068",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-025",
+    "qid": "Q076",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-026",
+    "qid": "Q076",
+    "corpus": "D50",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-027",
+    "qid": "Q089",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-028",
+    "qid": "Q101",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-029",
+    "qid": "Q105",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-030",
+    "qid": "Q105",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  },
+  {
+    "review_id": "REV-031",
+    "qid": "Q116",
+    "corpus": "D100",
+    "adjudicated": false,
+    "winner_or_correctness": {
+      "A": null,
+      "B": null
+    },
+    "notes": ""
+  }
+]
