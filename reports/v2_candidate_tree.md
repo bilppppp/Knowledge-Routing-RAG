@@ -17,11 +17,18 @@ B0 Vector RAG (Anchor Baseline)
 │     │     [Severe Context Dilution: Over-aggressive macro expansion evicted single-statute chunks]
 │     │
 │     └── C3 Intent-Gated Relational Router + 4 Guaranteed B0 Anchors + B0 Fast Path
-│           Accuracy: 73.15% (+0.93pp vs B0, +1.85pp vs C1) | CANDIDATE / NEW INCUMBENT ★
+│           Accuracy: 73.15% (+0.93pp vs B0, +1.85pp vs C1) | SUPERSEDED BY C4
 │           Net Rescue: +2 (2 Rescues, 0 Regressions)
 │           Evidence F1: 0.246 | Chain Comp: 34.3%
 │           Latency P50: 95 ms | CPR: 83.1%
 │           [Zero-Regression Architecture: Selectively engages routing only on cross-statute tasks]
+│           │
+│           └── C4 Relation-Specific Lanes (Temporal/Composite) + Conservative Evidence Admission
+│                 Accuracy: 74.54% (+2.31pp vs B0, +1.39pp vs C3) | CANDIDATE / NEW INCUMBENT ★
+│                 Net Rescue: +5 (5 Rescues, 0 Regressions)
+│                 Evidence F1: 0.250 | Chain Comp: 34.3%
+│                 Latency P50: 126 ms | CPR: 82.8%
+│                 [High-Precision Architecture: Specialized Micro-Programs + Strict 5-chunk Budget Replacement]
 ```
 
-**Current Champion**: `C3` (Accuracy: **73.15%**, Net Rescue: **+2**, Regressions: **0**)
+**Current Champion**: `C4` (Accuracy: **74.54%**, Net Rescue: **+5**, Regressions: **0**)

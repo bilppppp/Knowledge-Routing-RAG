@@ -94,4 +94,42 @@ Prior to formulating C1, a systematic question-level transition analysis was per
   - CPR: **83.1%**
   - Latency P50 / P95: **95 / 4520 ms** (P50 reduced from 3356 ms to 95 ms due to fast-path pass-through!)
   - Mean Tokens: **1420**
-- **Verdict**: **PROMOTED TO INCUMBENT**. Successfully beats baseline B0 while maintaining zero regressions.
+- **Verdict**: **PROMOTED TO INCUMBENT** (Superseded by C4). Successfully beats baseline B0 while maintaining zero regressions.
+
+---
+
+## Experiment 4: Candidate C4 (Relation-Specific Lanes + Conservative Evidence Admission)
+
+- **Candidate ID**: C4
+- **Parent Candidate**: C3
+- **Status**: **CANDIDATE / NEW INCUMBENT** (Promoted!)
+- **Architecture**: Relation-Specific Lanes (Temporal/Composite) + Conservative Evidence Admission (Replacement-First, Budget-Constrained)
+  - **Dual Relation-Specific Micro-Program Lanes**:
+    - **Lane A (`TEMPORAL_BASIS`)**:
+      - Triggered by temporal signals (现行, 施行, 废止, 修订, 上位立法依据, 哪部旧法规等).
+      - Executes deterministic micro-program (SRv6-style): `RESOLVE_VERSION` (SUPERSEDES / AMENDS / 附则废止) $\to$ `FOLLOW_BASIS` (BASED_ON / 总则依据) $\to$ `PRUNE_IRRELEVANT foreign doc`.
+    - **Lane B (`COMPOSITE_EVIDENCE`)**:
+      - Triggered by multi-obligation and cross-statutory coordination (联动要求, 与...衔接, 协同衔接, 批发准入, 资质许可, 出具医学意见等) or statutory gaps.
+      - Executes: `DETECT_OBLIGATION_GAPS` $\to$ `EXPAND_RELATIONS_AND_SECTIONS` (REFERENCES / BASED_ON / intra-statute FTS) $\to$ `ADMIT_CANDIDATE`.
+    - **Fast Path (`FAST_PATH`)**:
+      - Single-statute non-relational queries directly serve verified B0 baseline trace, isolating routing gain from generator re-sampling noise.
+  - **Conservative Evidence Admission (Budget Cap = 5 Chunks)**:
+    - Initial Forwarding Table = B0 Top-5 seeds.
+    - **Dynamic Protection**: Top 1~3 seeds are locked by default. Seeds 4 and 5 are replaceable unless they uniquely satisfy a query slot.
+    - **Strict Replacement**: Candidates do not expand the context window beyond 5 chunks. If admitted, a candidate replaces the lowest-value duplicate or replaceable seed.
+- **Empirical Metrics (N=216)**:
+  - Accuracy: **74.54% (161/216)** (vs B0 72.22%, $\Delta = \mathbf{+2.31\text{pp}}$; vs C3 73.15%, $\Delta = \mathbf{+1.39\text{pp}}$)
+  - Rescues (Base- $\to$ C+): **5** (`Q048 D20`, `Q076 D50`, `Q076 D100`, `Q089 D50`, `Q089 D100`)
+  - Regressions (Base+ $\to$ C-): **0** (Zero regressions across the entire benchmark!)
+  - Net Rescue: **+5**
+  - Chain Completion: **34.3% (74/216)**
+  - Evidence F1: **0.250** (vs B0 0.244, C3 0.246)
+  - CPR: **82.8%**
+  - Latency P50 / P95: **126 / 3952 ms**
+  - Mean Tokens: **1414**
+- **Detailed Lane Analysis**:
+  - **Fast Path (N=172)**: 134/172 correct (77.9%), 0 rescues, 0 regressions.
+  - **Temporal Lane (N=25)**: 17/25 correct (68.0%), 0 regressions, pruned 23 irrelevant foreign chunks across multi-statute queries.
+  - **Composite Lane (N=19)**: Jumped from 5/19 (26.3% in B0) $\to$ 7/19 (36.8% in C3) $\to$ **10/19 (52.6% in C4)**, generating all 5 net rescues.
+- **Verdict**: **PROMOTED TO NEW INCUMBENT ★**. Sets new benchmark high score of 74.54% with zero regressions.
+

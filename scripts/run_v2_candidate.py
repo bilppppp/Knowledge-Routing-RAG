@@ -34,6 +34,7 @@ from src.evaluation.metrics import Evaluator
 from src.routing.c1_router import C1RouterSystem
 from src.routing.c2_router import C2RouterSystem
 from src.routing.c3_router import C3RouterSystem
+from src.routing.c4_router import C4RouterSystem
 
 BENCHMARK_DIR = PROJECT_ROOT / "benchmark"
 RUNS_V2_DIR = PROJECT_ROOT / "runs" / "v2"
@@ -107,6 +108,18 @@ def get_candidate_system(candidate_id: str, search: SearchService, llm: LLMServi
             max_hops=2,
             max_branch_per_node=2,
             max_final_evidence=6,
+            max_evidence_tokens=4000
+        )
+    elif candidate_id == "C4":
+        b0_traces = load_b0_traces()
+        return C4RouterSystem(
+            search_service=search,
+            llm_service=llm,
+            lsdb=lsdb,
+            b0_traces=b0_traces,
+            top_k=5,
+            max_hops=2,
+            max_replacements=2,
             max_evidence_tokens=4000
         )
     else:
@@ -311,6 +324,10 @@ def evaluate_candidate_vs_b0(
         parent = "C1"
         main_change = "Intent-Gated Relational Routing + 4 Guaranteed B0 Anchors + B0 Fast Path"
         parent_acc = 0.7130
+    elif candidate_id == "C4":
+        parent = "C3"
+        main_change = "Relation-Specific Lanes (Temporal/Composite) + Conservative Evidence Admission"
+        parent_acc = 0.7315
     else:
         parent = "B0"
         main_change = candidate_id

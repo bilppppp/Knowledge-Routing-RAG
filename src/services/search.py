@@ -209,3 +209,52 @@ class SearchService:
                 source_method="doc_vector"
             ))
         return items
+
+    def fts_search_in_doc(
+        self,
+        query: str,
+        doc_id: str,
+        corpus: str = "D20",
+        top_k: int = 2
+    ) -> List[EvidenceItem]:
+        """
+        Searches for chunks inside a specific document matching query tokens using SQLite FTS5.
+        """
+        tokens = " OR ".join([f"\"{w}\"" for w in jieba.cut(query) if len(w.strip()) > 0])
+        if not tokens.strip():
+            tokens = query
+            
+        corpus_col = f"c.in_{corpus.lower()}"
+        conn = sqlite3.connect(self.sqlite_path)
+        cur = conn.cursor()
+        sql = f"""
+            SELECT 
+                c.chunk_id, c.doc_id, c.title, c.heading_path, c.text, bm25(chunks_fts) as score
+            FROM chunks_fts
+            JOIN chunks c ON chunks_fts.chunk_id = c.chunk_id
+            WHERE chunks_fts.tokenized_text MATCH ?
+              AND c.doc_id = ?
+              AND {corpus_col} = 1
+            ORDER BY score ASC
+            LIMIT ?;
+        """
+        try:
+            cur.execute(sql, (tokens, doc_id, top_k))
+            rows = cur.fetchall()
+        except Exception:
+            rows = []
+        finally:
+            conn.close()
+
+        items = []
+        for r in rows:
+            items.append(EvidenceItem(
+                chunk_id=r[0],
+                doc_id=r[1],
+                title=r[2],
+                heading_path=r[3],
+                text=r[4],
+                score=float(-r[5]),
+                source_method="fts_doc"
+            ))
+        return items
