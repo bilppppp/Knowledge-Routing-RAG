@@ -26,6 +26,7 @@ runs/*
 
 # Reports & Visualizations
 reports/*.csv
+!reports/v2_candidate_results.csv
 reports/*.png
 reports/*.svg
 !reports/final_report.md

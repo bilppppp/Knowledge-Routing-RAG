@@ -162,3 +162,50 @@ class SearchService:
             results.append(it)
             
         return results
+
+    def vector_search_in_doc(
+        self,
+        query: str,
+        doc_id: str,
+        corpus: str = "D20",
+        top_k: int = 2
+    ) -> List[EvidenceItem]:
+        """
+        Searches for the most relevant chunks inside a specific document.
+        """
+        q_vec = self.embedding_service.get_embedding(query)
+        corpus_field = f"in_{corpus.lower()}"
+        
+        doc_filter = qmodels.Filter(
+            must=[
+                qmodels.FieldCondition(
+                    key=corpus_field,
+                    match=qmodels.MatchValue(value=True)
+                ),
+                qmodels.FieldCondition(
+                    key="doc_id",
+                    match=qmodels.MatchValue(value=doc_id)
+                )
+            ]
+        )
+        
+        hits = self.qdrant_client.search(
+            collection_name=self.collection_name,
+            query_vector=q_vec,
+            query_filter=doc_filter,
+            limit=top_k
+        )
+        
+        items = []
+        for h in hits:
+            p = h.payload
+            items.append(EvidenceItem(
+                chunk_id=p["chunk_id"],
+                doc_id=p["doc_id"],
+                title=p["title"],
+                heading_path=p["heading_path"],
+                text=p["text"],
+                score=float(h.score),
+                source_method="doc_vector"
+            ))
+        return items

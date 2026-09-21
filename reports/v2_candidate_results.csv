@@ -1,0 +1,4 @@
+candidate_id,parent_candidate,main_change,accuracy,delta_vs_B0,delta_vs_parent,rescues,regressions,net_rescue,evidence_f1,chain_completion,cpr,latency_p50_ms,tokens,status
+C1,B0,"Vector Entrance + Scope Narrowing + Feasibility Routing + Soft Hub + Targeted Gap + B0 Anchors",71.30,-0.93,-0.93,7,9,-2,0.249,36.1,83.1,3356,1403,FAILED
+C2,C1,"Hierarchical Scope Routing + Diversity Admission Gate (Cap 2/doc) + Confidence Fast Path",68.52,-3.70,-2.78,6,14,-8,0.213,29.6,85.8,3327,1496,FAILED
+C3,C1,"Intent-Gated Relational Routing + 4 Guaranteed B0 Anchors + B0 Fast Path",73.15,+0.93,+1.85,2,0,+2,0.246,34.3,83.1,95,1420,CANDIDATE / NEW INCUMBENT
