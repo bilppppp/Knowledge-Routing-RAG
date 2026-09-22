@@ -1,302 +1,190 @@
 # Knowledge-Routing-RAG
 
-> **面向复杂法规检索的受约束知识路由架构**  
-> *探索将知识网络与元数据作为“导航平面”而非直接填充“证据上下文”的研究原型。*
+> **多文档法规 RAG 中结构化检索的实证研究（含知识图谱路由的负面结果）**  
+> *一个完整的冻结研究仓库，如实记录最初假设的失败、启发式探索、数据完整性审计与因果机制评测。*
 
 [English](README.md) | [中文说明](README_CN.md)
 
-[![Release](https://img.shields.io/badge/release-v3--research--final-blue.svg)](https://github.com/bilppppp/Knowledge-Routing-RAG/releases)
-[![Status](https://img.shields.io/badge/status-frozen__research-success.svg)](#10-局限性与有效性边界)
+[![Release](https://img.shields.io/badge/release-v1.0--research--final-blue.svg)](https://github.com/bilppppp/Knowledge-Routing-RAG/releases)
+[![Status](https://img.shields.io/badge/status-research__frozen-success.svg)](#研究范围与局限性)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](requirements.txt)
 
 ---
 
-## 项目核心摘要
+## 项目执行摘要
 
-**Knowledge-Routing-RAG** 探索了一种受约束的检索架构，将图谱与元数据作为**导航平面**而非直接充当证据上下文。在独立的 250 题 Holdout 测试集上，冻结的 V3 系统相比纯 Vector RAG 基线将回答准确率从 **67.6% 提升至 73.2%**，同时仅增加低毫秒级本地路由开销，且**无需任何额外的在线 LLM 调用**。规模鲁棒性与 Hub 鲁棒性**未得到确认**。
-
----
-
-## 1. 这是什么？
-
-本仓储包含 `Knowledge-Routing-RAG` 项目已全部完成并永久冻结的研究代码、实验协议、原始证据产物与最终科学结论。
-
-当前实验阶段已经全部结束。系统架构、Prompt 及评测基准已依据 [`V3_FREEZE.md`](V3_FREEZE.md) 进行密码学哈希封存，**不再进行算法迭代或调优**。
-
-### 核心痛点 (The Problem)
-标准稠密向量检索（Vector RAG）依赖 Query 与切片 Embedding 之间的语义相似度。在复杂的专业合规领域（如卫生行政法规、技术标准、法律条款）中，向量检索常面临以下困难：
-- **跨文档依赖 (Cross-Document Dependencies)**：正确答案需要多部不同法律法规条文的协同支撑。
-- **多跳证据链 (Multi-Hop Evidence Chains)**：下位规章从上位母法衍生授权依据（`BASED_ON`），或将具体执行细则转引至配套文件（`REFERENCES`）。
-- **时效与修订冲突 (Temporal / Version Relations)**：新法规修正或废止旧法规条款（`AMENDS`、`SUPERSEDES`）。
-
-在这些场景下，Vector RAG 极易陷入“局部相似性陷阱”，仅检索到单一文档中的表层相似段落，而系统性遗漏分散在其他法规中的关键证据。
-
-### 核心设计哲学 (The Core Idea)
-朴素图检索（Naive Graph RAG）往往直接将多跳遍历到的邻居节点全量塞入 LLM 上下文，极易引发**图洪泛 (Graph Flooding)** 和上下文稀释。
-
-Knowledge Routing 将**候选发现**与**最终证据上下文**彻底解耦：
-- **图谱与元数据仅用于导航 (Navigation Plane)**：控制平面的拓扑网络与阴影候选池只负责探路并定位目标文档。
-- **证据上下文严格预算物理隔离 (Evidence Context)**：进入生成模型的切片数量被硬性锁死在 $\le 5$ 块（$\le 4000$ Tokens），并通过覆盖度保持组合算法防止无关干扰。
-
-> **核心原则**：
-> 1. **候选空间 $\ne$ 证据上下文 (Candidate Space $\ne$ Evidence Context)**
-> 2. **全局路由，局部下潜，全局组合 (Route globally, retrieve locally, compose globally)**
+**Knowledge-Routing-RAG 最初是一项尝试将网络路由协议与知识图谱导航引入检索增强生成（RAG）的研究。最终的因果机制实验否定了“图游走是性能增益来源”的原始假设。相反，评测确认了真正产生增益的是一套更轻量、无需知识图谱的结构化检索流水线（融合了文档标题解析、局部词法下潜、更宽候选召回以及覆盖感知证据组合）。**
 
 ---
 
-## 2. 最终冻结架构 (V3-Frozen)
+## 本项目最终的核心发现
 
-经过多轮消融与去污染检验，最终系统收敛并冻结为 **V3-Frozen**（候选代号 `E2-Lite`）：
+1. **单纯 Dense Top-5 纯向量检索难以应对多文档法规问答**（在 Mechanism Holdout-3 基准上，检索链完整率仅 40.42%，端到端准确率为 62.92%）。
+2. **元数据/标题解析与局部词法检索（BM25）带来了极显著的性能跃迁**，将准确率推升至 **69.17%**（相比纯向量检索提升 **+6.25pp**，$p = 0.0051$），链完整率达到 47.08%。
+3. **知识图谱关系对上述增益并非必要条件**。移除了全部图关系的同构结构化检索系统（**V3-NoGraph**）取得了全场最高的 **69.58%** 准确率（相比 Dense Top-5 提升 **+6.67pp**，$p = 0.0033$）。
+4. **在最终的机制消融实验中，启用真实知识图谱反而显著降低了回答准确率**（从无图系统的 **69.58%** 下降到真实图系统的 **64.17%**，$\Delta = -5.42\text{pp}$，$p = 0.0059$）。图邻居扩展引入了大量具有表面关联但非法定要件的噪声 Chunk，挤占并驱逐了真正的黄金法条（0 次图因果挽救，9 次图因果退化，净因果增益为 **-9**）。
+5. **真实知识图谱与随机打乱邻居的拓扑在统计上完全没有区别**（真实图 64.17% vs 打乱图 63.33%，$p = 0.7728$）。
+6. **规模鲁棒性（Scale Robustness）与 Hub 节点稳定性未获证实**。
+
+---
+
+## 机制基准主结果：Mechanism Holdout-3 ($N = 240$, 校正后冻结语料)
+
+最终因果机制评测在校正后的冻结语料库上进行，严格隔离图边与非图结构化基准的因果贡献（$N = 240$，均分为 80 道显式题、80 道部分显式题、80 道隐式题；采用统一评测引擎，温度为 0.0，设置 4096 Tokens 动态推理窗口）：
+
+| 系统代号 | 系统架构描述 | 检索链完整率 (Chain Comp.) | 检索精确率 (Precision) | 检索召回率 (Recall) | 端到端准确率 ($N=240$) | 相比纯向量 ($S_0$) | 相比无图基准 ($S_3$) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **$S_0$** | **Dense Top-5**（历史向量基准） | 40.42% | 27.08% | 47.92% | **62.92%** | — | -6.67pp |
+| **$S_1$** | **Dense Top-20 + 合成器** | 42.50% | 26.67% | 48.75% | **65.00%** | +2.08pp | -4.58pp |
+| **$S_2$** | **元数据/标题路由 + 局部 BM25** | 47.08% | 30.25% | 54.17% | **69.17%** | $\mathbf{+6.25\text{pp}}$ ($p=0.0051$) | -0.42pp |
+| **$S_3$** | **V3-NoGraph (最终推荐结构化配置)** | **47.92%** | **30.67%** | **55.42%** | $\mathbf{69.58\%}$ | $\mathbf{+6.67\text{pp}}$ ($p=0.0033$) | **0.00pp** |
+| **$S_4$** | **V3-TrueGraph (完整 V3 真实图系统)** | 44.17% | 28.58% | 52.08% | **64.17%** | +1.25pp | $\mathbf{-5.42\text{pp}}$ ($p=0.0059$) |
+| **$S_5$** | **V3-ShuffledGraph (随机打乱图对照组)** | 45.00% | 29.08% | 52.92% | **63.33%** | +0.41pp | -6.25pp |
+
+### 预注册主要对比检验：
+- **C2 ($S_2 - S_0$, 元数据/词法 vs 纯向量)**: $\mathbf{+6.25\text{ pp}}$ ($p = 0.0051^{**}$, 95% 置信区间 `[+2.50pp, +10.42pp]`) $\to$ **强结构化基准足以完全解释历史上的全部主要增益。**
+- **C3 ($S_4 - S_3$, 真实图 vs 同构无图消融组)**: $\mathbf{-5.42\text{ pp}}$ ($p = 0.0059^{**}$, 95% 置信区间 `[-9.17pp, -2.08pp]`) $\to$ **引入图游走导致显著的回答准确率退化。**
+- **C4 ($S_4 - S_5$, 真实图 vs 随机打乱邻居图)**: $\mathbf{+0.83\text{ pp}}$ ($p = 0.7728$, 95% 置信区间 `[-2.08pp, +3.34pp]`) $\to$ **真实图拓扑相比随机拓扑无任何统计可信的独立贡献。**
+
+---
+
+## 历史全栈评测：Holdout-2 ($N = 250$, 旧语料快照)
+
+在进行 Gate I 数据审计与 Holdout-3 机制分离之前，完整 V3 系统曾在原语料快照上击败了 Dense Top-5：
+
+| 评测指标 | 纯向量基准 ($B_0$) | 完整 V3 检索流水线 | 差异增量 ($\Delta$) | 显著性检验 |
+| :--- | :---: | :---: | :---: | :--- |
+| **多数投票准确率 ($N=250$)** | 67.60% (169/250) | 73.20% (183/250) | **+5.60pp** | 精确 McNemar $p = 0.0043$ |
+| 剔除污染题后 ($N=248$, Gate I) | 67.74% (168/248) | 73.39% (182/248) | **+5.65pp** | 历史主结论非由数据错置制造 |
+| 净拯救题数 (Net Rescues) | — | — | **+14** | 确认胜过纯向量基准 |
+| 多跳（2-Hop+）准确率 | 48.72% | 57.69% | **+8.97pp** | 提升集中在多法规跨跳 |
+
+> [!WARNING]
+> **关于 Holdout-2 历史地位的重新定义**:
+> Holdout-2 仅能证明**完整的结构化检索技术栈胜过了 Dense Top-5**，后续的 Holdout-3 因果消融明确表明**该增益不能归因于知识图谱边**：
+> 1. **显式法规偏误（Explicitness Bias）**：Holdout-2 中 94.87%（148/156）的多跳问题均显式给出了全部目标法规名称（E2/E3），历史评测中全部净多跳收益（+14）均来自此类显式题目。Holdout-2 本质上测量的是显式多文档检索召回能力，而非图关系隐式发现能力。
+> 2. **相同证据翻转率为 0 是代码逻辑短路的结果**：旧评测 Runner 在证据完全一致时直接复用了基准生成结果（`h1_ans = h0_ans`），因此 Holdout-2 并未在经验上测量相同证据下的真实生成稳定性。
+> 3. **有效证据驱逐率（Useful Evidence Eviction）**：Holdout-2 的真实驱逐率为 4.0%（10/250），并非 0%（0% 仅适用于开发消融子集）。
+
+---
+
+## 最终推荐架构：结构化检索（无图）
+
+项目最终推荐且经过严格验证的系统配置为 **V3-NoGraph（Structured Retrieval Final）**。在线检索链路中已完全剔除图遍历：
 
 ```text
-                           用户提问 (Question)
-                                  │
-                                  ▼
-                        向量入口 (Vector Entrance)
-                                  │
-              ┌───────────────────┴───────────────────┐
-              │ 快速通道判定 (Fast Path: Sim ≥ 0.85)   │
-              ▼                                       ▼
-       [直通 Fast Path]                        [激活路由通道]
-              │                                       │
-              │                      ┌────────────────┴────────────────┐
-              │                      │   控制平面阴影前缀池 (Top-20)     │
-              │                      └────────────────┬────────────────┘
-              │                                       │
-              │                      ┌────────────────┴────────────────┐
-              │                      │   目标法规前缀解析与上位法抬升   │
-              │                      └────────────────┬────────────────┘
-              │                                       │
-              │                      ┌────────────────┴────────────────┐
-              │                      │ E2-Lite 槽位条件词法下潜 (BM25)  │
-              │                      └────────────────┬────────────────┘
-              │                                       │
-              └───────────────────┬───────────────────┘
-                                  │
-                                  ▼
-                   ┌─────────────────────────────┐
-                   │  E1 覆盖度保持组合器        │ (Coverage-Preserving Composer)
-                   └──────────────┬──────────────┘
-                                  │
-                                  ▼
-                   ┌─────────────────────────────┐
-                   │  最终证据上下文 (≤ 5 块切片) │ (预算严格物理受控)
-                   └──────────────┬──────────────┘
-                                  │
-                                  ▼
-                   ┌─────────────────────────────┐
-                   │  生成模型 (DeepSeek-Chat)   │ (零工程偏置，采用原始 B0 Prompt)
-                   └─────────────────────────────┘
+                             用户输入问题
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │       Dense 向量入口检索      │ (Top-5 Chunks)
+                    └──────────────┬───────────────┘
+                                   │
+                    ┌──────────────▼───────────────┐
+                    │    Shadow Candidate 宽召回   │ (Top-20 Chunks 对应前缀)
+                    └──────────────┬───────────────┘
+                                   │
+                    ┌──────────────▼───────────────┐
+                    │      文档 / 规范化标题解析    │ (利用元数据精确锁定法规文档)
+                    └──────────────┬───────────────┘
+                                   │
+                    ┌──────────────▼───────────────┐
+                    │  槽位约束下的局部 BM25 词法下潜 │ (在锁定文档内部定向检索条款)
+                    └──────────────┬───────────────┘
+                                   │
+                    ┌──────────────▼───────────────┐
+                    │   覆盖感知证据合成器 (E1)     │ (最大化槽位覆盖，严格约束 ≤ 5 Chunks)
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                       送入上下文证据 (≤ 5 Chunks, ≤ 4000 Tokens)
+                                   │
+                                   ▼
+                               大语言模型
 ```
 
-### 关键组件说明：
-1. **FIB 向量入口**：稠密向量初检 Top-5 切片（`google/embeddinggemma-300m`）。
-2. **快速通道 (Fast Path)**：若首位匹配度 $\ge 0.85$，直接透传，确保单跳简单问题不受任何额外逻辑干扰。
-3. **阴影前缀知识路由 (Shadow Knowledge Routing)**：在控制平面检查 Top-20 阴影候选池（RIB），汇聚法规前缀，沿拓扑图谱解析立法依据（`BASED_ON`）与引用关系（`REFERENCES`）。
-4. **E2-Lite 局部词法下潜 (Lexical Targeted Descent)**：精准锁定缺失目标法规后，仅针对未闭合的语义槽位执行 BM25 词法全文检索与标题层级加权。（*注：经消融实验证明，目标法规内的稠密向量下潜及 RRF 排序融合贡献为零且稀释首位，已被彻底剔除*）。
-5. **E1 覆盖度保持证据组合器 (Coverage-Aware Composer)**：依据边际覆盖效用进行准入判定，**彻底消除了将原有用基线证据误挤出的缺陷**。
-6. **B0 原始提示词**：合成阶段采用 100% 原始未修改的基准 Prompt，杜绝任何提示词微调带来的虚假增益。
+### 核心工程启示：
+- **候选空间 $\ne$ 证据上下文（Candidate Space $\ne$ Evidence Context）**：在控制平面展开充分探索（Top-20 宽召回、标题解析、局部 BM25），但在生成平面严格压缩并控制证据数量（$\le 5$ chunks），这一原则被完全证实有效。
+- **标题解析与局部词法下潜优于图游走**：在结构化法规体系中，通过标题元数据与层级索引定位文档，随后执行 BM25 局部条款下潜，即可达成相比纯向量检索 $+6.67\text{pp}$ 的稳健增益，且彻底避免了图遍历带来的噪声污染风险。
 
 ---
 
-## 3. 核心实验结果：独立 Holdout-2
+## 最终科学结论矩阵
 
-所有结论以预注册的 **Independent Holdout-2**（$N = 250$ 道全新题目，全量 $D_{100}$ 干扰语料库，3 轮独立随机种子生成，全部分歧案例双盲人工仲裁）为最终黄金标准：
-
-| 评估指标 (Metric) | 纯向量基线 (Vector B0) | V3-Frozen 知识路由 | 增量 (Delta) | 显著性检验与机制判定 |
-|:---|:---:|:---:|:---:|:---|
-| **3-Run Majority 准确率** | **67.60%** (169/250) | **73.20%** (183/250) | **+5.60pp** | **McNemar 精确检验 $p = 0.0043$** |
-| 95% 成对 Bootstrap 置信区间 | — | — | **[+2.00pp, +9.20pp]** | 严格高于 0，统计显著 |
-| 稳定救回题数 (Stable Rescues) | — | — | **18 题** | $B0$ 错而 $V3$ 对 |
-| 稳定退步题数 (Stable Regressions) | — | — | **4 题** | $B0$ 对而 $V3$ 错 |
-| **净稳定救回 (Net Stable Rescue)** | — | — | **+14 题** | 二项检验 $p = 0.0044$ |
-| **黄金法规召回率 (Gold Doc Recall)** | 88.93% | 98.53% | **+9.60pp** | 文档级导航机制完全证实 |
-| **黄金切片召回率 (Gold Chunk Recall)**| 75.73% | 76.53% | **+0.80pp** | 切片级微观证据增益 |
-| **完整证据链闭合率 (Chain Completion)**| 54.40% | 57.60% | **+3.20pp** (+8题) | 多法规证据链条成功闭合 |
-| **多跳问题准确率 (2-Hop+ Acc)** | 48.72% | 57.69% | **+8.97pp** | 收益高度集中于复杂多跳 |
-| **单跳简单题准确率 (1-Hop Acc)** | 98.94% | 98.94% | **+0.00pp** | **简单题零退步 (0 Regressions)** |
-
----
-
-## 4. 已确认与未确认的结论
-
-为保持学术与工程诚实，本研究对实验结论划定明确边界：
-
-### 已确认的结论 (CONFIRMED)
-- [x] **端到端准确率提升**：已证实（Holdout-2 上取得可重复且统计显著的 $+5.60\text{pp}$ 增益，$p=0.0043$）。
-- [x] **文档导航能力增益**：已证实（黄金法规召回率提升 $+9.60\text{pp}$，从 $88.93\%$ 升至 $98.53\%$）。
-- [x] **多跳复杂推理增益**：已证实（多跳题准确率大幅提升 $+8.97\text{pp}$，且单跳题保持 $0$ 退步）。
-- [x] **证据组合器与局部下潜的必要性**：已证实（E1 组合器将历史版本的有用证据挤出率从 $9.5\%$ 彻底降至 $0.0\%$）。
-- [x] **极高的工程落地价值**：已证实（在当前硬件与任务规模下，本地 P50 延迟仅增加 $+0.58\text{ ms}$，平均增加 $+3.63\text{ ms}$；**完全零新增在线 LLM 调用**，**零新增 Query Embedding**，输入 Token 仅微增 $+1.96\%$）。
-
-### 未确认与负面结果 (NOT CONFIRMED)
-- [ ] **规模鲁棒性优势**：**`未确认 (NOT CONFIRMED)`**。在 Phase C 评测中（$N=80$, $D_{20} \to D_{100}$ 语料扩张），V3 退化了 $+2.50\text{pp}$，而 B0 退化为 $+0.00\text{pp}$，规模鲁棒性优势 $\text{RA} = -2.50\text{pp}$（95% 置信区间 `[-6.25pp, 0.00pp]`）。**因此严禁声称“V3 比纯 Vector RAG 更能抵抗知识库扩张带来的干扰”。**
-- [ ] **Hub 节点稳定性**：**`未确认 (NOT CONFIRMED)`**。在 Phase D 高度数测试中，度数大于 20 的节点引发了 V3 内部候选切片扩张（P95 达到 27.1），证据链完整度从 $60\%$ 骤降至 $42.5\%$。
-- [ ] **图洪泛抑制**：**`未确认 / 不可测 (NOT TESTABLE)`**。由于历史无约束自由图遍历基线（Legacy Graph baseline）在代码库中未留存，缺乏同场对照，因此无法声称 V3 已证实解决了图洪泛。
-- [ ] **全局普遍优越性**：**`未声称`**。收益仅在具有显式法律效力层级与条文引用的法规语料中得到验证。
+| 科学命题 (Scientific Claim) | 最终状态 | 实证依据 |
+| :--- | :---: | :--- |
+| **结构化检索胜过 Dense Top-5** | **确认 (CONFIRMED)** | $S_3$ 达到 69.58% vs 62.92%（增量 $+6.67\text{pp}$，$p = 0.0033^{**}$）。 |
+| **元数据/标题路由 + 局部词法有效** | **确认 (CONFIRMED)** | $S_2$ 达到 69.17% vs 62.92%（增量 $+6.25\text{pp}$，$p = 0.0051^{**}$）。 |
+| **覆盖感知证据合成器有效** | **支持 (SUPPORTED)** | 在 5-chunk 极低预算下解决了多法规关键条款挤占与证据驱逐。 |
+| **单纯放宽向量 Top-K 即可解释增益** | **未确认 (NOT CONFIRMED)** | $S_1$ 仅达到 65.00%（相比 $S_0$ 差异不显著，$p = 0.5322$）。 |
+| **知识图谱关系提供独立正向增量** | **未确认 (NOT CONFIRMED)** | $S_4$ 真实图系统相比 $S_3$ 同构无图系统出现极显著落后（$-5.42\text{pp}$，$p = 0.0059$）。 |
+| **知识图谱是获得增益的必要条件** | **否定 (REJECTED)** | 无图结构化流水线（$S_2, S_3$）完全捕获并超越了历史增益。 |
+| **真实图显著优于随机打乱图** | **否定 (NO)** | $S_4$ 与 $S_5$ 差异仅 $+0.83\text{pp}$（$p = 0.7728$，统计无差异）。 |
+| **规模鲁棒性（Scale Robustness）** | **未确认 (NOT CONFIRMED)** | Phase C 实测：语料扩充后退化 $+2.50\text{pp}$（$\text{RA} = -2.50\text{pp}$）。 |
+| **Hub 节点抗压鲁棒性** | **未确认 (NOT CONFIRMED)** | Phase D 实测：高出度节点下链完整率大幅下跌 $17.5\text{pp}$。 |
+| **图洪水抑制能力（Graph Flooding）** | **未确认 (NOT TESTABLE)** | 历史无约束对比基准缺失，无法进行正式统计检验。 |
+| **历史上完整 V3 胜过 Dense Top-5** | **确认 (CONFIRMED)** | Holdout-2 实测：73.20% vs 67.60%（增量 $+5.60\text{pp}$，$p = 0.0043$）。 |
+| **历史增益可归功于图关系路由** | **否定 (NO)** | Mechanism Holdout-3 机制消融彻底排除了图因果贡献。 |
 
 ---
 
-## 5. 必须明确的方法学披露：Dev-216 的地位
+## 快速上手（推荐配置）
 
-在早期研发过程中，项目曾使用包含 120 道题目跨 $D_{20}/D_{50}/D_{100}$ 展开的 216 个评测实例来迭代候选系统 C1～C7。
+项目默认可执行的推荐系统为 **Structured Retrieval Final**（配置见 `configs/structured_retrieval_final.yaml`）。
 
-随着研发推进：
-- 该数据集被频繁用于错题人工归因、Prompt 调整及针对性路由逻辑修改；
-- **Dev-216 事实上已转变为“开发/优化集 (Optimization / Development Set)”**；
-- 早期 C7 在该集合上取得的 $80.09\%$ 成绩部分受特定启发式规则影响，**绝不可作为外推泛化的有效学术证据**；
-- 项目随后开展全面去污染审计，构建了通用干净的 `C7-Clean`，并最终以完全物理隔离且冻结的 **Holdout-2 ($73.20\%$)** 作为唯一终审依据。
-
----
-
-## 6. 快速开始 (Quick Start)
-
-### 环境依赖
-- Python 3.12+
-- Docker & Docker Compose（用于本地 Qdrant 与 Embedding 容器）
-
-### 1. 克隆代码与配置 Python 虚拟环境
+### 1. 环境准备
 ```bash
 git clone https://github.com/bilppppp/Knowledge-Routing-RAG.git
 cd Knowledge-Routing-RAG
 
+# 创建虚拟环境 (Python 3.12+)
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. 环境变量配置
-```bash
-cp .env.example .env
-# 若需运行在线 LLM 生成实验，请在 .env 中填入有效的 DEEPSEEK_API_KEY
-```
-
-### 3. 启动本地容器化向量与嵌入服务
-```bash
-docker compose up -d
-```
-
-### 4. 运行发布冒烟测试 (Smoke Test)
+### 2. 执行发布验证冒烟测试（零 API 成本）
 ```bash
 python scripts/release_smoke_test.py
 ```
 
-预期输出：
-```text
-======================================================
- Knowledge-Routing-RAG — Release Smoke Test 
-======================================================
-  [PASS] Core modules imported successfully.
-  [PASS] Runtime configuration files loaded and validated.
-  [PASS] Knowledge LSDB loaded (100 documents, 2862 chunks, 1397 routing edges).
-  [PASS] B0 single query executed (retrieved 5 chunks).
-  [PASS] V3-Frozen single query executed (retrieved 5 chunks, budget constraint <= 5 chunks satisfied).
-
-All smoke tests passed successfully! Release candidate is ready.
+### 3. 在 Holdout-3 上复现确定性检索（零 LLM API 成本）
+```bash
+# 执行并复现全部 6 个系统在 Holdout-3 上的确定性检索表现
+python scripts/run_holdout3_experiment.py
 ```
 
 ---
 
-## 7. 实验复现指南 (Reproduction Protocols)
-
-完整参数、密码学哈希清单及说明详见 [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md)。
-
-- **Level 1 — 基础冒烟测试 (极简验证)**：
-  ```bash
-  python scripts/release_smoke_test.py
-  ```
-- **Level 2 — 确定性检索机制复现 (零在线 LLM 消耗)**：
-  ```bash
-  python scripts/run_holdout2_experiment.py --retrieval-only
-  ```
-- **Level 3 — 全量科研实验端到端复现 (需配置 API 密钥)**：
-  ```bash
-  # 1. 复现核心结论：Holdout-2 终审评测 (N=250, 3-run 多数表决)
-  python scripts/run_holdout2_experiment.py
-
-  # 2. 复现规模鲁棒性评测 (Phase C: N=80)
-  python scripts/run_scale1_experiment.py
-
-  # 3. 复现 Hub 压力评测 (Phase D: N=100)
-  python scripts/run_hub1_experiment.py
-
-  # 4. 复现工程延迟与复杂度基准测试 (Phase E)
-  python scripts/benchmark_phase_e_cost.py
-  ```
-
----
-
-## 8. 仓储目录结构
+## 仓库结构导航
 
 ```text
-Knowledge-Routing-RAG/
-├── README.md                      # 英文项目主文档
-├── README_CN.md                   # 中文项目主文档 (本文档)
-├── REPRODUCIBILITY.md             # 硬件、随机种子、哈希与 3 级复现指南
-├── RELEASE_NOTES.md               # GitHub Release 发版说明
-├── V3_FREEZE.md                   # V3 架构与代码哈希冻结清单
-├── LICENSE                        # MIT 开源许可证
-├── requirements.txt               # 运行环境依赖 (Python 3.12+)
-├── docker-compose.yml             # Qdrant 与本地 Embedding 容器编排
 ├── configs/
-│   ├── b0_baseline.yaml           # 纯 Vector RAG 运行配置
-│   ├── v3_frozen.yaml             # 冻结的 V3 Knowledge Routing 运行配置
-│   └── runtime_config.yaml        # 历史通用运行时配置
-├── data/
-│   ├── knowledge_lsdb.sqlite      # SQLite Link-State 数据库 (FTS5 + 拓扑有向图)
-│   ├── chunks.jsonl               # 2,862 条法规切片数据
-│   ├── documents/                 # 100 篇卫生健康法规全文 (doc001–doc100)
-│   └── manifests/                 # D20 / D50 / D100 语料子集划分清单
+│   ├── structured_retrieval_final.yaml    # 推荐验证配置 (S3, 无图结构化流水线)
+│   ├── dense_baseline.yaml                # 标准 Dense Top-5 向量基准配置 (S0)
+│   └── v3_truegraph_experimental.yaml     # 历史图路由对照配置 (S4)
 ├── benchmark/
-│   ├── README.md                  # 数据集使用说明与暴露状态清单
-│   ├── questions.jsonl            # Dev-216 (优化/开发集，STATUS: EXPOSED)
-│   ├── confirmation/              # Holdout-1 (N=200，STATUS: EXPOSED AFTER CONFIRMATION)
-│   ├── holdout2/                  # Holdout-2 (N=250，STATUS: FINAL INDEPENDENT CONFIRMATION)
-│   ├── scale1/                    # ScaleSet-1 (N=80，STATUS: SCALE CONFIRMATION)
-│   └── hub1/                      # HubSet-1 (N=100，STATUS: HUB CHARACTERIZATION)
-├── src/
-│   ├── retrieval/                 # B0 向量检索实现
-│   ├── routing/                   # C7-Clean、E1 组合路由器与 E2-Lite 下潜路由器
-│   ├── composition/               # E1 覆盖度保持组合器与 E2 词法下潜算法
-│   ├── graph/                     # SQLite Knowledge LSDB 拓扑引擎
-│   ├── services/                  # 向量检索、本地嵌入与模型服务接口
-│   └── evaluation/                # 评估指标计算模块
-├── scripts/
-│   ├── release_smoke_test.py      # 发布冒烟验证测试
-│   ├── run_holdout2_experiment.py # Holdout-2 终审实验运行脚本
-│   ├── run_scale1_experiment.py   # Phase C 规模鲁棒性实验运行脚本
-│   ├── run_hub1_experiment.py     # Phase D Hub 压力实验运行脚本
-│   └── benchmark_phase_e_cost.py  # Phase E 延迟与复杂度评测脚本
-└── reports/
-    ├── README.md                  # 01～09 全研究阶段学术报告索引
-    ├── FINAL_REPORT.md            # 终审综合科研实验报告 (完整论述)
-    └── final_repository_audit.md  # 仓储与发布就绪状态审计报告
+│   ├── README.md                          # 6 个评测数据集的状态与暴露分类说明
+│   ├── holdout3/                          # 最终因果机制评测集 (N=240, 冻结校正语料)
+│   ├── holdout2/                          # 历史全栈独立确认集 (N=250)
+│   ├── scale1/                            # 规模鲁棒性评测集 (N=80)
+│   └── hub1/                              # 知识图谱高出度压力评测集 (N=100)
+├── reports/
+│   ├── FINAL_REPORT.md                    # 详尽完整的最终研究技术报告 (含全部 14 章节)
+│   ├── MECHANISM_HOLDOUT3_REPORT.md       # Mechanism Holdout-3 因果机制统计报告
+│   ├── README.md                          # 12 阶段研究全景索引
+│   └── integrity/                         # Gate I 100% 语料数据与评测代码审计报告
+├── CORPUS_CORRECTED_FREEZE.md             # 校正后语料库的哈希签名与冻结清单
+└── REPRODUCIBILITY.md                     # 实验复现指南与模块哈希清单
 ```
 
 ---
 
-## 9. 核心报告与科学证据链索引
+## 研究档案与参考文献
 
-全流程研究报告与原始 JSON 评测记录已全部收录于 [`reports/README.md`](reports/README.md)：
-- **权威科研总报告**：[`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md)
-- **Holdout-2 终审确认报告**：[`reports/v3_holdout2_confirmation.md`](reports/v3_holdout2_confirmation.md)
-- **Phase C 规模鲁棒性报告**：[`reports/v3_scale_robustness_confirmation.md`](reports/v3_scale_robustness_confirmation.md)
-- **Phase D Hub 压力评测报告**：[`reports/v3_hub_stress_confirmation.md`](reports/v3_hub_stress_confirmation.md)
-- **Phase E 成本与复杂度审计报告**：[`reports/v3_cost_complexity_audit.md`](reports/v3_cost_complexity_audit.md)
-- **去污染与规则清洗审计报告**：[`reports/decontamination_rule_audit.md`](reports/decontamination_rule_audit.md)
-
----
-
-## 10. 局限性与有效性边界
-
-1. **语料领域边界**：评测语料局限于 100 篇中国卫生医疗行政法规（共 2,862 条切片）。系统设计深度依托于法规之间显式的条文援引与立法授权层级（`BASED_ON`、`REFERENCES`、`SUPERSEDES`、`AMENDS`）。**在未经领域适配前，严禁将本架构结论直接推广至非结构化叙事文本、开放领域网页或代码库检索。**
-2. **语料规模边界**：实验测试上限为 100 篇法规（$D_{100}$）。Phase C 的规模退化表明，在更大规模知识库（1,000+ 文档）中，前缀探索需要更严格的自适应剪枝。
-3. **模型依赖性**：所有生成与裁判均基于 `deepseek-chat`（Greedy 贪婪解码，温度 $T=0.0$）。
-4. **科研原型状态**：本仓储是用于验证检索机制机理的**冻结科研原型**，并非高可用生产微服务。
-
----
-
-## 11. 开源协议
-
-本项目采用 [MIT 许可证](LICENSE)。
+本项目已正式冻结归档，完整实验原始数据与审计记录详见：
+- [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md)：包含所有失败尝试、机制探索、数据审计与边界讨论的权威报告。
+- [`reports/MECHANISM_HOLDOUT3_REPORT.md`](reports/MECHANISM_HOLDOUT3_REPORT.md)：Mechanism Holdout-3 的逐题归因、因果对比与显著性检验。
+- [`CORPUS_CORRECTED_FREEZE.md`](CORPUS_CORRECTED_FREEZE.md)：校正后语料的 SHA256 签名清单。
+- [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md)：环境、随机种子与完整复现指令。
