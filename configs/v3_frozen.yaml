@@ -1,0 +1,58 @@
+# ==============================================================================
+# Frozen Candidate Configuration: V3-Frozen (E2-Lite Knowledge Routing)
+# ==============================================================================
+# Reference: V3_FREEZE.md & HOLDOUT2_PREREGISTRATION.md System H1
+# Description: Minimal sufficient clean knowledge routing architecture:
+#              Vector Entrance -> C7-Clean Global Routing -> Prefix Resolution ->
+#              E2-Lite Slot-Conditioned Lexical Descent ->
+#              E1 Coverage-Preserving Evidence Composition -> B0 Prompt.
+# ==============================================================================
+
+system:
+  system_id: "V3"
+  candidate_name: "E2-Lite (Lexical Only)"
+  status: "100% FROZEN CANDIDATE"
+  frozen_commit: "4e5f40679086a5f403e0af42d120dcea79effc89"
+
+generator:
+  provider: "deepseek"
+  model: "deepseek-chat"
+  temperature: 0.0
+  max_evidence_tokens: 4000
+  prompt_template: "RAW_B0"
+
+retrieval:
+  top_k_fib: 5
+  shadow_rib_top_k: 20
+  lane_detection:
+    fast_path_threshold: 0.85
+    lanes: ["FAST_PATH", "TEMPORAL_BASIS", "COMPOSITE_EVIDENCE"]
+
+routing:
+  max_hops: 2
+  parent_lift: true
+  doc_relation_resolve: true
+  scope_routing: true
+  hub_thresholds:
+    h_fanout: 11
+    h_in: 6
+    h_total: 13
+
+descent:
+  channel_mode: "lexical_only"
+  fts_top_k: 3
+  candidate_cap_per_doc: 3
+  heading_bonus:
+    structural_category: 0.010
+    keyword_match: 0.005
+
+composition:
+  composer_type: "coverage_preserving"
+  max_evidence_chunks: 5
+  max_replacements: 2
+  coverage_threshold: 0.40
+  eviction_penalty_prevention: true
+
+corpus:
+  primary: "D100"
+  nested_sets: ["D20", "D50", "D100"]

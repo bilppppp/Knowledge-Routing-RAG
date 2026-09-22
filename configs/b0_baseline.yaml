@@ -1,0 +1,33 @@
+# ==============================================================================
+# Baseline Configuration: B0 (Standard Vector RAG)
+# ==============================================================================
+# Reference: HOLDOUT2_PREREGISTRATION.md System H0
+# Description: Dense vector search baseline retrieving top-k chunks over corpus.
+# ==============================================================================
+
+system:
+  system_id: "B0"
+  name: "Vector RAG Baseline"
+  status: "FROZEN_BASELINE"
+
+generator:
+  provider: "deepseek"
+  model: "deepseek-chat"
+  temperature: 0.0
+  max_evidence_tokens: 4000
+  prompt_template: "RAW_B0"
+
+retrieval:
+  mode: "dense_vector_only"
+  vector_top_k: 5
+  collection: "knowledge_routing_exp"
+  dimension: 768
+  metric: "Cosine"
+
+composition:
+  max_evidence_chunks: 5
+  replacement_enabled: false
+
+corpus:
+  primary: "D100"
+  nested_sets: ["D20", "D50", "D100"]
