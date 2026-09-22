@@ -1,0 +1,14 @@
+{
+  "dataset_name": "Mechanism Holdout-3",
+  "status": "HOLDOUT3_FROZEN",
+  "creation_date": "2026-09-22",
+  "total_questions": 240,
+  "strata": {
+    "E": 80,
+    "P": 80,
+    "I": 80
+  },
+  "gold_sha256": "a8c9cc2329a8853901ca12c4b8ed8f8c322e196c0a9d572b67d33bfc9ae66051",
+  "target_corpus": "D100 (Corrected Frozen Corpus)",
+  "article_explicit_count": 77
+}

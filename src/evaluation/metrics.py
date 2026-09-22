@@ -93,7 +93,7 @@ class Evaluator:
                 prompt=judge_prompt,
                 system_prompt=JUDGE_SYSTEM_PROMPT,
                 response_format_json=True,
-                max_tokens=256
+                max_tokens=1024
             )
             data = json.loads(content)
             return {
