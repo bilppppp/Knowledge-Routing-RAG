@@ -202,4 +202,52 @@ Prior to formulating C1, a systematic question-level transition analysis was per
   - `Q014` full recovery: D20 (False $\to$ True), D50 (False $\to$ True), D100 (True $\to$ True). All 3 corpora 100% correct with identical evidence.
   - `UNNECESSARY_DISCLAIMER` failure mode in routed paths: completely eliminated (dropped from 3 in C5 to 0 in C6).
   - Slot Completion Rate on routed paths: **100.0% (71/71 slots covered)**.
-- **Verdict**: **PROMOTED TO NEW INCUMBENT ★**. Reaches new all-time high of 77.31% accuracy with 0 regressions against baseline B0.
+- **Verdict**: **PROMOTED TO INCUMBENT** (Superseded by C7). Reached 77.31% accuracy with 0 regressions against baseline B0.
+
+---
+
+## Experiment 7: Candidate C7 (Shadow Candidate Plane + Route-Prefix Resolution)
+
+- **Candidate ID**: C7
+- **Parent Candidate**: C6
+- **Status**: **CANDIDATE / NEW INCUMBENT ★** (Promoted!)
+- **Architecture**: Shadow Candidate Plane (Top-20 RIB) + Route-Prefix Resolution (Longest Prefix Match / Specificity) + Targeted In-Doc Descent + Conservative Admission Gate
+  - **Core Philosophy**: *"Search wide, route narrow, evidence narrower. RIB can be large; FIB must stay small."*
+  - **Mechanisms**:
+    1. **Strict Control Plane / Data Plane Separation**:
+       - 172/216 Fast Path instances 100% frozen B0 baseline traces (0 regressions guaranteed).
+       - Top-20 Vector search is strictly confined to internal Control Plane RIB. Shadow chunks NEVER directly enter evidence context.
+    2. **Route-Prefix Resolution**:
+       - Aggregates Top-20 chunks to Document Prefixes and scores each prefix using:
+         `prefix_score = vector_score + multi_chunk_bonus + explicit_entity_bonus + title_overlap_bonus + typed_relation_bonus`.
+       - Longest Prefix Match & Entity Alias mapping: Maps statute variations (e.g. `医师法` $\to$ `中华人民共和国医师法`, `实施细则` $\to$ `医疗机构管理条例实施细则`) to target documents.
+       - Selects top 1~2 external document prefixes (excluding documents that already dominate seeds to prevent self-saturation).
+    3. **Targeted In-Doc Descent**:
+       - Descends into target documents using targeted FTS (`fts_search_in_doc`) with specific slot queries (e.g. `医德医风 职业道德 考评 考核 定期考核 暂停执业`).
+       - Discovers precise gold chunks (e.g. `doc014#c054`, `doc024#c005`).
+    4. **Conservative Evidence Admission**:
+       - Seeds 1~3 locked. Top-2 candidates admitted by replacing duplicate or disconnected chunks at indices 3~4.
+       - Evidence budget capped strictly at 5 chunks.
+    5. **Evidence-Contract Synthesis**:
+       - Uses exact C6 Evidence Contract (Answer Contract system prompt and 7 Contract Rules) for routed paths.
+- **Empirical Metrics (N=216)**:
+  - Accuracy: **80.09% (173/216)** (vs B0 72.22%, $\Delta = \mathbf{+7.87\text{pp}}$; vs C6 77.31%, $\Delta = \mathbf{+2.78\text{pp}}$)
+  - Rescues vs B0: **17** (`Q014 D20/D50/D100`, `Q016 D20/D50/D100`, `Q025 D20/D50/D100`, `Q026 D20/D50/D100`, `Q048 D20`, `Q076 D50/D100`, `Q089 D50/D100`)
+  - Regressions vs B0: **0** (Zero regressions across the entire 216 benchmark!)
+  - Net Rescue vs B0: **+17**
+  - Rescues vs C6: **6** (`Q016 D100`, `Q025 D100`, `Q026 D20`, `Q026 D50`, `Q026 D100`, `Q076 D50`)
+  - Regressions vs C6: **0**
+  - Net Rescue vs C6: **+6**
+  - Evidence-Complete Subset Accuracy: **90.67% (68/75)**
+  - Chain Completion: **34.7% (75/216)**
+  - Evidence F1: **0.253**
+  - CPR: **82.6%**
+  - Latency P50 / P95: **140 / 3996 ms**
+  - Mean Tokens: **1507**
+- **Key Findings & Diagnostic**:
+  - `Q026` 100% rescued across D20, D50, D100! (Top-20 uncovered `doc014`, targeted descent retrieved `doc014#c054`, judge confidence = 0.95).
+  - `Q025 D100` rescued! (`doc005#c048` emergency epidemic measures admitted into context).
+  - `Q076 D50` rescued! (`doc024#c005` prenatal diagnosis technical qualifications admitted).
+  - `Q016 D100` rescued!
+  - 100% preservation of all 11 existing C6 rescues.
+- **Verdict**: **PROMOTED TO NEW INCUMBENT ★**. First architecture to surpass the 80% accuracy threshold (80.09%) on the frozen benchmark.

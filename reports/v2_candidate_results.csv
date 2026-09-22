@@ -5,3 +5,4 @@ C3,C1,"Intent-Gated Relational Routing + 4 Guaranteed B0 Anchors + B0 Fast Path"
 C4,C3,"Relation-Specific Lanes (Temporal/Composite) + Conservative Evidence Admission",74.54,+2.31,+1.39,5,0,+5,0.250,34.3,82.8,126,1414,CANDIDATE / NEW INCUMBENT
 C5,C4,"Hierarchical Next-Hop Resolution (Recursive Parent Lift + Targeted Descent)",75.93,+3.70,+1.39,8,0,+8,0.251,35.6,82.7,121,1420,CANDIDATE / NEW INCUMBENT
 C6,C5,"Evidence-Contract Synthesis (Slot Decomposition + Semantic Binding + Substantive Contract)",77.31,+5.09,+1.38,11,0,+11,0.251,35.6,82.7,143,1491,CANDIDATE / NEW INCUMBENT
+C7,C6,"Shadow Candidate Plane (Top-20 RIB) + Route-Prefix Resolution + Targeted Descent",80.09,+7.87,+2.78,17,0,+17,0.253,34.7,82.6,140,1507,CANDIDATE / NEW INCUMBENT

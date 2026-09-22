@@ -37,6 +37,7 @@ from src.routing.c3_router import C3RouterSystem
 from src.routing.c4_router import C4RouterSystem
 from src.routing.c5_router import C5RouterSystem
 from src.routing.c6_router import C6RouterSystem
+from src.routing.c7_router import C7RouterSystem
 
 BENCHMARK_DIR = PROJECT_ROOT / "benchmark"
 RUNS_V2_DIR = PROJECT_ROOT / "runs" / "v2"
@@ -144,6 +145,19 @@ def get_candidate_system(candidate_id: str, search: SearchService, llm: LLMServi
             lsdb=lsdb,
             b0_traces=b0_traces,
             top_k=5,
+            max_hops=2,
+            max_replacements=2,
+            max_evidence_tokens=4000
+        )
+    elif candidate_id == "C7":
+        b0_traces = load_b0_traces()
+        return C7RouterSystem(
+            search_service=search,
+            llm_service=llm,
+            lsdb=lsdb,
+            b0_traces=b0_traces,
+            top_k=5,
+            shadow_top_k=20,
             max_hops=2,
             max_replacements=2,
             max_evidence_tokens=4000
@@ -378,6 +392,10 @@ def evaluate_candidate_vs_b0(
         parent = "C5"
         main_change = "Evidence-Contract Synthesis (Slot Decomposition + Semantic Binding + Substantive Contract)"
         parent_acc = 0.7593
+    elif candidate_id == "C7":
+        parent = "C6"
+        main_change = "Shadow Candidate Plane (Top-20 RIB) + Route-Prefix Resolution + Targeted Descent"
+        parent_acc = 0.7731
     else:
         parent = "B0"
         main_change = candidate_id

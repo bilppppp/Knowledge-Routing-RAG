@@ -38,12 +38,20 @@ B0 Vector RAG (Anchor Baseline)
 │                       [Recursive Architecture: Lift only to resolve; descend immediately to retrieve]
 │                       │
 │                       └── C6 Evidence-Contract Synthesis (Slot Decomposition + Semantic Binding + Substantive Contract)
-│                             Accuracy: 77.31% (+5.09pp vs B0, +1.38pp vs C5) | CANDIDATE / NEW INCUMBENT ★
+│                             Accuracy: 77.31% (+5.09pp vs B0, +1.38pp vs C5) | SUPERSEDED BY C7
 │                             Net Rescue: +11 vs B0 (+3 vs C5, 0 regressions vs B0)
 │                             Evidence F1: 0.251 | Chain Comp: 35.6%
 │                             Latency P50: 143 ms | CPR: 82.7%
 │                             Evidence-Complete Accuracy: 90.91% (70/77 vs B0 84.42%)
 │                             [Contract Architecture: Route to evidence; bind evidence to question; substantive reality over literal framing]
+│                             │
+│                             └── C7 Shadow Candidate Plane (Top-20 RIB) + Route-Prefix Resolution + Targeted Descent
+│                                   Accuracy: 80.09% (+7.87pp vs B0, +2.78pp vs C6) | CANDIDATE / NEW INCUMBENT ★
+│                                   Net Rescue: +17 vs B0 (+6 vs C6, 0 regressions vs B0)
+│                                   Evidence F1: 0.253 | Chain Comp: 34.7%
+│                                   Latency P50: 140 ms | CPR: 82.6%
+│                                   Evidence-Complete Accuracy: 90.67% (68/75 vs B0 86.67%)
+│                                   [Decoupled Architecture: Wide Control Plane RIB, Narrow Data Plane FIB; Longest Prefix Match]
 ```
 
-**Current Champion**: `C6` (Accuracy: **77.31% (167/216)**, Net Rescue vs B0: **+11**, Net vs C5: **+3**, Regressions vs B0: **0**)
+**Current Champion**: `C7` (Accuracy: **80.09% (173/216)**, Net Rescue vs B0: **+17**, Net vs C6: **+6**, Regressions vs B0: **0**)
