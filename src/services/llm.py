@@ -38,7 +38,8 @@ class LLMService:
         system_prompt: Optional[str] = None,
         response_format_json: bool = False,
         max_tokens: int = 1024,
-        max_retries: int = 3
+        max_retries: int = 3,
+        seed: int = 42
     ) -> Tuple[str, Dict[str, int], float]:
         """
         Returns: (content_text, usage_dict, latency_ms)
@@ -56,6 +57,7 @@ class LLMService:
             "model": self.model,
             "messages": messages,
             "temperature": 0.0,
+            "seed": seed,
             "max_tokens": max_tokens
         }
         if response_format_json:

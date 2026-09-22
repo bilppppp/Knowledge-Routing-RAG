@@ -1,45 +1,65 @@
-# src/routing/c7_router.py
+# src/routing/c7_clean_router.py
 """
-Candidate C7 Router System: Shadow Candidate Plane + Route-Prefix Resolution
-Reference: V2 Directed Search Architecture Specification (Candidate C7)
+Candidate C7-Clean Router System: Decontaminated Knowledge Routing Architecture.
+Reference: Decontamination / Ablation Audit Specification (Sections VII-X, XXIV).
 
-Core Architecture:
-1. All working foundations of C6 are strictly preserved:
-   - FAST_PATH pass-through to frozen B0 baseline traces (172 instances, 0 regressions).
-   - Relation-Specific Lanes (Lane A: TEMPORAL_BASIS, Lane B: COMPOSITE_EVIDENCE).
-   - Hierarchical Next-Hop Resolution (Recursive Parent Lift + Targeted Descent).
-   - Conservative Evidence Admission (Replacement-first, Top 1~3 locked, budget cap = 5 chunks).
-   - Evidence-Contract Synthesis (Slot Decomposition + Semantic Binding + 7 Contract Rules).
-2. Control Plane / Data Plane Separation (Shadow Candidate Plane):
-   - RIB (Routing Information Base): Top-20 Vector search + Entity Aliases + Graph Relations.
-   - Document Prefix Aggregation: Computes composite prefix score for candidate documents.
-   - Route-Prefix Resolution (Longest Prefix Match / Specificity): Selects 1~2 external prefixes.
-   - Targeted Descent: In-document FTS search within selected prefixes to discover precision evidence.
-   - FIB (Forwarding Information Base): Strict Conservative Admission ensures only up to 5 verified chunks enter final evidence.
+Core Architecture (Strictly Preserved):
+1. Two-Plane Separation (Evidence Plane vs. Shadow Candidate Plane):
+   - FIB (Data Plane): Vector Top-5 baseline.
+   - RIB (Control Plane): Vector Top-20 + Graph Topological Exploration.
+2. Document Prefix Aggregation:
+   - Aggregates chunk candidates to document prefixes and computes multi-factor prefix score.
+3. Route-Prefix Resolution:
+   - Selects top 1~2 external prefixes based on prefix specificity and relational connection.
+4. Generic Algorithmic Targeted Descent (Section X):
+   - Derived purely from question keywords + unresolved slot + target document title keywords.
+   - Zero lookup tables, zero hardcoded queries, zero standard-answer leakage.
+5. Hierarchical Next-Hop Resolution (Recursive Parent Lift):
+   - PARENT_LIFT -> DOC_RELATION_RESOLVE -> Generic Targeted Descent.
+6. Conservative Evidence Admission:
+   - Replacement-first policy (Top 1~3 locked, slots 4~5 replaceable).
+   - Strict budget cap: maximum 5 final evidence chunks.
+7. Decontamination:
+   - Removed all hardcoded doc IDs (doc006, doc024, doc036).
+   - Removed hand-tuned slot query boosts (消毒, 准入).
+   - Removed verbatim benchmark clauses from LANE_B_PATTERN.
+   - Removed manual reply sub-keywords from alias map.
 """
 
 import re
 import time
+import jieba
 from typing import List, Dict, Set, Any, Tuple, Optional
 from src.common.models import ExecutionTrace, RoutingStep, EvidenceItem
 from src.common.prompt import SYSTEM_PROMPT, pack_evidence_context, format_user_prompt
 from src.services.search import SearchService
 from src.services.llm import LLMService
 from src.graph.lsdb import KnowledgeLSDB
-from src.routing.c6_router import C6RouterSystem
-from src.generation.evidence_contract import (
-    extract_question_slots,
-    bind_evidence_to_slots,
-    build_evidence_contract_prompt
-)
 from src.generation.generic_contract import (
     extract_generic_question_slots,
     bind_generic_evidence_to_slots,
     build_generic_contract_prompt
 )
 
+VALID_RELATIONS = {"SUPERSEDES", "AMENDS", "BASED_ON", "REFERENCES"}
 
-class C7RouterSystem(C6RouterSystem):
+STOP_WORDS = {
+    '对于', '在', '前', '有何', '何种', '吗', '呢', '什么', '哪些', '如何',
+    '应当', '以及', '的和', '产生的', '关于', '根据', '依据', '制定', '可以', '是否',
+    '请问', '分别', '具体', '属于', '进行', '相关', '国家', '规定'
+}
+
+# Generic intent patterns (free of benchmark question verbatim clauses)
+LANE_A_PATTERN = re.compile(
+    r"(现行|施行|废止|旧法规|旧条例|旧管理办法|旧办法|修订|修正|替代|上位立法依据|上位法依据|立法依据|根据何法制定|依据何法制定|依据哪两部|废止了哪一部|废止了哪部)"
+)
+
+LANE_B_PATTERN = re.compile(
+    r"(有何要求.+又.+|以及.+有何|同时.+满足|联动要求|与.+衔接|协同衔接|分别.+规定|两部上位法|两项|两个.+条件|两个.+门槛|交叉门槛)"
+)
+
+
+class C7CleanRouterSystem:
     def __init__(
         self,
         search_service: SearchService,
@@ -51,31 +71,23 @@ class C7RouterSystem(C6RouterSystem):
         max_hops: int = 2,
         max_replacements: int = 2,
         max_evidence_tokens: int = 4000,
-        generation_mode: str = "EVIDENCE_CONTRACT"
+        generation_mode: str = "RAW"  # "RAW" (B0 Prompt) or "GENERIC_CONTRACT"
     ):
-        super().__init__(
-            search_service=search_service,
-            llm_service=llm_service,
-            lsdb=lsdb,
-            b0_traces=b0_traces,
-            top_k=top_k,
-            max_hops=max_hops,
-            max_replacements=max_replacements,
-            max_evidence_tokens=max_evidence_tokens
-        )
+        self.search_service = search_service
+        self.llm_service = llm_service
+        self.lsdb = lsdb
+        self.b0_traces = b0_traces or {}
+        self.top_k = top_k
         self.shadow_top_k = shadow_top_k
+        self.max_hops = max_hops
+        self.max_replacements = max_replacements
+        self.max_evidence_tokens = max_evidence_tokens
         self.generation_mode = generation_mode.upper()
-        self.doc_alias_map = self._build_doc_alias_map()
+        self.doc_alias_map = self._build_clean_doc_alias_map()
 
-    def _build_doc_alias_map(self) -> Dict[str, List[str]]:
+    def _build_clean_doc_alias_map(self) -> Dict[str, List[str]]:
         """
-        Builds a comprehensive alias mapping for all documents in the LSDB.
-        Supports:
-          - Full title
-          - Stripped title (removing '中华人民共和国')
-          - Core statute names (ending in 法/条例/办法/细则/规定)
-          - Implementation rules (实施细则)
-          - Regulatory replies (批复) and primary topic keywords
+        Builds a generic alias mapping for all documents in LSDB without manual keyword injection.
         """
         alias_map: Dict[str, List[str]] = {}
         for did, meta in self.lsdb.doc_meta.items():
@@ -87,28 +99,21 @@ class C7RouterSystem(C6RouterSystem):
             if clean != title:
                 aliases.add(clean)
 
-            # 2. Extract core statute pattern
+            # 2. Core statutory pattern
             m_statute = re.search(r"([\u4e00-\u9fa5]{2,12}(?:法|条例|办法|细则|规定))", title)
             if m_statute:
                 aliases.add(m_statute.group(1))
 
-            # 3. Special handling for 实施细则
+            # 3. 实施细则
             if "实施细则" in title:
                 aliases.add("实施细则")
                 aliases.add(title.replace("管理条例", ""))
 
-            # 4. Special handling for 批复
+            # 4. 批复 generic core topic extraction (NO hardcoded sub-keywords)
             m_reply = re.search(r"关于(.+?)的(?:若干|几个|五个|六个|七个|十四个)?批复", title)
             if m_reply:
                 core_topic = m_reply.group(1)
                 aliases.add(core_topic)
-                for sub in [
-                    "医疗广告", "乡村医生", "执业登记", "超范围执业",
-                    "个体诊所", "非法行医", "放射诊疗", "产前诊断",
-                    "药品使用", "医疗美容", "涉嫌犯罪", "继续犯罪"
-                ]:
-                    if sub in core_topic:
-                        aliases.add(sub)
 
             clean_aliases = [
                 a for a in aliases
@@ -118,10 +123,6 @@ class C7RouterSystem(C6RouterSystem):
         return alias_map
 
     def _match_question_entities(self, question: str, corpus: str = "D20") -> List[Tuple[str, str, int]]:
-        """
-        Matches entities / statutes mentioned in the question against doc aliases.
-        Returns list of (doc_id, matched_alias, alias_length) sorted by longest match first.
-        """
         matches = []
         corpus_key = f"in_{corpus.lower()}"
         for did, aliases in self.doc_alias_map.items():
@@ -134,6 +135,93 @@ class C7RouterSystem(C6RouterSystem):
         matches.sort(key=lambda x: x[2], reverse=True)
         return matches
 
+    def _extract_query_entities(self, question: str) -> List[str]:
+        matches = re.findall(r"《([^》]+)》", question)
+        return [m.strip() for m in matches if len(m.strip()) > 2]
+
+    def _check_statutory_gap(self, question: str, seed_items: List[EvidenceItem]) -> Tuple[bool, List[str]]:
+        entities = self._extract_query_entities(question)
+        if not entities:
+            return False, []
+
+        seed_titles = " ".join([it.title for it in seed_items])
+        missing = []
+        for ent in entities:
+            clean_ent = ent.replace("中华人民共和国", "")
+            if clean_ent not in seed_titles and ent not in seed_titles:
+                missing.append(ent)
+
+        return len(missing) > 0, missing
+
+    def detect_lane(self, question: str, seed_items: List[EvidenceItem]) -> str:
+        if LANE_A_PATTERN.search(question):
+            return "TEMPORAL_BASIS"
+
+        has_gap, _ = self._check_statutory_gap(question, seed_items)
+        if LANE_B_PATTERN.search(question) or has_gap:
+            return "COMPOSITE_EVIDENCE"
+
+        return "FAST_PATH"
+
+    def _clean_slot_query(self, slot_text: str) -> str:
+        """
+        Generic slot query tokenization and stopword removal.
+        Zero benchmark-specific keyword boosts.
+        """
+        words = [w for w in jieba.cut(slot_text) if len(w.strip()) > 1 and w.strip() not in STOP_WORDS]
+        return " ".join(words)
+
+    def _extract_unresolved_slot(self, question: str) -> str:
+        clauses = [c.strip() for c in re.split(r'[？?。；;，,\n]', question) if c.strip()]
+        if len(clauses) <= 1:
+            return question
+        basis_pattern = re.compile(r'(上位法|立法依据|根据何法|依据何法|依据哪|制定依据|废止了哪|旧行政法规|旧办法)')
+        unresolved = [cl for cl in clauses if not basis_pattern.search(cl)]
+        if unresolved:
+            return ' '.join(unresolved)
+        return clauses[-1]
+
+    def _build_generic_descent_query(
+        self,
+        question: str,
+        target_title: str,
+        seed_items: Optional[List[EvidenceItem]] = None
+    ) -> str:
+        """
+        Generic Targeted Descent Query (Section X):
+        Derived strictly from:
+          unresolved question keywords + target document title keywords.
+        Zero lookup tables; zero pre-cooked answer strings.
+        """
+        clean_q = re.sub(r"[《》？?。；;，,\n（）()、“”\"']", " ", question)
+        q_words = [w for w in jieba.cut(clean_q) if len(w.strip()) > 1 and w.strip() not in STOP_WORDS]
+
+        clean_title = re.sub(r"^(?:中华人民共和国)?", "", target_title)
+        clean_title = re.sub(r"[《》？?。；;，,\n（）()、“”\"']", " ", clean_title)
+        title_words = [
+            w for w in jieba.cut(clean_title)
+            if len(w.strip()) > 1 and w.strip() not in STOP_WORDS and w.strip() not in ["关于", "规定", "条例", "办法", "批复", "细则"]
+        ]
+
+        # Identify words already heavily covered in top seeds
+        covered_words = set()
+        if seed_items:
+            seed_text = " ".join([f"{s.title} {s.heading_path} {s.text}" for s in seed_items[:3]])
+            for w in q_words:
+                if seed_text.count(w) >= 3:
+                    covered_words.add(w)
+
+        focus_q_words = [w for w in q_words if w not in covered_words] or q_words
+
+        combined = []
+        seen = set()
+        for w in title_words + focus_q_words:
+            if w not in seen:
+                seen.add(w)
+                combined.append(w)
+
+        return " ".join(combined[:10])
+
     def _extract_shadow_prefixes(
         self,
         question: str,
@@ -142,22 +230,21 @@ class C7RouterSystem(C6RouterSystem):
         current_candidate_docs: Set[str]
     ) -> Tuple[List[Dict[str, Any]], List[Tuple[str, float, str]]]:
         """
-        Constructs the Shadow RIB (Routing Information Base):
-        1. Executes Vector Top-20 (Control Plane only).
-        2. Aggregates chunks to document prefixes.
-        3. Computes multi-factor prefix score.
+        Control Plane RIB Prefix Selection (Generic Architecture):
+        1. Top-20 Vector Search in Shadow Plane.
+        2. Chunks -> Document Prefix aggregation.
+        3. Multi-factor prefix scoring.
         4. Selects 1~2 best external document prefixes.
         """
         seed_dids = set(s.doc_id for s in seed_items)
-        primary_did = seed_items[0].doc_id if seed_items else ""
 
-        # Vector Top-20
+        # Vector Top-20 in Control Plane
         v20 = self.search_service.vector_search(query=question, corpus=corpus, top_k=self.shadow_top_k)
         doc_hits: Dict[str, List[float]] = {}
         for it in v20:
             doc_hits.setdefault(it.doc_id, []).append(it.score)
 
-        # Include explicit entity matches even if not in Top-20
+        # Include explicit entity matches
         explicit_matches = self._match_question_entities(question, corpus=corpus)
         for did, al, _ in explicit_matches:
             if did not in doc_hits:
@@ -171,7 +258,6 @@ class C7RouterSystem(C6RouterSystem):
             if not meta.get(corpus_key, False):
                 continue
 
-            # Prevent self-saturation: Shadow Plane is strictly for external prefixes
             if did in seed_dids and sum(1 for s in seed_items if s.doc_id == did) >= 2:
                 continue
 
@@ -179,7 +265,6 @@ class C7RouterSystem(C6RouterSystem):
             v_score = max(scores)
             multi_bonus = min(len(scores) * 0.05, 0.15)
 
-            # Explicit entity bonus
             explicit_bonus = 0.0
             aliases = self.doc_alias_map.get(did, [])
             for al in aliases:
@@ -191,7 +276,6 @@ class C7RouterSystem(C6RouterSystem):
                     else:
                         explicit_bonus = max(explicit_bonus, 0.25)
 
-            # Title keyword overlap bonus
             words = [
                 w for w in re.findall(r"[\u4e00-\u9fa5]{2,}", title)
                 if w not in ["中华", "人民", "共和国", "条例", "管理", "规定", "关于", "问题", "批复"]
@@ -199,7 +283,6 @@ class C7RouterSystem(C6RouterSystem):
             overlap = sum(1 for w in words if w in question)
             overlap_bonus = min(overlap * 0.08, 0.24)
 
-            # Typed relation bonus with seeds
             rel_bonus = 0.0
             for s_did in seed_dids:
                 if self.lsdb.G_routing.has_edge(s_did, did) or self.lsdb.G_routing.has_edge(did, s_did):
@@ -216,7 +299,6 @@ class C7RouterSystem(C6RouterSystem):
 
         shadow_rib.sort(key=lambda x: x["score"], reverse=True)
 
-        # Select top 1~2 external prefixes
         selected_prefixes: List[Tuple[str, float, str]] = []
         for p in shadow_rib:
             did = p["doc_id"]
@@ -229,24 +311,55 @@ class C7RouterSystem(C6RouterSystem):
 
         return shadow_rib, selected_prefixes
 
-    def _build_descent_query(self, question: str, target_title: str) -> str:
+    def resolve_hierarchical_next_hop(
+        self,
+        source_chunk: EvidenceItem,
+        required_relation: str,
+        unresolved_slot: str,
+        corpus: str = "D20",
+        max_targets: int = 1
+    ) -> Optional[Dict[str, Any]]:
         """
-        Builds a precision in-document search query tailored to target document.
+        Generic Hierarchical Next-Hop Resolution (Recursive Parent Lift).
         """
-        clean_q = re.sub(r"[《》？?。；;，,\n]", " ", question)
-        if "医师法" in target_title and ("医德" in question or "职业道德" in question):
-            return "医德医风 职业道德 评价 考评 考核 定期考核 暂停执业"
-        elif "医师法" in target_title and ("个体诊所" in question or "乡村医生" in question):
-            return "设立 个体诊所 医师 执业满五年 审批 备案 执业证书"
-        elif "医疗机构管理条例" in target_title and "个体诊所" in question:
-            return "设立 个体诊所 规划 许可证 登记"
-        elif "传染病防治法" in target_title and "应急" in question:
-            return "新发突发重大传染病 疫情 应急控制体系 紧急措施 疫区封锁"
-        elif "医疗广告" in target_title:
-            return "未取得 医疗机构执业许可证 擅自发布 医疗广告 查处 取缔"
-        elif "母婴保健" in target_title and ("产前诊断" in question or "终止妊娠" in question):
-            return "产前诊断 母婴保健技术服务 许可证 考核合格 执业 资质"
-        return clean_q
+        parent_doc = source_chunk.doc_id
+        if not parent_doc or parent_doc not in self.lsdb.G_routing:
+            return None
+
+        target_docs = []
+        for tgt in self.lsdb.G_routing.successors(parent_doc):
+            edge_data = self.lsdb.G_routing.get_edge_data(parent_doc, tgt)
+            if edge_data.get('relation') == required_relation:
+                if tgt in self.lsdb.doc_meta and self.lsdb.doc_meta[tgt].get(f'in_{corpus.lower()}', False):
+                    target_docs.append(tgt)
+
+        if not target_docs:
+            return None
+
+        def score_target(doc_id: str) -> int:
+            t = self.lsdb.doc_meta[doc_id].get('title', '')
+            return sum(1 for w in jieba.cut(unresolved_slot) if len(w) > 1 and w in t)
+
+        target_docs.sort(key=score_target, reverse=True)
+        selected_targets = target_docs[:max_targets]
+
+        cleaned_slot = self._clean_slot_query(unresolved_slot)
+        candidate_items: List[EvidenceItem] = []
+        for t_doc in selected_targets:
+            res = self.search_service.fts_search_in_doc(cleaned_slot, t_doc, corpus=corpus, top_k=2)
+            for r in res:
+                r.score = 0.96
+                r.source_method = f"clean_hierarchical_{required_relation.lower()}"
+                candidate_items.append(r)
+
+        return {
+            "source_chunk": source_chunk.chunk_id,
+            "parent_doc": parent_doc,
+            "relation": required_relation,
+            "selected_targets": selected_targets,
+            "slot_query": cleaned_slot,
+            "candidate_items": candidate_items
+        }
 
     def run(self, qid: str, question: str, corpus: str = "D20") -> ExecutionTrace:
         t0 = time.time()
@@ -264,7 +377,7 @@ class C7RouterSystem(C6RouterSystem):
         if not seed_items:
             return ExecutionTrace(
                 qid=qid,
-                system_id="C7",
+                system_id="C7-Clean",
                 corpus=corpus,
                 question=question,
                 generated_answer="未检索到相关法律法规依据。",
@@ -275,7 +388,7 @@ class C7RouterSystem(C6RouterSystem):
                 llm_calls=0
             )
 
-        # 2. Lane Detection (Strictly Identical to C5/C6)
+        # 2. Lane Detection
         lane = self.detect_lane(question, seed_items)
 
         # FAST PATH: Non-relational single-scope query -> Direct Pass-Through
@@ -284,7 +397,7 @@ class C7RouterSystem(C6RouterSystem):
                 b0 = self.b0_traces[key]
                 return ExecutionTrace(
                     qid=qid,
-                    system_id="C7",
+                    system_id="C7-Clean",
                     corpus=corpus,
                     question=question,
                     generated_answer=b0["generated_answer"],
@@ -305,18 +418,28 @@ class C7RouterSystem(C6RouterSystem):
                     llm_calls=1,
                     metadata={
                         "generation_mode": "FAST_PATH_PASSTHROUGH",
+                        "is_reused_b0_output": True,
                         "question_slots": [],
                         "slot_evidence_bindings": {},
                         "synthesis_flags": ["FAST_PATH"]
                     }
                 )
             else:
+                # Fresh generation for Fast Path (e.g. under Generic Contract or Fresh run)
                 evidence_context = pack_evidence_context(seed_items, max_tokens=self.max_evidence_tokens)
-                content, usage, llm_latency_ms = self.llm_service.generate(prompt=question, system_prompt="Answer based on evidence.")
+                if self.generation_mode == "GENERIC_CONTRACT":
+                    q_slots = extract_generic_question_slots(question)
+                    bindings = bind_generic_evidence_to_slots(q_slots, seed_items)
+                    sys_p, usr_p = build_generic_contract_prompt(question, q_slots, bindings, seed_items, self.max_evidence_tokens)
+                    content, usage, llm_latency_ms = self.llm_service.generate(prompt=usr_p, system_prompt=sys_p)
+                else:
+                    user_prompt = format_user_prompt(question, evidence_context)
+                    content, usage, llm_latency_ms = self.llm_service.generate(prompt=user_prompt, system_prompt=SYSTEM_PROMPT)
+
                 retrieved_ids = [s.chunk_id for s in seed_items]
                 return ExecutionTrace(
                     qid=qid,
-                    system_id="C7",
+                    system_id="C7-Clean",
                     corpus=corpus,
                     question=question,
                     generated_answer=content,
@@ -335,10 +458,13 @@ class C7RouterSystem(C6RouterSystem):
                     input_tokens=usage.get("prompt_tokens", 0),
                     output_tokens=usage.get("completion_tokens", 0),
                     llm_calls=1,
-                    metadata={"generation_mode": "FAST_PATH_FALLBACK"}
+                    metadata={
+                        "generation_mode": f"FAST_PATH_FRESH_{self.generation_mode}",
+                        "is_reused_b0_output": False
+                    }
                 )
 
-        # 3. ROUTED PATH: C6 Lane Logic + C7 Shadow Candidate Plane
+        # 3. ROUTED PATH: Decontaminated Clean Architecture
         t_route_0 = time.time()
         routing_steps: List[RoutingStep] = []
         hub_encounters = 0
@@ -363,7 +489,7 @@ class C7RouterSystem(C6RouterSystem):
                             heading_path=chk["heading_path"],
                             text=chk["text"],
                             score=0.95,
-                            source_method=f"c7_lane_a_{rel.lower()}"
+                            source_method=f"clean_lane_a_{rel.lower()}"
                         )
                         candidate_pool.append((it, 1.2, f"Resolved version via {rel}"))
 
@@ -371,7 +497,7 @@ class C7RouterSystem(C6RouterSystem):
                 fts_repeal = self.search_service.fts_search_in_doc("施行 废止 附则", primary_doc_id, corpus=corpus, top_k=1)
                 for f_item in fts_repeal:
                     f_item.score = 0.90
-                    f_item.source_method = "c7_lane_a_repeal_clause"
+                    f_item.source_method = "clean_lane_a_repeal_clause"
                     candidate_pool.append((f_item, 1.1, "Repeal/effective date clause"))
 
             chunk_basis_found = False
@@ -387,7 +513,7 @@ class C7RouterSystem(C6RouterSystem):
                             heading_path=chk["heading_path"],
                             text=chk["text"],
                             score=0.95,
-                            source_method="c7_lane_a_based_on"
+                            source_method="clean_lane_a_based_on"
                         )
                         candidate_pool.append((it, 1.2, "Followed legislative basis"))
                         chunk_basis_found = True
@@ -421,7 +547,7 @@ class C7RouterSystem(C6RouterSystem):
                     ))
                     step_idx += 1
 
-        # LANE B: COMPOSITE_EVIDENCE
+        # LANE B: COMPOSITE_EVIDENCE (Zero hardcoded doc006 / doc024 special cases!)
         elif lane == "COMPOSITE_EVIDENCE":
             has_gap, missing_statutes = self._check_statutory_gap(question, seed_items)
             if missing_statutes:
@@ -446,7 +572,7 @@ class C7RouterSystem(C6RouterSystem):
                                             heading_path=cdata["heading_path"],
                                             text=cdata["text"],
                                             score=0.98,
-                                            source_method=f"c7_lane_b_graph_gap_{rel.lower()}"
+                                            source_method=f"clean_lane_b_graph_gap_{rel.lower()}"
                                         )
                                         candidate_pool.append((it, 1.5, f"Missing statute {target_statute} resolved via graph {rel}"))
                                         found_by_graph = True
@@ -470,22 +596,7 @@ class C7RouterSystem(C6RouterSystem):
                             found_by_graph = True
                             break
 
-            if "准入" in question or "批发" in question:
-                for s in seed_items:
-                    if s.doc_id == "doc006":
-                        slot_items = self.search_service.fts_search_in_doc("批发 准入 国务院 省级", "doc006", corpus=corpus, top_k=1)
-                        for it in slot_items:
-                            candidate_pool.append((it, 1.4, "Covered obligation slot: 批发准入"))
-                        break
-
-            if "机构" in question and "资质" in question:
-                for s in seed_items:
-                    if s.doc_id in ["doc024", "doc036"]:
-                        slot_items = self.search_service.fts_search_in_doc("产前诊断 资质 机构 许可", "doc024", corpus=corpus, top_k=1)
-                        for it in slot_items:
-                            candidate_pool.append((it, 1.4, "Covered obligation slot: 机构人员资质许可"))
-                        break
-
+            # General graph typed expansion
             for s in seed_items[:3]:
                 nbrs = self.lsdb.get_routing_neighbors(s.chunk_id, corpus=corpus, allowed_relations={"SUPERSEDES", "AMENDS", "BASED_ON", "REFERENCES"})
                 for tgt, rel, cost in nbrs:
@@ -498,7 +609,7 @@ class C7RouterSystem(C6RouterSystem):
                             heading_path=chk["heading_path"],
                             text=chk["text"],
                             score=0.90,
-                            source_method=f"c7_lane_b_{rel.lower()}"
+                            source_method=f"clean_lane_b_{rel.lower()}"
                         )
                         candidate_pool.append((it, 1.1, f"Composite expansion via {rel}"))
 
@@ -509,7 +620,6 @@ class C7RouterSystem(C6RouterSystem):
             if m[0] not in current_docs
         ]
 
-        # Trigger Shadow Plane when explicit entities are missing or candidate pool is empty
         trigger_shadow = len(missing_matches) > 0 or len(candidate_pool) == 0
         shadow_rib_log: List[Dict[str, Any]] = []
         selected_prefixes_log: List[Tuple[str, float, str]] = []
@@ -527,7 +637,8 @@ class C7RouterSystem(C6RouterSystem):
 
             descent_k = 1 if len(selected_prefixes) >= 2 else 2
             for p_did, p_score, p_title in selected_prefixes:
-                descent_query = self._build_descent_query(question, p_title)
+                # Generic Targeted Descent without lookup table!
+                descent_query = self._build_generic_descent_query(question, p_title, seed_items)
                 descent_items = self.search_service.fts_search_in_doc(
                     query=descent_query,
                     doc_id=p_did,
@@ -535,7 +646,6 @@ class C7RouterSystem(C6RouterSystem):
                     top_k=descent_k
                 )
                 if not descent_items:
-                    # Fallback to chunk 1 or section 1
                     c1_data = self.lsdb.get_chunk_evidence(f"{p_did}#c001")
                     if c1_data:
                         descent_items = [EvidenceItem(
@@ -545,18 +655,17 @@ class C7RouterSystem(C6RouterSystem):
                             heading_path=c1_data["heading_path"],
                             text=c1_data["text"],
                             score=0.92,
-                            source_method="c7_shadow_fallback_c001"
+                            source_method="clean_shadow_fallback_c001"
                         )]
 
                 for d_item in descent_items:
                     d_item.score = 0.95
-                    d_item.source_method = "c7_shadow_prefix_descent"
-                    # Priority score in candidate pool: 1.35~1.45
+                    d_item.source_method = "clean_shadow_prefix_descent"
                     cand_pool_score = 1.45 if any(m[0] == p_did for m in missing_matches) else 1.35
                     candidate_pool.append((
                         d_item,
                         cand_pool_score,
-                        f"Shadow Prefix Discovery: {p_did} ({p_title[:20]}) -> Descent: {descent_query[:25]}"
+                        f"Clean Shadow Prefix: {p_did} ({p_title[:20]}) -> Generic Descent: {descent_query[:25]}"
                     ))
                     descent_cids.append(d_item.chunk_id)
 
@@ -587,7 +696,7 @@ class C7RouterSystem(C6RouterSystem):
 
         routing_latency_ms = (time.time() - t_route_0) * 1000.0
 
-        # 4. CONSERVATIVE EVIDENCE ADMISSION (Replacement Policy - Strictly Identical to C4/C5/C6)
+        # 4. CONSERVATIVE EVIDENCE ADMISSION (Replacement Policy)
         current_evidence: List[EvidenceItem] = list(seed_items[:self.top_k])
         current_cids = {e.chunk_id for e in current_evidence}
 
@@ -642,8 +751,8 @@ class C7RouterSystem(C6RouterSystem):
 
         # 5. SYNTHESIS GENERATION
         t_gen_0 = time.time()
-        metadata = {
-            "synthesis_flags": ["C7_SHADOW_PREFIX"],
+        metadata: Dict[str, Any] = {
+            "synthesis_flags": ["CLEAN_ARCHITECTURE"],
             "shadow_rib": shadow_rib_log[:8],
             "selected_prefixes": selected_prefixes_log,
             "descent_chunks": descent_cids,
@@ -651,17 +760,7 @@ class C7RouterSystem(C6RouterSystem):
             "is_reused_b0_output": False
         }
 
-        if self.generation_mode == "RAW":
-            evidence_context = pack_evidence_context(current_evidence, max_tokens=self.max_evidence_tokens)
-            user_prompt = format_user_prompt(question, evidence_context)
-            content, usage, llm_latency_ms = self.llm_service.generate(
-                prompt=user_prompt,
-                system_prompt=SYSTEM_PROMPT
-            )
-            metadata["generation_mode"] = "RAW_B0_PROMPT"
-            metadata["question_slots"] = []
-            metadata["slot_evidence_bindings"] = {}
-        elif self.generation_mode == "GENERIC_CONTRACT":
+        if self.generation_mode == "GENERIC_CONTRACT":
             question_slots = extract_generic_question_slots(question)
             slot_bindings = bind_generic_evidence_to_slots(question_slots, current_evidence, routing_steps)
             contract_system_prompt, contract_user_prompt = build_generic_contract_prompt(
@@ -679,30 +778,23 @@ class C7RouterSystem(C6RouterSystem):
             metadata["question_slots"] = question_slots
             metadata["slot_evidence_bindings"] = slot_bindings
         else:
-            # Default: EVIDENCE_CONTRACT (Specialized C7)
-            question_slots = extract_question_slots(question)
-            slot_bindings = bind_evidence_to_slots(question_slots, current_evidence, routing_steps)
-            contract_system_prompt, contract_user_prompt = build_evidence_contract_prompt(
-                question=question,
-                slots=question_slots,
-                bindings=slot_bindings,
-                evidence_items=current_evidence,
+            # RAW mode: B0 Prompt
+            evidence_context = pack_evidence_context(
+                current_evidence,
                 max_tokens=self.max_evidence_tokens
             )
+            user_prompt = format_user_prompt(question, evidence_context)
             content, usage, llm_latency_ms = self.llm_service.generate(
-                prompt=contract_user_prompt,
-                system_prompt=contract_system_prompt
+                prompt=user_prompt,
+                system_prompt=SYSTEM_PROMPT
             )
-            metadata["generation_mode"] = "EVIDENCE_CONTRACT"
-            metadata["question_slots"] = question_slots
-            metadata["slot_evidence_bindings"] = slot_bindings
-            metadata["synthesis_flags"].append("ROUTED_EVIDENCE_CONTRACT")
+            metadata["generation_mode"] = "RAW_B0_PROMPT"
 
         total_latency_ms = (time.time() - t0) * 1000.0
 
         return ExecutionTrace(
             qid=qid,
-            system_id="C7",
+            system_id="C7-Clean",
             corpus=corpus,
             question=question,
             generated_answer=content,
