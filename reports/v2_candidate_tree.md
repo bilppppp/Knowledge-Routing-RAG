@@ -31,11 +31,19 @@ B0 Vector RAG (Anchor Baseline)
 │                 [High-Precision Architecture: Specialized Micro-Programs + Strict 5-chunk Budget Replacement]
 │                 │
 │                 └── C5 Hierarchical Next-Hop Resolution (Recursive Parent Lift + Targeted Descent)
-│                       Accuracy: 75.93% (+3.70pp vs B0, +1.39pp vs C4) | CANDIDATE / NEW INCUMBENT ★
+│                       Accuracy: 75.93% (+3.70pp vs B0, +1.39pp vs C4) | SUPERSEDED BY C6
 │                       Net Rescue: +8 (8 Rescues, 0 Regressions)
 │                       Evidence F1: 0.251 | Chain Comp: 35.6%
 │                       Latency P50: 121 ms | CPR: 82.7%
 │                       [Recursive Architecture: Lift only to resolve; descend immediately to retrieve]
+│                       │
+│                       └── C6 Evidence-Contract Synthesis (Slot Decomposition + Semantic Binding + Substantive Contract)
+│                             Accuracy: 77.31% (+5.09pp vs B0, +1.38pp vs C5) | CANDIDATE / NEW INCUMBENT ★
+│                             Net Rescue: +11 vs B0 (+3 vs C5, 0 regressions vs B0)
+│                             Evidence F1: 0.251 | Chain Comp: 35.6%
+│                             Latency P50: 143 ms | CPR: 82.7%
+│                             Evidence-Complete Accuracy: 90.91% (70/77 vs B0 84.42%)
+│                             [Contract Architecture: Route to evidence; bind evidence to question; substantive reality over literal framing]
 ```
 
-**Current Champion**: `C5` (Accuracy: **75.93%**, Net Rescue: **+8**, Regressions: **0**)
+**Current Champion**: `C6` (Accuracy: **77.31% (167/216)**, Net Rescue vs B0: **+11**, Net vs C5: **+3**, Regressions vs B0: **0**)

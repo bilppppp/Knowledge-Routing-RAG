@@ -36,6 +36,7 @@ from src.routing.c2_router import C2RouterSystem
 from src.routing.c3_router import C3RouterSystem
 from src.routing.c4_router import C4RouterSystem
 from src.routing.c5_router import C5RouterSystem
+from src.routing.c6_router import C6RouterSystem
 
 BENCHMARK_DIR = PROJECT_ROOT / "benchmark"
 RUNS_V2_DIR = PROJECT_ROOT / "runs" / "v2"
@@ -126,6 +127,18 @@ def get_candidate_system(candidate_id: str, search: SearchService, llm: LLMServi
     elif candidate_id == "C5":
         b0_traces = load_b0_traces()
         return C5RouterSystem(
+            search_service=search,
+            llm_service=llm,
+            lsdb=lsdb,
+            b0_traces=b0_traces,
+            top_k=5,
+            max_hops=2,
+            max_replacements=2,
+            max_evidence_tokens=4000
+        )
+    elif candidate_id == "C6":
+        b0_traces = load_b0_traces()
+        return C6RouterSystem(
             search_service=search,
             llm_service=llm,
             lsdb=lsdb,
@@ -234,6 +247,11 @@ def run_candidate(candidate_id: str, concurrency: int = 5):
             "input_tokens": trace.input_tokens,
             "output_tokens": trace.output_tokens,
             "llm_calls": trace.llm_calls,
+            "generation_mode": trace.metadata.get("generation_mode", "STANDARD"),
+            "question_slots": trace.metadata.get("question_slots", []),
+            "slot_evidence_bindings": trace.metadata.get("slot_evidence_bindings", {}),
+            "evidence_complete": set(gold["gold_chunk_ids"]).issubset(set(trace.final_evidence_chunk_ids)),
+            "synthesis_flags": trace.metadata.get("synthesis_flags", []),
             "routing_steps": [
                 {
                     "step_num": s.step_num,
@@ -356,11 +374,29 @@ def evaluate_candidate_vs_b0(
         parent = "C4"
         main_change = "Hierarchical Next-Hop Resolution (Recursive Parent Lift + Targeted Descent)"
         parent_acc = 0.7454
+    elif candidate_id == "C6":
+        parent = "C5"
+        main_change = "Evidence-Contract Synthesis (Slot Decomposition + Semantic Binding + Substantive Contract)"
+        parent_acc = 0.7593
     else:
         parent = "B0"
         main_change = candidate_id
         parent_acc = b0_acc
     delta_parent = (cand_acc - parent_acc) * 100
+
+    # Evidence-Complete Subset Analysis
+    ev_complete_keys = [
+        k for k in common_keys
+        if set(gold_map[k[0]]["gold_chunk_ids"]).issubset(set(cand_map[k]["final_evidence_chunk_ids"]))
+    ]
+    N_ev = len(ev_complete_keys)
+    cand_ev_corr = sum(1 for k in ev_complete_keys if cand_map[k]["is_correct"])
+    cand_ev_acc = (cand_ev_corr / N_ev * 100) if N_ev else 0.0
+    b0_ev_corr = sum(1 for k in ev_complete_keys if b0_traces[k]["is_correct"])
+    b0_ev_acc = (b0_ev_corr / N_ev * 100) if N_ev else 0.0
+    print(f"Evidence-Complete Subset: {N_ev}/{N}")
+    print(f"  {candidate_id} Ev-Complete Acc:   {cand_ev_acc:.1f}% ({cand_ev_corr}/{N_ev})")
+    print(f"  B0 Ev-Complete Acc:          {b0_ev_acc:.1f}% ({b0_ev_corr}/{N_ev})")
 
     # Update reports/v2_candidate_results.csv
     update_results_csv(

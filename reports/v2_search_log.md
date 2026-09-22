@@ -164,6 +164,42 @@ Prior to formulating C1, a systematic question-level transition analysis was per
   - Target Document resolution accuracy: **8/8 (100%)** (`doc019 -> doc005`, `doc013 -> doc001`, `doc038 -> doc005`).
   - Target Chunk retrieval accuracy: **8/8 (100%)** (`doc005#c030`, `doc001#c001`, `doc005#c049`).
   - Successfully unlocked `Q014 D100` via `doc019 --BASED_ON--> doc005#c030`, and solidified `Q016 D50 / D100`.
-- **Verdict**: **PROMOTED TO NEW INCUMBENT ★**. First architecture to surpass 75.9% accuracy with zero regressions.
+- **Verdict**: **PROMOTED TO INCUMBENT** (Superseded by C6).
 
+---
 
+## Experiment 6: Candidate C6 (Evidence-Contract Synthesis)
+
+- **Candidate ID**: C6
+- **Parent Candidate**: C5
+- **Status**: **CANDIDATE / NEW INCUMBENT ★** (Promoted!)
+- **Architecture**: Evidence-Contract Synthesis (Slot Decomposition + Deterministic Evidence Binding + Substantive Answer Contract)
+  - **Philosophy**: *"Route to the evidence; bind the evidence to the question; answer only what the evidence supports."*
+  - **Core Mechanisms**:
+    1. **Strict Preservation of Retrieval & Fast Path**:
+       - 172/216 Fast Path instances 100% frozen B0 baseline traces (0 regressions by construction).
+       - Retrieval, Lane Detection, Hierarchical Next-Hop Resolution, and Conservative Evidence Admission are 100% identical to C5 (0 retrieval differences across all 216 instances).
+    2. **Evidence-Contract Synthesis (Routed Paths Only, N=44)**:
+       - Single LLM generator call with structured Answer Contract.
+       - Slot decomposition (`extract_question_slots`): Breaks queries into typed, quantified legal sub-tasks.
+       - Deterministic evidence binding (`bind_evidence_to_slots`): Binds chunks to slots using lexical token overlap and LSDB metadata.
+       - Enforces 7 Contract Rules: Substantive legal reality over literal labels, ban on defensive disclaimers when substantive evidence exists, restrained and precise answers, statutory normative terminology.
+- **Empirical Metrics (N=216)**:
+  - Accuracy: **77.31% (167/216)** (vs B0 72.22%, $\Delta = \mathbf{+5.09\text{pp}}$; vs C5 75.93%, $\Delta = \mathbf{+1.38\text{pp}}$)
+  - Rescues vs B0: **11** (`Q014 D20`, `Q014 D50`, `Q014 D100`, `Q016 D20`, `Q016 D50`, `Q025 D20`, `Q025 D50`, `Q048 D20`, `Q076 D100`, `Q089 D50`, `Q089 D100` etc.)
+  - Regressions vs B0: **0** (Zero regressions vs baseline maintained!)
+  - Net Rescue vs B0: **+11**
+  - Rescues vs C5: **5** (`Q014 D20`, `Q014 D50`, `Q016 D20`, `Q025 D20`, `Q025 D50`)
+  - Regressions vs C5: **2** (`Q016 D100`, `Q076 D50`)
+  - Net Rescue vs C5: **+3**
+  - Evidence-Complete Subset Accuracy: **90.91% (70/77)** vs C5 88.31% (68/77) and B0 84.42% (65/77)
+  - Chain Completion: **35.6% (77/216)**
+  - Evidence F1: **0.251**
+  - CPR: **82.7%**
+  - Latency P50 / P95: **143 / 3806 ms**
+  - Mean Tokens: **1491**
+- **Synthesis Diagnostic Auditing**:
+  - `Q014` full recovery: D20 (False $\to$ True), D50 (False $\to$ True), D100 (True $\to$ True). All 3 corpora 100% correct with identical evidence.
+  - `UNNECESSARY_DISCLAIMER` failure mode in routed paths: completely eliminated (dropped from 3 in C5 to 0 in C6).
+  - Slot Completion Rate on routed paths: **100.0% (71/71 slots covered)**.
+- **Verdict**: **PROMOTED TO NEW INCUMBENT ★**. Reaches new all-time high of 77.31% accuracy with 0 regressions against baseline B0.
