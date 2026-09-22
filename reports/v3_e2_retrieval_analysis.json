@@ -1,0 +1,63 @@
+{
+  "N": 216,
+  "execution_time_s": 11.15,
+  "retrieval_metrics": {
+    "D0_B0": {
+      "gold_doc_recall": 76.39,
+      "gold_chunk_recall": 52.85,
+      "evidence_f1": 24.44,
+      "chain_completion_rate": 33.33,
+      "chain_completion_count": 72,
+      "retrieval_rescues": 0,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 0
+    },
+    "D1_Clean_Raw": {
+      "gold_doc_recall": 79.71,
+      "gold_chunk_recall": 52.7,
+      "evidence_f1": 25.07,
+      "chain_completion_rate": 34.26,
+      "chain_completion_count": 74,
+      "retrieval_rescues": 2,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 2
+    },
+    "E1_Coverage_Composer": {
+      "gold_doc_recall": 79.71,
+      "gold_chunk_recall": 53.16,
+      "evidence_f1": 24.67,
+      "chain_completion_rate": 34.26,
+      "chain_completion_count": 74,
+      "retrieval_rescues": 2,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 2
+    },
+    "E2_Hybrid_Descent": {
+      "gold_doc_recall": 79.55,
+      "gold_chunk_recall": 53.32,
+      "evidence_f1": 24.71,
+      "chain_completion_rate": 34.26,
+      "chain_completion_count": 74,
+      "retrieval_rescues": 2,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 2
+    }
+  },
+  "candidate_pool_recall": {
+    "E1_pool_gold_recall": 0.93,
+    "E2_pool_gold_recall": 6.02,
+    "delta_pool_recall": 5.09
+  },
+  "channel_complementarity": {
+    "gold_found_lexical_only": 0,
+    "gold_found_semantic_only": 0,
+    "gold_found_both": 3,
+    "gold_found_neither": 38
+  },
+  "evidence_displacement": {
+    "D1_eviction_count": 2,
+    "E1_eviction_count": 0,
+    "E2_eviction_count": 0,
+    "E2_evictions": []
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "summary": {
+    "RETRIEVAL_CAUSAL_RESCUE": 10,
+    "UNCERTAIN": 10,
+    "RETRIEVAL_REGRESSION": 2
+  },
+  "total_transitions": 22,
+  "retrieval_causal_rescues": 10,
+  "cases": [
+    {
+      "qid": "H2_099",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_107",
+      "transition": "RESCUE",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 1,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_110",
+      "transition": "RESCUE",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 1,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_114",
+      "transition": "RESCUE",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 1,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_118",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_127",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_138",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_143",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_146",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_149",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_156",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_165",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_169",
+      "transition": "RESCUE",
+      "category": "RETRIEVAL_CAUSAL_RESCUE",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_183",
+      "transition": "RESCUE",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 1,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_194",
+      "transition": "RESCUE",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 2,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 3
+    },
+    {
+      "qid": "H2_195",
+      "transition": "RESCUE",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 1,
+      "gold_chunk_count": 3
+    },
+    {
+      "qid": "H2_207",
+      "transition": "RESCUE",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 0,
+      "h1_gold_hits": 0,
+      "gold_chunk_count": 3
+    },
+    {
+      "qid": "H2_230",
+      "transition": "RESCUE",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 1,
+      "gold_chunk_count": 3
+    },
+    {
+      "qid": "H2_151",
+      "transition": "REGRESSION",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 2,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_157",
+      "transition": "REGRESSION",
+      "category": "UNCERTAIN",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 1,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_180",
+      "transition": "REGRESSION",
+      "category": "RETRIEVAL_REGRESSION",
+      "h0_gold_hits": 1,
+      "h1_gold_hits": 0,
+      "gold_chunk_count": 2
+    },
+    {
+      "qid": "H2_216",
+      "transition": "REGRESSION",
+      "category": "RETRIEVAL_REGRESSION",
+      "h0_gold_hits": 3,
+      "h1_gold_hits": 2,
+      "gold_chunk_count": 3
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "qid": "S1_025",
+    "decisions": {
+      "S_A": true,
+      "S_B": true,
+      "S_C": true,
+      "S_D": false
+    }
+  },
+  {
+    "qid": "S1_049",
+    "decisions": {
+      "S_A": false,
+      "S_B": false,
+      "S_C": true,
+      "S_D": false
+    }
+  }
+]

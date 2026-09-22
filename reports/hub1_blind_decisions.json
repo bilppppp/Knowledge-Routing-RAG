@@ -1,0 +1,56 @@
+[
+  {
+    "qid": "HUB_064",
+    "transition_type": "HUB_RESCUE",
+    "blind_judgment": {
+      "system_a_correct": true,
+      "system_a_reason": "系统A准确引用了《乡村医生从业管理条例》第十九条和《医疗事故处理条例》第二十四条，完整回答了注销名单的公告备案程序、专家随机抽取规则以及本地专家库不足时的跨库抽取或函件咨询措施，与标准答案实质一致。",
+      "system_b_correct": false,
+      "system_b_reason": "系统B仅正确回答了注销名单的公告备案问题，但错误地声称参考证据中未包含《医疗事故处理条例》第二十四条，导致未能回答专家抽取和本地专家库不足时的措施，遗漏了核心法律依据，实质回答不完整。",
+      "preferred_system": "System A",
+      "blind_adjudication_summary": "系统A全面、准确地依据相关法条回答了全部问题，并进行了合理的证据边界说明；系统B因误判证据缺失而未能回答两个关键问题，表现明显不足。因此系统A更优。"
+    },
+    "unblinded": {
+      "b0_correct": false,
+      "v3_correct": true,
+      "preferred": "V3-Frozen",
+      "supports_transition": true
+    }
+  },
+  {
+    "qid": "HUB_066",
+    "transition_type": "HUB_RESCUE",
+    "blind_judgment": {
+      "system_a_correct": true,
+      "system_a_reason": "系统A准确依据《卫生部关于中医执业的14个批复》相关文件，将机构行为定性为非法行医和违法使用中医医疗技术，并正确指出卫生计生行政部门与药品监督管理部门的职责分工及衔接配合，同时提及涉嫌犯罪的移送司法机关处理，与标准答案高度一致。",
+      "system_b_correct": false,
+      "system_b_reason": "系统B虽正确认定了非法诊疗活动，但未完整涵盖标准答案中关于药品监督管理部门的职责、中药饮片追溯体系监管以及涉嫌犯罪移送司法机关等关键内容，且对《药品管理法》的引用和职责分工阐述不足。",
+      "preferred_system": "System A",
+      "blind_adjudication_summary": "系统A的解答更全面、准确地反映了标准答案的要求，涵盖了行为定性、两部门职责分工与衔接配合以及涉嫌犯罪的处理，而系统B在药品监管职责和犯罪移送方面存在遗漏，因此系统A表现更优。"
+    },
+    "unblinded": {
+      "b0_correct": true,
+      "v3_correct": false,
+      "preferred": "B0",
+      "supports_transition": false
+    }
+  },
+  {
+    "qid": "HUB_071",
+    "transition_type": "HUB_REGRESSION",
+    "blind_judgment": {
+      "system_a_correct": true,
+      "system_a_reason": "系统A正确识别了国境卫生检疫机关的职责边界，准确引用《卫生部关于中医执业的14个批复》中关于移送处理的规定，并正确适用《国境卫生检疫法》第七条，区分了本机关管辖事项与应移送事项，法律适用和移送处理路径与标准答案一致。",
+      "system_b_correct": false,
+      "system_b_reason": "系统B错误地以《国境卫生检疫法》第十九条替代第七条，并声称第七条内容未提供而拒绝适用，导致未能正确依据第七条分析国境卫生检疫机关的检疫和控制职责，偏离了标准答案的核心要求。",
+      "preferred_system": "System A",
+      "blind_adjudication_summary": "系统A实质性正确，完整覆盖了职责划分、法律适用和移送处理，并正确引用了《国境卫生检疫法》第七条。系统B因错误回避第七条而未能准确回答核心问题，存在关键法律适用错误。因此系统A表现更优。"
+    },
+    "unblinded": {
+      "b0_correct": true,
+      "v3_correct": false,
+      "preferred": "B0",
+      "supports_transition": true
+    }
+  }
+]

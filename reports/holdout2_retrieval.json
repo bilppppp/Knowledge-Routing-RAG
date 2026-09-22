@@ -1,0 +1,44 @@
+{
+  "N": 250,
+  "corpus": "D100",
+  "h0_b0": {
+    "gold_document_recall": 88.93,
+    "gold_chunk_recall": 75.73,
+    "evidence_f1": 36.59,
+    "chain_completion_rate": 54.4,
+    "chain_completion_count": 136
+  },
+  "h1_v3_frozen": {
+    "gold_document_recall": 98.53,
+    "gold_chunk_recall": 76.53,
+    "evidence_f1": 36.9,
+    "chain_completion_rate": 57.6,
+    "chain_completion_count": 144,
+    "useful_evidence_evictions": 10,
+    "candidate_pool_gold_recall": 7.2
+  },
+  "delta": {
+    "gold_document_recall": 9.6,
+    "gold_chunk_recall": 0.8,
+    "evidence_f1": 0.31,
+    "chain_completion_rate": 3.2,
+    "chain_completion_count": 8
+  },
+  "transitions": {
+    "retrieval_rescues": 11,
+    "retrieval_regressions": 3,
+    "net_retrieval_rescue": 8
+  },
+  "v3_descent_funnel": {
+    "total_questions": 250,
+    "routed_instances": 107,
+    "descent_eligible_instances": 61,
+    "correct_target_document_resolved": 77,
+    "gold_chunk_in_candidate_pool": 18,
+    "admitted_by_composer": 17,
+    "chain_complete_among_routed": 37,
+    "document_resolution_rate": 71.96,
+    "local_descent_conversion_rate": 23.38,
+    "composer_admission_rate": 94.44
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "N": 216,
+  "D0_B0_accuracy": 72.22,
+  "D0_B0_correct_count": 156,
+  "E1_accuracy": 73.61,
+  "E1_correct_count": 159,
+  "E2_accuracy": 74.07,
+  "E2_correct_count": 160,
+  "delta_accuracy_vs_b0": 1.85,
+  "delta_accuracy_vs_e1": 0.46,
+  "rescues_vs_b0": 4,
+  "regressions_vs_b0": 0,
+  "net_rescue_vs_b0": 4,
+  "rescues_vs_e1": 2,
+  "regressions_vs_e1": 1,
+  "net_rescue_vs_e1": 1,
+  "1_hop": {
+    "N": 64,
+    "B0_accuracy": 84.38,
+    "E1_accuracy": 84.38,
+    "E2_accuracy": 84.38
+  },
+  "multi_hop": {
+    "N": 152,
+    "B0_accuracy": 67.11,
+    "E1_accuracy": 69.08,
+    "E2_accuracy": 69.74
+  }
+}

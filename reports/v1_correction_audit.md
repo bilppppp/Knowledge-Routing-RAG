@@ -25,12 +25,12 @@
 
 ## 2. 交付与生成文件清单
 
-1. [`reports/final_report.md`](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/reports/final_report.md): 严格遵照 §25~§35 规程重写的完整学术报告（标记 `PENDING HUMAN ADJUDICATION`，结论锁定为 `NO-GO`）。
-2. [`reports/blind_review_pack.json`](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/reports/blind_review_pack.json): 包含全部 31 组争议对比对的双盲仲裁包（完全抹去所有系统和算法名称，仅保留随机化 Output A / Output B）。
-3. [`reports/blind_review_mapping.json`](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/reports/blind_review_mapping.json): 双盲仲裁对照密钥，单独留存，不提供给仲裁员。
-4. [`reports/blind_review_decisions.json`](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/reports/blind_review_decisions.json): 人工仲裁决策模板（不伪造仲裁数据，待真实评审回填）。
-5. [`reports/final_adjudicated_results.json`](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/reports/final_adjudicated_results.json): 追踪每题判断来源（`auto_high_confidence` vs `provisional_auto_pending_human_adjudication`）。
-6. [`reports/statistical_analysis.json`](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/reports/statistical_analysis.json): 包含 95% Bootstrap CI、Paired Deltas、McNemar 矩阵、Core-60 比例与诊断分布的完整机器可读统计库。
+1. [`reports/v1_historical_report.md`](v1_historical_report.md): 严格遵照 §25~§35 规程重写的完整学术报告（标记 `PENDING HUMAN ADJUDICATION`，结论锁定为 `NO-GO`）。
+2. [`reports/blind_review_pack.json`](blind_review_pack.json): 包含全部 31 组争议对比对的双盲仲裁包（完全抹去所有系统和算法名称，仅保留随机化 Output A / Output B）。
+3. [`reports/blind_review_mapping.json`](blind_review_mapping.json): 双盲仲裁对照密钥，单独留存，不提供给仲裁员。
+4. [`reports/blind_review_decisions.json`](blind_review_decisions.json): 人工仲裁决策模板（不伪造仲裁数据，待真实评审回填）。
+5. [`reports/final_adjudicated_results.json`](final_adjudicated_results.json): 追踪每题判断来源（`auto_high_confidence` vs `provisional_auto_pending_human_adjudication`）。
+6. [`reports/statistical_analysis.json`](statistical_analysis.json): 包含 95% Bootstrap CI、Paired Deltas、McNemar 矩阵、Core-60 比例与诊断分布的完整机器可读统计库。
 
 ---
 

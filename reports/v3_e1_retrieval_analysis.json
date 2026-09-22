@@ -1,0 +1,105 @@
+{
+  "N": 216,
+  "execution_time_s": 10.38,
+  "retrieval_metrics": {
+    "gold_doc_recall": {
+      "d0": 0.7638888888888888,
+      "d1": 0.7970679012345679,
+      "e1": 0.7970679012345679,
+      "delta_d1_vs_d0": 0.033179012345679104,
+      "delta_e1_vs_d0": 0.033179012345679104,
+      "delta_e1_vs_d1": 0.0
+    },
+    "gold_chunk_recall": {
+      "d0": 0.5285493827160493,
+      "d1": 0.5270061728395061,
+      "e1": 0.5316358024691357,
+      "delta_d1_vs_d0": -0.0015432098765432167,
+      "delta_e1_vs_d0": 0.0030864197530863224,
+      "delta_e1_vs_d1": 0.004629629629629539
+    },
+    "evidence_f1": {
+      "d0": 0.24443342151675487,
+      "d1": 0.2507164902998236,
+      "e1": 0.24674823633156967,
+      "delta_d1_vs_d0": 0.0062830687830687515,
+      "delta_e1_vs_d0": 0.0023148148148147973,
+      "delta_e1_vs_d1": -0.003968253968253954
+    },
+    "chain_completion": {
+      "d0": 0.3333333333333333,
+      "d1": 0.3425925925925926,
+      "e1": 0.3425925925925926,
+      "delta_d1_vs_d0": 0.0092592592592593,
+      "delta_e1_vs_d0": 0.0092592592592593,
+      "delta_e1_vs_d1": 0.0
+    },
+    "rescues_and_regressions": {
+      "d1_rescues": 2,
+      "d1_regressions": 0,
+      "d1_net_rescue": 2,
+      "d1_rescue_keys": [
+        "Q089_D100",
+        "Q089_D50"
+      ],
+      "d1_regression_keys": [],
+      "e1_rescues": 2,
+      "e1_regressions": 0,
+      "e1_net_rescue": 2,
+      "e1_rescue_keys": [
+        "Q089_D100",
+        "Q089_D50"
+      ],
+      "e1_regression_keys": []
+    }
+  },
+  "evidence_displacement": {
+    "d1_useful_evidence_evicted_count": 2,
+    "d1_evicted_instances": [
+      {
+        "task": "Q078_D100",
+        "lost_gold": [
+          "doc038#c001"
+        ],
+        "evicted_cids": [
+          "doc038#c001",
+          "doc038#c002"
+        ],
+        "admitted_cids": [
+          "doc005#c020",
+          "doc005#c049"
+        ]
+      },
+      {
+        "task": "Q078_D50",
+        "lost_gold": [
+          "doc038#c001"
+        ],
+        "evicted_cids": [
+          "doc038#c001",
+          "doc038#c002"
+        ],
+        "admitted_cids": [
+          "doc005#c020",
+          "doc005#c049"
+        ]
+      }
+    ],
+    "e1_useful_evidence_evicted_count": 0,
+    "e1_evicted_instances": []
+  },
+  "coverage_metrics": {
+    "total_slots": 351,
+    "covered_slots": 330,
+    "slot_coverage_rate": 0.9401709401709402,
+    "avg_covered_slots_per_q": 1.5277777777777777,
+    "unique_slots_total": 78,
+    "unique_slots_preserved": 78,
+    "unique_slot_preservation_rate": 1.0,
+    "routed_candidates_accepted": 34,
+    "routed_candidates_rejected": 6,
+    "locked_rejections_count": 0,
+    "avg_marginal_gain": 0.49633823529411764,
+    "avg_set_redundancy": 1.0252314814814814
+  }
+}

@@ -1,0 +1,359 @@
+{
+  "hardware_info": {
+    "system": "Darwin",
+    "release": "25.6.0",
+    "machine": "arm64",
+    "processor": "arm",
+    "cpu_brand": "Apple M4",
+    "ram_gb": 24.0,
+    "python_version": "3.12.9",
+    "vector_backend": "Qdrant (Local Docker / Native Port 55001)",
+    "graph_backend": "SQLite 3 (knowledge_lsdb.sqlite) + NetworkX DiGraph",
+    "llm_provider": "DeepSeek (deepseek-chat)"
+  },
+  "benchmark": "Independent Holdout-2 (N = 250, D100)",
+  "confirmed_benefits": {
+    "accuracy_gain_pp": 5.6,
+    "stable_net_rescues": 14,
+    "multihop_accuracy_gain_pp": 8.97
+  },
+  "latency_metrics": {
+    "query_embedding_cold_ms": {
+      "mean": 134.31,
+      "p50": 142.47,
+      "p90": 169.55,
+      "p95": 201.76,
+      "max": 252.2
+    },
+    "b0_local_warm_ms": {
+      "mean": 3.76,
+      "p50": 3.67,
+      "p90": 4.44,
+      "p95": 4.96,
+      "max": 7.62
+    },
+    "v3_local_warm_ms": {
+      "mean": 7.39,
+      "p50": 4.34,
+      "p90": 15.87,
+      "p95": 19.07,
+      "max": 45.7
+    },
+    "b0_local_cold_ms": {
+      "mean": 138.07,
+      "p50": 146.16,
+      "p90": 173.23,
+      "p95": 204.79,
+      "max": 255.4
+    },
+    "v3_local_cold_ms": {
+      "mean": 141.7,
+      "p50": 148.87,
+      "p90": 181.83,
+      "p95": 207.87,
+      "max": 261.55
+    },
+    "b0_local_ms": {
+      "mean": 3.76,
+      "p50": 3.67,
+      "p90": 4.44,
+      "p95": 4.96,
+      "max": 7.62
+    },
+    "v3_local_ms": {
+      "mean": 7.39,
+      "p50": 4.34,
+      "p90": 15.87,
+      "p95": 19.07,
+      "max": 45.7
+    },
+    "local_overhead_ms": {
+      "mean": 3.63,
+      "p50": 0.58,
+      "p90": 12.62,
+      "p95": 15.75,
+      "max": 41.6
+    },
+    "local_overhead_bootstrap_ci_95": [
+      2.87,
+      4.44
+    ],
+    "latency_multiplier_p50": 1.18,
+    "latency_multiplier_p95": 3.85,
+    "b0_generation_ms": {
+      "mean": 3556.02,
+      "p50": 3548.46,
+      "p90": 5525.98,
+      "p95": 5801.36,
+      "max": 6200.01
+    },
+    "v3_generation_ms": {
+      "mean": 3595.38,
+      "p50": 3677.15,
+      "p90": 5598.86,
+      "p95": 5896.04,
+      "max": 6480.51
+    },
+    "b0_e2e_ms": {
+      "mean": 3559.79,
+      "p50": 3551.85,
+      "p90": 5530.09,
+      "p95": 5805.03,
+      "max": 6204.27
+    },
+    "v3_e2e_ms": {
+      "mean": 3602.77,
+      "p50": 3681.47,
+      "p90": 5614.62,
+      "p95": 5906.33,
+      "max": 6487.78
+    },
+    "e2e_overhead_ms": {
+      "mean": 42.98,
+      "p50": 60.62,
+      "p90": 719.62,
+      "p95": 1134.6,
+      "max": 2974.17
+    },
+    "e2e_overhead_bootstrap_ci_95": [
+      -38.01,
+      123.39
+    ],
+    "routing_overhead_share_of_e2e_pct": 0.1
+  },
+  "v3_stage_breakdown_mean_ms": {
+    "t_vector_ms": 3.34,
+    "t_lane_ms": 0.2,
+    "t_shadow_ms": 2.08,
+    "t_graph_ms": 0.69,
+    "t_descent_ms": 1.08,
+    "t_composer_ms": 0.56
+  },
+  "token_metrics": {
+    "b0_input_tokens": {
+      "mean": 739.76,
+      "p50": 653.5,
+      "p90": 953.3,
+      "p95": 1298.6,
+      "max": 3195.0
+    },
+    "v3_input_tokens": {
+      "mean": 754.24,
+      "p50": 680.5,
+      "p90": 1053.0,
+      "p95": 1404.85,
+      "max": 3195.0
+    },
+    "token_overhead_tokens": {
+      "mean": 14.48,
+      "p50": 0.0,
+      "p90": 90.6,
+      "p95": 298.85,
+      "max": 1137.0
+    },
+    "token_overhead_bootstrap_ci_95": [
+      -12.76,
+      40.46
+    ],
+    "token_overhead_pct": 1.96,
+    "b0_evidence_tokens": {
+      "mean": 560.49,
+      "p50": 491.0,
+      "p90": 749.9,
+      "p95": 1063.0,
+      "max": 2710.0
+    },
+    "v3_evidence_tokens": {
+      "mean": 572.47,
+      "p50": 508.5,
+      "p90": 850.0,
+      "p95": 1170.4,
+      "max": 2710.0
+    },
+    "b0_output_tokens": {
+      "mean": 620.73,
+      "p50": 636.5,
+      "p90": 1024.0,
+      "p95": 1024.0,
+      "max": 1025.0
+    },
+    "v3_output_tokens": {
+      "mean": 622.41,
+      "p50": 645.5,
+      "p90": 1024.0,
+      "p95": 1024.0,
+      "max": 1025.0
+    }
+  },
+  "candidate_and_computation_counters": {
+    "b0_candidates": {
+      "mean": 5.0,
+      "p50": 5.0,
+      "p90": 5.0,
+      "p95": 5.0,
+      "max": 5.0
+    },
+    "v3_candidates": {
+      "mean": 6.61,
+      "p50": 5.0,
+      "p90": 9.0,
+      "p95": 11.0,
+      "max": 41.0
+    },
+    "candidate_delta_bootstrap_ci_95": [
+      1.12,
+      2.2
+    ],
+    "candidate_multiplier": 1.32,
+    "b0_candidate_work_factor": {
+      "mean": 1.0,
+      "p50": 1.0,
+      "p90": 1.0,
+      "p95": 1.0,
+      "max": 1.0
+    },
+    "v3_candidate_work_factor": {
+      "mean": 1.32,
+      "p50": 1.0,
+      "p90": 1.8,
+      "p95": 2.2,
+      "max": 8.2
+    },
+    "b0_documents_touched": {
+      "mean": 1.75,
+      "p50": 1.0,
+      "p90": 3.0,
+      "p95": 3.55,
+      "max": 5.0
+    },
+    "v3_documents_touched": {
+      "mean": 2.85,
+      "p50": 2.0,
+      "p90": 4.0,
+      "p95": 5.55,
+      "max": 35.0
+    },
+    "v3_fts_queries": {
+      "mean": 0.42,
+      "p50": 0.0,
+      "p90": 2.0,
+      "p95": 2.0,
+      "max": 3.0
+    },
+    "additional_online_llm_calls": 0,
+    "additional_query_embedding_calls": 0
+  },
+  "stratified_analysis": {
+    "v3_non_routed_fast_path": {
+      "count": 143,
+      "share_pct": 57.2,
+      "local_ms": {
+        "mean": 3.82,
+        "p50": 3.67,
+        "p90": 4.54,
+        "p95": 4.99,
+        "max": 6.73
+      },
+      "candidates": {
+        "mean": 5.0,
+        "p50": 5.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "max": 5.0
+      }
+    },
+    "v3_routed": {
+      "count": 107,
+      "share_pct": 42.8,
+      "local_ms": {
+        "mean": 12.16,
+        "p50": 10.63,
+        "p90": 20.1,
+        "p95": 24.58,
+        "max": 45.7
+      },
+      "candidates": {
+        "mean": 8.77,
+        "p50": 7.0,
+        "p90": 11.0,
+        "p95": 23.4,
+        "max": 41.0
+      }
+    },
+    "hop_breakdown": {
+      "1-hop": {
+        "N": 94,
+        "b0_local_p50": 3.77,
+        "b0_local_p95": 5.19,
+        "v3_local_p50": 3.75,
+        "v3_local_p95": 5.47,
+        "local_overhead_p50": 0.08,
+        "v3_cands_mean": 5.05,
+        "v3_docs_mean": 1.55
+      },
+      "2-hop": {
+        "N": 100,
+        "b0_local_p50": 3.51,
+        "b0_local_p95": 5.03,
+        "v3_local_p50": 6.68,
+        "v3_local_p95": 18.89,
+        "local_overhead_p50": 3.27,
+        "v3_cands_mean": 7.72,
+        "v3_docs_mean": 3.89
+      },
+      "3-hop": {
+        "N": 56,
+        "b0_local_p50": 3.4,
+        "b0_local_p95": 4.47,
+        "v3_local_p50": 7.14,
+        "v3_local_p95": 23.71,
+        "local_overhead_p50": 3.41,
+        "v3_cands_mean": 7.25,
+        "v3_docs_mean": 3.18
+      }
+    }
+  },
+  "engineering_efficiency_ratios": {
+    "local_overhead_p50_ms": 0.58,
+    "local_overhead_p95_ms": 15.75,
+    "local_overhead_mean_ms": 3.63,
+    "cost_per_1pp_accuracy_ms": 0.65,
+    "total_extra_local_time_for_250_queries_sec": 0.91,
+    "extra_time_per_net_rescue_sec": 0.07
+  },
+  "offline_preparation_cost": {
+    "sqlite_db_size_mb": 8.6,
+    "qdrant_points_count": 2862,
+    "qdrant_vector_dim": 768,
+    "graph_node_count": 3234,
+    "graph_edge_count": 1397,
+    "corpus_doc_count": 100,
+    "corpus_chunks_count": 2862
+  },
+  "production_complexity_proxy": {
+    "b0": {
+      "runtime_stages": 2,
+      "persistent_indexes": 1,
+      "online_vector_queries": 1,
+      "online_fts_queries": 0,
+      "additional_llm_calls": 0,
+      "external_services": 2,
+      "estimated_production_loc": 450
+    },
+    "v3": {
+      "runtime_stages": 5,
+      "persistent_indexes": 2,
+      "online_vector_queries": 1,
+      "online_fts_queries_mean": 0.42,
+      "additional_llm_calls": 0,
+      "external_services": 2,
+      "estimated_production_loc": 2150
+    }
+  },
+  "verdict": {
+    "verdict_code": "VERDICT E-A",
+    "verdict_title": "ENGINEERING VALUE CONFIRMED",
+    "verdict_statement": "Frozen V3 的独立准确率收益具有可接受的工程成本；相比 B0，其额外开销主要集中于本地检索与路由（平均仅增加 3.63 ms，占端到端耗时 0.10%），并未引入额外的在线 LLM 循环或不可控的上下文成本。因此，Knowledge Routing 的工程价值在当前规模与运行环境下得到确认。",
+    "claim_engineering_value": "YES"
+  }
+}

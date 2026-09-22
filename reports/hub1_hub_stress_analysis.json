@@ -1,0 +1,706 @@
+{
+  "N": 100,
+  "overall": {
+    "N": 100,
+    "b0_acc": 61.0,
+    "v3_acc": 64.0,
+    "delta_acc": 3.0,
+    "b0_evidence": {
+      "gold_doc_recall": 82.0,
+      "gold_chunk_recall": 72.83,
+      "f1": 37.04,
+      "chain_completion": 51.0,
+      "cpr_chunk": 74.2,
+      "cpr_doc": 24.4
+    },
+    "v3_evidence": {
+      "gold_doc_recall": 90.83,
+      "gold_chunk_recall": 73.67,
+      "f1": 37.57,
+      "chain_completion": 53.0,
+      "cpr_chunk": 73.8,
+      "cpr_doc": 28.8
+    },
+    "candidates": {
+      "b0_cand_p50": 5.0,
+      "b0_cand_p95": 5.0,
+      "b0_cer": 1.0,
+      "v3_raw_cand_p50": 5.0,
+      "v3_raw_cand_p95": 27.0,
+      "v3_raw_cand_mean": 8.82,
+      "v3_cer_p50": 1.0,
+      "v3_cer_p95": 5.4,
+      "v3_cer_mean": 1.76
+    },
+    "latency": {
+      "b0_p50_ms": 173.78,
+      "b0_p95_ms": 261.14,
+      "v3_p50_ms": 0.92,
+      "v3_p95_ms": 50.47
+    }
+  },
+  "bucket_stats": {
+    "Bucket A (<5)": {
+      "N": 20,
+      "b0_acc": 45.0,
+      "v3_acc": 45.0,
+      "delta_acc": 0.0,
+      "b0_evidence": {
+        "gold_doc_recall": 89.17,
+        "gold_chunk_recall": 70.0,
+        "f1": 33.45,
+        "chain_completion": 45.0,
+        "cpr_chunk": 77.0,
+        "cpr_doc": 13.0
+      },
+      "v3_evidence": {
+        "gold_doc_recall": 95.0,
+        "gold_chunk_recall": 68.33,
+        "f1": 32.2,
+        "chain_completion": 45.0,
+        "cpr_chunk": 78.0,
+        "cpr_doc": 15.0
+      },
+      "candidates": {
+        "b0_cand_p50": 5.0,
+        "b0_cand_p95": 5.0,
+        "b0_cer": 1.0,
+        "v3_raw_cand_p50": 5.0,
+        "v3_raw_cand_p95": 8.15,
+        "v3_raw_cand_mean": 5.9,
+        "v3_cer_p50": 1.0,
+        "v3_cer_p95": 1.63,
+        "v3_cer_mean": 1.18
+      },
+      "latency": {
+        "b0_p50_ms": 156.68,
+        "b0_p95_ms": 259.12,
+        "v3_p50_ms": 0.48,
+        "v3_p95_ms": 47.49
+      }
+    },
+    "Bucket B (5-10)": {
+      "N": 20,
+      "b0_acc": 70.0,
+      "v3_acc": 80.0,
+      "delta_acc": 10.0,
+      "b0_evidence": {
+        "gold_doc_recall": 83.33,
+        "gold_chunk_recall": 80.0,
+        "f1": 39.17,
+        "chain_completion": 65.0,
+        "cpr_chunk": 73.0,
+        "cpr_doc": 20.0
+      },
+      "v3_evidence": {
+        "gold_doc_recall": 93.33,
+        "gold_chunk_recall": 86.67,
+        "f1": 43.27,
+        "chain_completion": 75.0,
+        "cpr_chunk": 70.0,
+        "cpr_doc": 20.0
+      },
+      "candidates": {
+        "b0_cand_p50": 5.0,
+        "b0_cand_p95": 5.0,
+        "b0_cer": 1.0,
+        "v3_raw_cand_p50": 5.0,
+        "v3_raw_cand_p95": 10.25,
+        "v3_raw_cand_mean": 6.3,
+        "v3_cer_p50": 1.0,
+        "v3_cer_p95": 2.05,
+        "v3_cer_mean": 1.26
+      },
+      "latency": {
+        "b0_p50_ms": 168.06,
+        "b0_p95_ms": 242.96,
+        "v3_p50_ms": 0.76,
+        "v3_p95_ms": 43.14
+      }
+    },
+    "Bucket C (11-20)": {
+      "N": 20,
+      "b0_acc": 70.0,
+      "v3_acc": 70.0,
+      "delta_acc": 0.0,
+      "b0_evidence": {
+        "gold_doc_recall": 85.83,
+        "gold_chunk_recall": 79.17,
+        "f1": 38.99,
+        "chain_completion": 60.0,
+        "cpr_chunk": 73.0,
+        "cpr_doc": 25.0
+      },
+      "v3_evidence": {
+        "gold_doc_recall": 86.67,
+        "gold_chunk_recall": 77.5,
+        "f1": 37.74,
+        "chain_completion": 60.0,
+        "cpr_chunk": 74.0,
+        "cpr_doc": 30.0
+      },
+      "candidates": {
+        "b0_cand_p50": 5.0,
+        "b0_cand_p95": 5.0,
+        "b0_cer": 1.0,
+        "v3_raw_cand_p50": 5.0,
+        "v3_raw_cand_p95": 15.45,
+        "v3_raw_cand_mean": 7.75,
+        "v3_cer_p50": 1.0,
+        "v3_cer_p95": 3.09,
+        "v3_cer_mean": 1.55
+      },
+      "latency": {
+        "b0_p50_ms": 179.71,
+        "b0_p95_ms": 244.58,
+        "v3_p50_ms": 0.62,
+        "v3_p95_ms": 45.91
+      }
+    },
+    "Bucket D (21-50)": {
+      "N": 20,
+      "b0_acc": 45.0,
+      "v3_acc": 50.0,
+      "delta_acc": 5.0,
+      "b0_evidence": {
+        "gold_doc_recall": 64.17,
+        "gold_chunk_recall": 57.5,
+        "f1": 31.07,
+        "chain_completion": 25.0,
+        "cpr_chunk": 78.0,
+        "cpr_doc": 33.0
+      },
+      "v3_evidence": {
+        "gold_doc_recall": 87.5,
+        "gold_chunk_recall": 58.33,
+        "f1": 32.14,
+        "chain_completion": 25.0,
+        "cpr_chunk": 77.0,
+        "cpr_doc": 39.0
+      },
+      "candidates": {
+        "b0_cand_p50": 5.0,
+        "b0_cand_p95": 5.0,
+        "b0_cer": 1.0,
+        "v3_raw_cand_p50": 15.0,
+        "v3_raw_cand_p95": 27.05,
+        "v3_raw_cand_mean": 16.0,
+        "v3_cer_p50": 3.0,
+        "v3_cer_p95": 5.41,
+        "v3_cer_mean": 3.2
+      },
+      "latency": {
+        "b0_p50_ms": 180.54,
+        "b0_p95_ms": 265.18,
+        "v3_p50_ms": 29.58,
+        "v3_p95_ms": 51.51
+      }
+    },
+    "Bucket E (>50)": {
+      "N": 20,
+      "b0_acc": 75.0,
+      "v3_acc": 75.0,
+      "delta_acc": 0.0,
+      "b0_evidence": {
+        "gold_doc_recall": 87.5,
+        "gold_chunk_recall": 77.5,
+        "f1": 42.5,
+        "chain_completion": 60.0,
+        "cpr_chunk": 70.0,
+        "cpr_doc": 31.0
+      },
+      "v3_evidence": {
+        "gold_doc_recall": 91.67,
+        "gold_chunk_recall": 77.5,
+        "f1": 42.5,
+        "chain_completion": 60.0,
+        "cpr_chunk": 70.0,
+        "cpr_doc": 40.0
+      },
+      "candidates": {
+        "b0_cand_p50": 5.0,
+        "b0_cand_p95": 5.0,
+        "b0_cer": 1.0,
+        "v3_raw_cand_p50": 5.0,
+        "v3_raw_cand_p95": 12.95,
+        "v3_raw_cand_mean": 8.15,
+        "v3_cer_p50": 1.0,
+        "v3_cer_p95": 2.59,
+        "v3_cer_mean": 1.63
+      },
+      "latency": {
+        "b0_p50_ms": 173.78,
+        "b0_p95_ms": 261.35,
+        "v3_p50_ms": 0.88,
+        "v3_p95_ms": 55.4
+      }
+    }
+  },
+  "subsets": {
+    "low_degree": {
+      "N": 40,
+      "b0_acc": 57.5,
+      "v3_acc": 62.5,
+      "delta_acc": 5.0,
+      "b0_evidence": {
+        "gold_doc_recall": 86.25,
+        "gold_chunk_recall": 75.0,
+        "f1": 36.31,
+        "chain_completion": 55.0,
+        "cpr_chunk": 75.0,
+        "cpr_doc": 16.5
+      },
+      "v3_evidence": {
+        "gold_doc_recall": 94.17,
+        "gold_chunk_recall": 77.5,
+        "f1": 37.74,
+        "chain_completion": 60.0,
+        "cpr_chunk": 74.0,
+        "cpr_doc": 17.5
+      },
+      "candidates": {
+        "b0_cand_p50": 5.0,
+        "b0_cand_p95": 5.0,
+        "b0_cer": 1.0,
+        "v3_raw_cand_p50": 5.0,
+        "v3_raw_cand_p95": 10.05,
+        "v3_raw_cand_mean": 6.1,
+        "v3_cer_p50": 1.0,
+        "v3_cer_p95": 2.01,
+        "v3_cer_mean": 1.22
+      },
+      "latency": {
+        "b0_p50_ms": 160.53,
+        "b0_p95_ms": 250.07,
+        "v3_p50_ms": 0.62,
+        "v3_p95_ms": 43.14
+      }
+    },
+    "middle_degree": {
+      "N": 20,
+      "b0_acc": 70.0,
+      "v3_acc": 70.0,
+      "delta_acc": 0.0,
+      "b0_evidence": {
+        "gold_doc_recall": 85.83,
+        "gold_chunk_recall": 79.17,
+        "f1": 38.99,
+        "chain_completion": 60.0,
+        "cpr_chunk": 73.0,
+        "cpr_doc": 25.0
+      },
+      "v3_evidence": {
+        "gold_doc_recall": 86.67,
+        "gold_chunk_recall": 77.5,
+        "f1": 37.74,
+        "chain_completion": 60.0,
+        "cpr_chunk": 74.0,
+        "cpr_doc": 30.0
+      },
+      "candidates": {
+        "b0_cand_p50": 5.0,
+        "b0_cand_p95": 5.0,
+        "b0_cer": 1.0,
+        "v3_raw_cand_p50": 5.0,
+        "v3_raw_cand_p95": 15.45,
+        "v3_raw_cand_mean": 7.75,
+        "v3_cer_p50": 1.0,
+        "v3_cer_p95": 3.09,
+        "v3_cer_mean": 1.55
+      },
+      "latency": {
+        "b0_p50_ms": 179.71,
+        "b0_p95_ms": 244.58,
+        "v3_p50_ms": 0.62,
+        "v3_p95_ms": 45.91
+      }
+    },
+    "high_degree": {
+      "N": 40,
+      "b0_acc": 60.0,
+      "v3_acc": 62.5,
+      "delta_acc": 2.5,
+      "b0_evidence": {
+        "gold_doc_recall": 75.83,
+        "gold_chunk_recall": 67.5,
+        "f1": 36.79,
+        "chain_completion": 42.5,
+        "cpr_chunk": 74.0,
+        "cpr_doc": 32.0
+      },
+      "v3_evidence": {
+        "gold_doc_recall": 89.58,
+        "gold_chunk_recall": 67.92,
+        "f1": 37.32,
+        "chain_completion": 42.5,
+        "cpr_chunk": 73.5,
+        "cpr_doc": 39.5
+      },
+      "candidates": {
+        "b0_cand_p50": 5.0,
+        "b0_cand_p95": 5.0,
+        "b0_cer": 1.0,
+        "v3_raw_cand_p50": 9.0,
+        "v3_raw_cand_p95": 27.05,
+        "v3_raw_cand_mean": 12.07,
+        "v3_cer_p50": 1.8,
+        "v3_cer_p95": 5.41,
+        "v3_cer_mean": 2.42
+      },
+      "latency": {
+        "b0_p50_ms": 178.99,
+        "b0_p95_ms": 263.63,
+        "v3_p50_ms": 22.22,
+        "v3_p95_ms": 55.4
+      }
+    }
+  },
+  "hub_degradation": {
+    "drop_b0_acc": -2.5,
+    "drop_v3_acc": 0.0,
+    "robustness_advantage": -2.5,
+    "bootstrap_ci_ra_95": [
+      -12.5,
+      7.5
+    ],
+    "drop_evidence": {
+      "gold_doc_recall": {
+        "b0": 10.42,
+        "v3": 4.59
+      },
+      "gold_chunk_recall": {
+        "b0": 7.5,
+        "v3": 9.58
+      },
+      "f1": {
+        "b0": -0.48,
+        "v3": 0.42
+      },
+      "chain_completion": {
+        "b0": 12.5,
+        "v3": 17.5
+      }
+    }
+  },
+  "statistical_tests": {
+    "overall_delta_acc": 3.0,
+    "overall_delta_ci_95": [
+      -1.0,
+      8.0
+    ],
+    "low_degree_delta_acc": 5.0,
+    "low_degree_delta_ci_95": [
+      0.0,
+      12.5
+    ],
+    "high_degree_delta_acc": 2.5,
+    "high_degree_delta_ci_95": [
+      -5.0,
+      12.5
+    ],
+    "high_degree_rescues": 2,
+    "high_degree_regressions": 1,
+    "high_degree_discordant_p_value": 1.0
+  },
+  "high_degree_transitions": {
+    "stable_correct": [
+      "HUB_061",
+      "HUB_062",
+      "HUB_063",
+      "HUB_072",
+      "HUB_073",
+      "HUB_075",
+      "HUB_076",
+      "HUB_079",
+      "HUB_081",
+      "HUB_082",
+      "HUB_083",
+      "HUB_084",
+      "HUB_085",
+      "HUB_086",
+      "HUB_088",
+      "HUB_089",
+      "HUB_090",
+      "HUB_091",
+      "HUB_092",
+      "HUB_093",
+      "HUB_094",
+      "HUB_095",
+      "HUB_098"
+    ],
+    "hub_rescue": [
+      "HUB_064",
+      "HUB_066"
+    ],
+    "hub_regression": [
+      "HUB_071"
+    ],
+    "stable_wrong": [
+      "HUB_065",
+      "HUB_067",
+      "HUB_068",
+      "HUB_069",
+      "HUB_070",
+      "HUB_074",
+      "HUB_077",
+      "HUB_078",
+      "HUB_080",
+      "HUB_087",
+      "HUB_096",
+      "HUB_097",
+      "HUB_099",
+      "HUB_100"
+    ]
+  },
+  "hop_subgroup_breakdown": {
+    "1-hop": {
+      "N_total": 27,
+      "N_low": 14,
+      "N_high": 6,
+      "low": {
+        "N": 14,
+        "b0_acc": 100.0,
+        "v3_acc": 100.0,
+        "delta_acc": 0.0,
+        "b0_evidence": {
+          "gold_doc_recall": 100.0,
+          "gold_chunk_recall": 100.0,
+          "f1": 33.33,
+          "chain_completion": 100.0,
+          "cpr_chunk": 80.0,
+          "cpr_doc": 14.29
+        },
+        "v3_evidence": {
+          "gold_doc_recall": 100.0,
+          "gold_chunk_recall": 100.0,
+          "f1": 33.33,
+          "chain_completion": 100.0,
+          "cpr_chunk": 80.0,
+          "cpr_doc": 14.29
+        },
+        "candidates": {
+          "b0_cand_p50": 5.0,
+          "b0_cand_p95": 5.0,
+          "b0_cer": 1.0,
+          "v3_raw_cand_p50": 5.0,
+          "v3_raw_cand_p95": 5.0,
+          "v3_raw_cand_mean": 5.0,
+          "v3_cer_p50": 1.0,
+          "v3_cer_p95": 1.0,
+          "v3_cer_mean": 1.0
+        },
+        "latency": {
+          "b0_p50_ms": 90.64,
+          "b0_p95_ms": 162.1,
+          "v3_p50_ms": 0.31,
+          "v3_p95_ms": 79.92
+        }
+      },
+      "high": {
+        "N": 6,
+        "b0_acc": 100.0,
+        "v3_acc": 100.0,
+        "delta_acc": 0.0,
+        "b0_evidence": {
+          "gold_doc_recall": 100.0,
+          "gold_chunk_recall": 100.0,
+          "f1": 33.33,
+          "chain_completion": 100.0,
+          "cpr_chunk": 80.0,
+          "cpr_doc": 20.0
+        },
+        "v3_evidence": {
+          "gold_doc_recall": 100.0,
+          "gold_chunk_recall": 100.0,
+          "f1": 33.33,
+          "chain_completion": 100.0,
+          "cpr_chunk": 80.0,
+          "cpr_doc": 20.0
+        },
+        "candidates": {
+          "b0_cand_p50": 5.0,
+          "b0_cand_p95": 5.0,
+          "b0_cer": 1.0,
+          "v3_raw_cand_p50": 5.0,
+          "v3_raw_cand_p95": 5.0,
+          "v3_raw_cand_mean": 5.0,
+          "v3_cer_p50": 1.0,
+          "v3_cer_p95": 1.0,
+          "v3_cer_mean": 1.0
+        },
+        "latency": {
+          "b0_p50_ms": 93.41,
+          "b0_p95_ms": 152.0,
+          "v3_p50_ms": 0.33,
+          "v3_p95_ms": 0.79
+        }
+      }
+    },
+    "2-hop": {
+      "N_total": 48,
+      "N_low": 16,
+      "N_high": 24,
+      "low": {
+        "N": 16,
+        "b0_acc": 50.0,
+        "v3_acc": 62.5,
+        "delta_acc": 12.5,
+        "b0_evidence": {
+          "gold_doc_recall": 90.62,
+          "gold_chunk_recall": 75.0,
+          "f1": 42.86,
+          "chain_completion": 50.0,
+          "cpr_chunk": 70.0,
+          "cpr_doc": 20.0
+        },
+        "v3_evidence": {
+          "gold_doc_recall": 100.0,
+          "gold_chunk_recall": 81.25,
+          "f1": 46.43,
+          "chain_completion": 62.5,
+          "cpr_chunk": 67.5,
+          "cpr_doc": 20.0
+        },
+        "candidates": {
+          "b0_cand_p50": 5.0,
+          "b0_cand_p95": 5.0,
+          "b0_cer": 1.0,
+          "v3_raw_cand_p50": 5.0,
+          "v3_raw_cand_p95": 8.0,
+          "v3_raw_cand_mean": 5.56,
+          "v3_cer_p50": 1.0,
+          "v3_cer_p95": 1.6,
+          "v3_cer_mean": 1.11
+        },
+        "latency": {
+          "b0_p50_ms": 165.62,
+          "b0_p95_ms": 214.26,
+          "v3_p50_ms": 0.63,
+          "v3_p95_ms": 27.07
+        }
+      },
+      "high": {
+        "N": 24,
+        "b0_acc": 62.5,
+        "v3_acc": 66.67,
+        "delta_acc": 4.17,
+        "b0_evidence": {
+          "gold_doc_recall": 79.17,
+          "gold_chunk_recall": 70.83,
+          "f1": 40.48,
+          "chain_completion": 45.83,
+          "cpr_chunk": 71.67,
+          "cpr_doc": 34.17
+        },
+        "v3_evidence": {
+          "gold_doc_recall": 95.83,
+          "gold_chunk_recall": 68.75,
+          "f1": 39.29,
+          "chain_completion": 45.83,
+          "cpr_chunk": 72.5,
+          "cpr_doc": 41.67
+        },
+        "candidates": {
+          "b0_cand_p50": 5.0,
+          "b0_cand_p95": 5.0,
+          "b0_cer": 1.0,
+          "v3_raw_cand_p50": 9.5,
+          "v3_raw_cand_p95": 27.0,
+          "v3_raw_cand_mean": 12.33,
+          "v3_cer_p50": 1.9,
+          "v3_cer_p95": 5.4,
+          "v3_cer_mean": 2.47
+        },
+        "latency": {
+          "b0_p50_ms": 173.78,
+          "b0_p95_ms": 201.23,
+          "v3_p50_ms": 17.71,
+          "v3_p95_ms": 50.31
+        }
+      }
+    },
+    "3-hop": {
+      "N_total": 25,
+      "N_low": 10,
+      "N_high": 10,
+      "low": {
+        "N": 10,
+        "b0_acc": 10.0,
+        "v3_acc": 10.0,
+        "delta_acc": 0.0,
+        "b0_evidence": {
+          "gold_doc_recall": 60.0,
+          "gold_chunk_recall": 40.0,
+          "f1": 30.0,
+          "chain_completion": 0.0,
+          "cpr_chunk": 76.0,
+          "cpr_doc": 14.0
+        },
+        "v3_evidence": {
+          "gold_doc_recall": 76.67,
+          "gold_chunk_recall": 40.0,
+          "f1": 30.0,
+          "chain_completion": 0.0,
+          "cpr_chunk": 76.0,
+          "cpr_doc": 18.0
+        },
+        "candidates": {
+          "b0_cand_p50": 5.0,
+          "b0_cand_p95": 5.0,
+          "b0_cer": 1.0,
+          "v3_raw_cand_p50": 8.0,
+          "v3_raw_cand_p95": 13.2,
+          "v3_raw_cand_mean": 8.5,
+          "v3_cer_p50": 1.6,
+          "v3_cer_p95": 2.64,
+          "v3_cer_mean": 1.7
+        },
+        "latency": {
+          "b0_p50_ms": 239.57,
+          "b0_p95_ms": 260.18,
+          "v3_p50_ms": 32.86,
+          "v3_p95_ms": 46.09
+        }
+      },
+      "high": {
+        "N": 10,
+        "b0_acc": 30.0,
+        "v3_acc": 30.0,
+        "delta_acc": 0.0,
+        "b0_evidence": {
+          "gold_doc_recall": 53.33,
+          "gold_chunk_recall": 40.0,
+          "f1": 30.0,
+          "chain_completion": 0.0,
+          "cpr_chunk": 76.0,
+          "cpr_doc": 34.0
+        },
+        "v3_evidence": {
+          "gold_doc_recall": 68.33,
+          "gold_chunk_recall": 46.67,
+          "f1": 35.0,
+          "chain_completion": 0.0,
+          "cpr_chunk": 72.0,
+          "cpr_doc": 46.0
+        },
+        "candidates": {
+          "b0_cand_p50": 5.0,
+          "b0_cand_p95": 5.0,
+          "b0_cer": 1.0,
+          "v3_raw_cand_p50": 12.5,
+          "v3_raw_cand_p95": 29.65,
+          "v3_raw_cand_mean": 15.7,
+          "v3_cer_p50": 2.5,
+          "v3_cer_p95": 5.93,
+          "v3_cer_mean": 3.14
+        },
+        "latency": {
+          "b0_p50_ms": 237.49,
+          "b0_p95_ms": 265.8,
+          "v3_p50_ms": 45.28,
+          "v3_p95_ms": 61.57
+        }
+      }
+    }
+  }
+}

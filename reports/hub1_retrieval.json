@@ -1,0 +1,58 @@
+{
+  "N": 100,
+  "corpus": "D100",
+  "legacy_graph_status": "UNAVAILABLE",
+  "s0_b0": {
+    "gold_document_recall": 82.0,
+    "gold_chunk_recall": 72.83,
+    "evidence_f1": 37.04,
+    "chain_completion_rate": 51.0,
+    "chain_completion_count": 51,
+    "cpr_chunk": 74.2,
+    "cpr_doc": 24.4,
+    "cpr_hub": 5.6,
+    "mean_candidate_count": 5.0,
+    "candidate_p50": 5.0,
+    "candidate_p95": 5.0,
+    "cer_mean": 1.0,
+    "latency_p50_ms": 173.78,
+    "latency_p95_ms": 261.14
+  },
+  "s1_v3_frozen": {
+    "gold_document_recall": 90.83,
+    "gold_chunk_recall": 73.67,
+    "evidence_f1": 37.57,
+    "chain_completion_rate": 53.0,
+    "chain_completion_count": 53,
+    "cpr_chunk": 73.8,
+    "cpr_doc": 28.8,
+    "cpr_hub": 6.6,
+    "mean_raw_candidates": 8.82,
+    "raw_candidate_p50": 5.0,
+    "raw_candidate_p95": 27.0,
+    "mean_routed_candidates": 1.53,
+    "mean_final_evidence": 5.0,
+    "cer_raw_mean": 1.76,
+    "cer_raw_p50": 1.0,
+    "cer_raw_p95": 5.4,
+    "retrieval_latency_p50_ms": 0.0,
+    "routing_latency_p50_ms": 0.92,
+    "total_retrieval_latency_p50_ms": 0.92,
+    "total_retrieval_latency_p95_ms": 50.47
+  },
+  "delta": {
+    "gold_document_recall": 8.83,
+    "gold_chunk_recall": 0.83,
+    "evidence_f1": 0.54,
+    "chain_completion_rate": 2.0,
+    "chain_completion_count": 2,
+    "cpr_chunk_reduction": 0.4,
+    "cpr_doc_reduction": -4.4,
+    "cpr_hub_reduction": -1.0
+  },
+  "transitions": {
+    "retrieval_rescues": 2,
+    "retrieval_regressions": 0,
+    "net_retrieval_rescue": 2
+  }
+}

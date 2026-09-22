@@ -1,0 +1,228 @@
+{
+  "discordant_cases_audited": 22,
+  "adjudicated_stable_rescues": 16,
+  "adjudicated_stable_regressions": 2,
+  "adjudicated_net_stable_rescue": 14,
+  "decisions": [
+    {
+      "qid": "H2_099",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_107",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_110",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_114",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_118",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_127",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_138",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_143",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_146",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_149",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": true,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "NEUTRAL"
+    },
+    {
+      "qid": "H2_151",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_156",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_157",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": true,
+      "adjudicated_h1_correct": false,
+      "adjudicated_transition": "STABLE_REGRESSION"
+    },
+    {
+      "qid": "H2_165",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_169",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_180",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": false,
+      "adjudicated_transition": "NEUTRAL"
+    },
+    {
+      "qid": "H2_183",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": false,
+      "adjudicated_transition": "NEUTRAL"
+    },
+    {
+      "qid": "H2_194",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_195",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": true,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "NEUTRAL"
+    },
+    {
+      "qid": "H2_207",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    },
+    {
+      "qid": "H2_216",
+      "blinded_mapping": {
+        "System_A": "H1",
+        "System_B": "H0"
+      },
+      "adjudicated_h0_correct": true,
+      "adjudicated_h1_correct": false,
+      "adjudicated_transition": "STABLE_REGRESSION"
+    },
+    {
+      "qid": "H2_230",
+      "blinded_mapping": {
+        "System_A": "H0",
+        "System_B": "H1"
+      },
+      "adjudicated_h0_correct": false,
+      "adjudicated_h1_correct": true,
+      "adjudicated_transition": "STABLE_RESCUE"
+    }
+  ]
+}

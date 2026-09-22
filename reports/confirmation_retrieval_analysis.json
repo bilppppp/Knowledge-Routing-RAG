@@ -1,0 +1,52 @@
+{
+  "gold_doc_recall": {
+    "h0": 0.83,
+    "h1": 0.9108333333333333,
+    "delta": 0.08083333333333331
+  },
+  "gold_chunk_recall": {
+    "h0": 0.6758333333333333,
+    "h1": 0.6908333333333333,
+    "delta": 0.015000000000000013
+  },
+  "evidence_precision": {
+    "h0": 0.20600000000000002,
+    "h1": 0.22024999999999997,
+    "delta": 0.014249999999999957
+  },
+  "evidence_recall": {
+    "h0": 0.6758333333333333,
+    "h1": 0.6908333333333333,
+    "delta": 0.015000000000000013
+  },
+  "evidence_f1": {
+    "h0": 0.30494047619047626,
+    "h1": 0.31975000000000003,
+    "delta": 0.014809523809523772
+  },
+  "cpr": {
+    "h0": 0.794,
+    "h1": 0.7797499999999999,
+    "delta": -0.014250000000000096
+  },
+  "chain_completion": {
+    "h0": 0.48,
+    "h1": 0.49,
+    "delta": 0.010000000000000009
+  },
+  "retrieval_rescues_count": 5,
+  "retrieval_regressions_count": 3,
+  "net_retrieval_rescue": 2,
+  "retrieval_rescue_qids": [
+    "CONF_Q123",
+    "CONF_Q138",
+    "CONF_Q142",
+    "CONF_Q143",
+    "CONF_Q200"
+  ],
+  "retrieval_regression_qids": [
+    "CONF_Q089",
+    "CONF_Q106",
+    "CONF_Q111"
+  ]
+}

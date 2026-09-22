@@ -1,0 +1,162 @@
+{
+  "N": 216,
+  "configurations": {
+    "B1-H_Hybrid": {
+      "candidate_pool_gold_recall": 6.02,
+      "candidate_pool_eq_recall": 16.2,
+      "final_gold_chunk_recall": 53.32,
+      "gold_document_recall": 79.55,
+      "chain_completion_rate": 34.26,
+      "chain_completion_count": 74,
+      "evidence_f1": 24.71,
+      "retrieval_rescues_vs_b0": 2,
+      "retrieval_regressions_vs_b0": 0,
+      "net_retrieval_rescues_vs_b0": 2,
+      "useful_evidence_evictions": 0,
+      "admission_rate": 70.37,
+      "total_descent_candidates": 54,
+      "admitted_descent_candidates": 38
+    },
+    "B1-L_Lexical_Only": {
+      "candidate_pool_gold_recall": 6.94,
+      "candidate_pool_eq_recall": 16.2,
+      "final_gold_chunk_recall": 53.63,
+      "gold_document_recall": 79.55,
+      "chain_completion_rate": 35.19,
+      "chain_completion_count": 76,
+      "evidence_f1": 24.94,
+      "retrieval_rescues_vs_b0": 4,
+      "retrieval_regressions_vs_b0": 0,
+      "net_retrieval_rescues_vs_b0": 4,
+      "useful_evidence_evictions": 0,
+      "admission_rate": 71.15,
+      "total_descent_candidates": 52,
+      "admitted_descent_candidates": 37
+    },
+    "B1-S_Semantic_Only": {
+      "candidate_pool_gold_recall": 5.09,
+      "candidate_pool_eq_recall": 16.2,
+      "final_gold_chunk_recall": 52.85,
+      "gold_document_recall": 79.32,
+      "chain_completion_rate": 33.33,
+      "chain_completion_count": 72,
+      "evidence_f1": 24.44,
+      "retrieval_rescues_vs_b0": 0,
+      "retrieval_regressions_vs_b0": 0,
+      "net_retrieval_rescues_vs_b0": 0,
+      "useful_evidence_evictions": 0,
+      "admission_rate": 70.37,
+      "total_descent_candidates": 54,
+      "admitted_descent_candidates": 38
+    }
+  },
+  "channel_incrementality": {
+    "routed_instances_count": 41,
+    "lexical_unique_gold_count": 4,
+    "semantic_unique_gold_count": 0,
+    "both_gold_count": 11,
+    "neither_gold_count": 26,
+    "lexical_unique_instances": [
+      {
+        "qid": "Q078",
+        "corpus": "D100",
+        "l_unique_chunks": [
+          "doc005#c001"
+        ],
+        "admitted_into_hybrid_final": true,
+        "evidence_changed_vs_semantic": true,
+        "chain_improved_vs_semantic": true
+      },
+      {
+        "qid": "Q078",
+        "corpus": "D50",
+        "l_unique_chunks": [
+          "doc005#c001"
+        ],
+        "admitted_into_hybrid_final": true,
+        "evidence_changed_vs_semantic": true,
+        "chain_improved_vs_semantic": true
+      },
+      {
+        "qid": "Q089",
+        "corpus": "D100",
+        "l_unique_chunks": [
+          "doc033#c001"
+        ],
+        "admitted_into_hybrid_final": false,
+        "evidence_changed_vs_semantic": false,
+        "chain_improved_vs_semantic": false
+      },
+      {
+        "qid": "Q089",
+        "corpus": "D50",
+        "l_unique_chunks": [
+          "doc033#c001"
+        ],
+        "admitted_into_hybrid_final": false,
+        "evidence_changed_vs_semantic": false,
+        "chain_improved_vs_semantic": false
+      }
+    ],
+    "semantic_unique_instances": [],
+    "both_gold_instance_keys": [
+      [
+        "Q015",
+        "D100"
+      ],
+      [
+        "Q015",
+        "D20"
+      ],
+      [
+        "Q015",
+        "D50"
+      ],
+      [
+        "Q017",
+        "D100"
+      ],
+      [
+        "Q017",
+        "D20"
+      ],
+      [
+        "Q017",
+        "D50"
+      ],
+      [
+        "Q018",
+        "D100"
+      ],
+      [
+        "Q018",
+        "D20"
+      ],
+      [
+        "Q018",
+        "D50"
+      ],
+      [
+        "Q073",
+        "D100"
+      ],
+      [
+        "Q073",
+        "D50"
+      ]
+    ]
+  },
+  "final_outcome_incrementality": {
+    "semantic_admitted_into_final": 0,
+    "semantic_evidence_changed": 0,
+    "semantic_chain_completion_improved": 0,
+    "lexical_admitted_into_final": 2,
+    "lexical_evidence_changed": 2,
+    "lexical_chain_completion_improved": 2
+  },
+  "minimality_decision": {
+    "verdict": "FREEZE_E2_LITE_LEXICAL",
+    "recommended_architecture": "E2-Lite (Lexical Only)",
+    "rationale": "Semantic Channel provides zero unique gold chunks (SEMANTIC_UNIQUE_GOLD == 0) and zero incremental evidence or chain completion over Lexical-only. Hybrid metrics equal Lexical-only metrics. Under the Minimum Sufficient System principle, the Semantic Channel and RRF fusion are removed."
+  }
+}

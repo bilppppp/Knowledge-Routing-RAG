@@ -1,0 +1,24 @@
+{
+  "N": 216,
+  "system_id": "E2-Lite-Lexical",
+  "accuracy": 74.54,
+  "correct_count": 161,
+  "b0_accuracy": 72.22,
+  "b0_correct_count": 156,
+  "rescues_vs_b0": 5,
+  "regressions_vs_b0": 0,
+  "net_rescue_vs_b0": 5,
+  "1_hop": {
+    "N": 64,
+    "accuracy": 84.38,
+    "correct_count": 54,
+    "b0_accuracy": 84.38
+  },
+  "multi_hop": {
+    "N": 152,
+    "accuracy": 70.39,
+    "correct_count": 107,
+    "b0_accuracy": 67.11
+  },
+  "same_evidence_flips": 0
+}

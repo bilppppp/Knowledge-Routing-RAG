@@ -1,0 +1,27 @@
+{
+  "step_1_total_routed": {
+    "name": "Total Routed Instances",
+    "count": 41,
+    "conversion_rate": 1.0
+  },
+  "step_2_correct_target_doc": {
+    "name": "Correct Target Document Resolved",
+    "count": 35,
+    "conversion_rate": 0.8537
+  },
+  "step_3_entered_candidate_pool": {
+    "name": "Gold Chunk Entered Candidate Pool",
+    "count": 13,
+    "conversion_rate": 0.3714
+  },
+  "step_4_admitted_by_composer": {
+    "name": "Admitted by E1 Composer",
+    "count": 32,
+    "conversion_rate": 2.4615
+  },
+  "step_5_chain_complete": {
+    "name": "Final Evidence Chain Complete",
+    "count": 19,
+    "conversion_rate": 0.5938
+  }
+}

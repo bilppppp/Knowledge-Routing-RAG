@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "description": "Unified Knowledge-Routing-RAG Descent Funnel across Dev-216 (Standardized Denominators)",
+    "benchmark_size": 216,
+    "evaluated_systems": [
+      "B1-H_Hybrid",
+      "B1-L_Lexical_Only"
+    ]
+  },
+  "operational_descent_funnel": {
+    "step_1_total_evaluation_instances": {
+      "name": "Total Evaluation Instances",
+      "count": 216,
+      "denominator": 216,
+      "rate": 1.0,
+      "percentage": "100.0%"
+    },
+    "step_2_routed_instances": {
+      "name": "Routed Instances (Triggered Knowledge Routing)",
+      "count": 41,
+      "denominator": 216,
+      "rate": 0.1898,
+      "percentage": "18.98%"
+    },
+    "step_3_descent_eligible_instances": {
+      "name": "Descent-Eligible Instances (Target Documents Selected for Descent)",
+      "count": 41,
+      "denominator": 41,
+      "rate": 1.0,
+      "percentage": "100.0%"
+    },
+    "step_4_correct_target_document_resolved": {
+      "name": "Correct Target Document Resolved (Selected Target Docs Contain Gold Doc)",
+      "count": 35,
+      "denominator": 41,
+      "rate": 0.8537,
+      "percentage": "85.37%"
+    },
+    "step_5a_gold_chunk_found_hybrid": {
+      "name": "Gold/Equivalent Chunk Found in Local Descent (B1-H Hybrid)",
+      "count": 13,
+      "denominator": 35,
+      "rate": 0.3714,
+      "percentage": "37.14%"
+    },
+    "step_5b_gold_chunk_found_lexical": {
+      "name": "Gold/Equivalent Chunk Found in Local Descent (B1-L Lexical Only)",
+      "count": 15,
+      "denominator": 35,
+      "rate": 0.4286,
+      "percentage": "42.86%"
+    },
+    "step_6a_composer_accepted_hybrid": {
+      "name": "Admitted by E1 Composer (B1-H Hybrid)",
+      "count": 13,
+      "denominator": 13,
+      "rate": 1.0,
+      "percentage": "100.0%"
+    },
+    "step_6b_composer_accepted_lexical": {
+      "name": "Admitted by E1 Composer (B1-L Lexical Only)",
+      "count": 15,
+      "denominator": 15,
+      "rate": 1.0,
+      "percentage": "100.0%"
+    },
+    "step_7a_chain_complete_routed_hybrid": {
+      "name": "Final Evidence Chain Complete among Routed (B1-H Hybrid)",
+      "count": 19,
+      "denominator": 41,
+      "rate": 0.4634,
+      "percentage": "46.34%"
+    },
+    "step_7b_chain_complete_routed_lexical": {
+      "name": "Final Evidence Chain Complete among Routed (B1-L Lexical Only)",
+      "count": 21,
+      "denominator": 41,
+      "rate": 0.5122,
+      "percentage": "51.22%"
+    }
+  },
+  "key_conversion_rates": {
+    "document_resolution_rate": {
+      "formula": "Correct Target Document (35) / Routed Instances (41)",
+      "value": 85.37,
+      "interpretation": "Strong: In 85.4% of routed tasks, the system correctly locates the required statute prefix."
+    },
+    "local_descent_conversion_hybrid": {
+      "formula": "Gold Chunk Found (13) / Correct Target Document (35)",
+      "value": 37.14,
+      "interpretation": "Sub-50%: The primary loss of evidence occurs during descent inside the correct document."
+    },
+    "local_descent_conversion_lexical": {
+      "formula": "Gold Chunk Found (15) / Correct Target Document (35)",
+      "value": 42.86,
+      "interpretation": "Improved: Lexical-only captures 2 additional gold instances, reaching 42.9% descent conversion."
+    },
+    "composer_admission_rate": {
+      "formula": "Composer Admitted (15) / Candidate Pool Gold (15)",
+      "value": 100.0,
+      "interpretation": "Perfect: Zero false rejections; all descent gold candidates are admitted by E1 Composer."
+    }
+  },
+  "a0_vs_e2_reconciliation": {
+    "discrepancy_explanation": "In A0 Oracle Audit, TARGET_DOC_MISS=1 was reported out of 14 failure tasks (Q098_D100). In E2 Funnel, 35 correct target docs were reported out of 41 total routed tasks (meaning 6 tasks missed target docs). These numbers are fully reconcilable: A0 audited a pre-filtered failure subset of 14 tasks from E1 (where 9 were DESCENT_QUERY_MISS, 4 were CHUNK_RANK_MISS, and 1 was TARGET_DOC_MISS: Q098_D100). Across the full Dev-216, there are 41 routed tasks across D20, D50, D100. Of these 41 tasks, 35 correctly resolve the target document, while 6 miss the target document (Q073_D100, Q098_D20, Q098_D50, Q098_D100, and Q014/Q026 edge cases). Thus, A0 TARGET_DOC_MISS=1 is the unique failure instance within E1 failures, while Miss=6 is the comprehensive task count across all 3 distraction corpora.",
+    "denominator_mapping": {
+      "a0_audited_failures_denominator": 14,
+      "a0_target_doc_miss": 1,
+      "full_routed_tasks_denominator": 41,
+      "full_target_doc_correct": 35,
+      "full_target_doc_miss": 6
+    }
+  },
+  "bottleneck_diagnosis": {
+    "document_resolution_rate": "85.37%",
+    "local_descent_conversion_rate": "42.86%",
+    "primary_bottleneck": "Local Targeted Descent (Document -> Chunk)",
+    "rationale": "Document Resolution Rate (85.37%) is double the Local Descent Conversion Rate (42.86%). The system successfully locates the target statute in over 85% of cases, but loses more than 57% of evidence when descending into the document to find the exact chunk. Therefore, Document -> Chunk descent remains the primary conversion bottleneck, not Global Document Discovery."
+  },
+  "candidate_oracle_headroom": {
+    "current_local_descent_conversion": 42.86,
+    "candidate_oracle_chunk_recall": 56.17,
+    "current_e2_lite_chunk_recall": 53.63,
+    "headroom_chunk_recall_pp": 2.54,
+    "candidate_oracle_chain_completion_count": 79,
+    "current_e2_lite_chain_completion_count": 76,
+    "headroom_chain_completion_count": 3
+  }
+}

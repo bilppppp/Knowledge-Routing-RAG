@@ -1,0 +1,70 @@
+{
+  "CONF_Q089": {
+    "System_A": "H0",
+    "System_B": "H1"
+  },
+  "CONF_Q093": {
+    "System_A": "H0",
+    "System_B": "H1"
+  },
+  "CONF_Q106": {
+    "System_A": "H1",
+    "System_B": "H0"
+  },
+  "CONF_Q110": {
+    "System_A": "H1",
+    "System_B": "H0"
+  },
+  "CONF_Q121": {
+    "System_A": "H0",
+    "System_B": "H1"
+  },
+  "CONF_Q133": {
+    "System_A": "H0",
+    "System_B": "H1"
+  },
+  "CONF_Q144": {
+    "System_A": "H1",
+    "System_B": "H0"
+  },
+  "CONF_Q152": {
+    "System_A": "H1",
+    "System_B": "H0"
+  },
+  "CONF_Q156": {
+    "System_A": "H1",
+    "System_B": "H0"
+  },
+  "CONF_Q161": {
+    "System_A": "H0",
+    "System_B": "H1"
+  },
+  "CONF_Q167": {
+    "System_A": "H1",
+    "System_B": "H0"
+  },
+  "CONF_Q169": {
+    "System_A": "H1",
+    "System_B": "H0"
+  },
+  "CONF_Q175": {
+    "System_A": "H0",
+    "System_B": "H1"
+  },
+  "CONF_Q177": {
+    "System_A": "H0",
+    "System_B": "H1"
+  },
+  "CONF_Q179": {
+    "System_A": "H1",
+    "System_B": "H0"
+  },
+  "CONF_Q183": {
+    "System_A": "H0",
+    "System_B": "H1"
+  },
+  "CONF_Q189": {
+    "System_A": "H0",
+    "System_B": "H1"
+  }
+}

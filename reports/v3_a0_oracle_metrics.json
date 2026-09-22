@@ -1,0 +1,118 @@
+{
+  "benchmark_instances": 216,
+  "routed_instances": 20,
+  "descent_failure_instances": 14,
+  "a0_decision": "GO",
+  "metrics_comparison": {
+    "D0_B0": {
+      "gold_doc_recall": 76.39,
+      "gold_chunk_recall": 52.85,
+      "evidence_f1": 24.44,
+      "chain_completion_rate": 33.33,
+      "chain_completion_count": 72,
+      "retrieval_rescues": 0,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 0
+    },
+    "D1_Clean_Raw": {
+      "gold_doc_recall": 79.71,
+      "gold_chunk_recall": 52.7,
+      "evidence_f1": 25.07,
+      "chain_completion_rate": 34.26,
+      "chain_completion_count": 74,
+      "retrieval_rescues": 2,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 2
+    },
+    "E1_Coverage_Composer": {
+      "gold_doc_recall": 79.71,
+      "gold_chunk_recall": 53.16,
+      "evidence_f1": 24.67,
+      "chain_completion_rate": 34.26,
+      "chain_completion_count": 74,
+      "retrieval_rescues": 2,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 2
+    },
+    "Oracle1_Candidate_Oracle": {
+      "gold_doc_recall": 79.71,
+      "gold_chunk_recall": 56.17,
+      "evidence_f1": 26.48,
+      "chain_completion_rate": 36.57,
+      "chain_completion_count": 79,
+      "retrieval_rescues": 7,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 7
+    },
+    "Oracle2_Evidence_Oracle": {
+      "gold_doc_recall": 79.71,
+      "gold_chunk_recall": 56.17,
+      "evidence_f1": 26.48,
+      "chain_completion_rate": 36.57,
+      "chain_completion_count": 79,
+      "retrieval_rescues": 7,
+      "retrieval_regressions": 0,
+      "net_retrieval_rescue": 7
+    }
+  },
+  "failure_taxonomy": {
+    "TARGET_DOC_MISS": 1,
+    "DESCENT_QUERY_MISS": 9,
+    "CHUNK_RANK_MISS": 4,
+    "CHUNK_BOUNDARY_EQUIVALENT": 0,
+    "CANDIDATE_PRESENT_BUT_FILTERED": 0,
+    "OTHER": 6
+  },
+  "equivalent_evidence_counts": {
+    "EXACT_GOLD": 2,
+    "SAME_ARTICLE_EQUIVALENT": 0,
+    "PARTIAL_SUPPORT": 6,
+    "TOPIC_ONLY": 10,
+    "IRRELEVANT": 2
+  },
+  "local_rank_distribution": {
+    "1": 2,
+    "2": 0,
+    "3-5": 4,
+    "6-10": 0,
+    "11-20": 3,
+    "NOT_FOUND": 9
+  },
+  "conversion_funnel": {
+    "step_1_total_routed": {
+      "name": "Total Routed Instances",
+      "count": 20,
+      "conversion_rate": 1.0
+    },
+    "step_2_correct_target_doc": {
+      "name": "Correct Target Document Resolved",
+      "count": 18,
+      "conversion_rate": 0.9
+    },
+    "step_3_found_locally": {
+      "name": "Gold/Equivalent Chunk Found Locally",
+      "count": 12,
+      "conversion_rate": 0.6667
+    },
+    "step_4_entered_candidate_pool": {
+      "name": "Entered Candidate Pool",
+      "count": 8,
+      "conversion_rate": 0.6667
+    },
+    "step_5_accepted_by_composer": {
+      "name": "Accepted by E1 Composer",
+      "count": 18,
+      "conversion_rate": 2.25
+    },
+    "step_6_chain_complete": {
+      "name": "Final Evidence Chain Complete",
+      "count": 6,
+      "conversion_rate": 0.3333
+    }
+  },
+  "oracle_candidate_acceptance": {
+    "accepted_count": 14,
+    "rejected_count": 0,
+    "acceptance_rate": 100.0
+  }
+}
