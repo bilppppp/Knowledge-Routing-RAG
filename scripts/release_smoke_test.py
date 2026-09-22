@@ -60,14 +60,28 @@ def main():
     # 2. Config Loading
     try:
         b0_cfg_path = PROJECT_ROOT / "configs" / "b0_baseline.yaml"
+        dense_cfg_path = PROJECT_ROOT / "configs" / "dense_baseline.yaml"
         v3_cfg_path = PROJECT_ROOT / "configs" / "v3_frozen.yaml"
+        s3_cfg_path = PROJECT_ROOT / "configs" / "structured_retrieval_final.yaml"
+        s4_cfg_path = PROJECT_ROOT / "configs" / "v3_truegraph_experimental.yaml"
+
         with open(b0_cfg_path, "r", encoding="utf-8") as f:
             b0_cfg = yaml.safe_load(f)
+        with open(dense_cfg_path, "r", encoding="utf-8") as f:
+            dense_cfg = yaml.safe_load(f)
         with open(v3_cfg_path, "r", encoding="utf-8") as f:
             v3_cfg = yaml.safe_load(f)
+        with open(s3_cfg_path, "r", encoding="utf-8") as f:
+            s3_cfg = yaml.safe_load(f)
+        with open(s4_cfg_path, "r", encoding="utf-8") as f:
+            s4_cfg = yaml.safe_load(f)
+
         assert b0_cfg["system"]["system_id"] == "B0"
+        assert dense_cfg["system"]["system_id"] == "S0"
         assert v3_cfg["system"]["system_id"] == "V3"
-        print_pass("Runtime configuration files loaded and validated.")
+        assert s3_cfg["system"]["system_id"] == "S3"
+        assert s4_cfg["system"]["system_id"] == "S4"
+        print_pass("Runtime configuration files loaded and validated (B0, S0, V3, S3-Final, S4-TrueGraph).")
     except Exception as e:
         print_fail(f"Config loading failed: {e}")
         return 1

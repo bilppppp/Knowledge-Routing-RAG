@@ -1,0 +1,34 @@
+# ==============================================================================
+# Baseline Configuration: S0 (Standard Dense Top-5 Vector RAG)
+# ==============================================================================
+# System ID: S0 / B0
+# Description: Standard dense vector search baseline retrieving top-5 chunks
+#              using bge-large-zh-v1.5 and cosine similarity over Qdrant.
+# ==============================================================================
+
+system:
+  system_id: "S0"
+  name: "Dense Top-5 Baseline"
+  status: "FROZEN_BASELINE"
+
+generator:
+  provider: "deepseek"
+  model: "deepseek-chat"
+  temperature: 0.0
+  max_evidence_tokens: 4000
+  prompt_template: "RAW_B0"
+
+retrieval:
+  mode: "dense_vector_only"
+  vector_top_k: 5
+  collection: "knowledge_routing_exp"
+  dimension: 1024
+  metric: "Cosine"
+
+composition:
+  max_evidence_chunks: 5
+  replacement_enabled: false
+
+corpus:
+  primary: "D100"
+  nested_sets: ["D20", "D50", "D100"]

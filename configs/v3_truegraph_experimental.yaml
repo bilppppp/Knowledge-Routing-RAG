@@ -1,0 +1,65 @@
+# ==============================================================================
+# Historical Research Configuration: S4 (V3-TrueGraph / E2-Lite Knowledge Routing)
+# ==============================================================================
+# System ID: S4 (V3-TrueGraph)
+# Status: HISTORICAL_EXPERIMENTAL_CONFIGURATION
+# Description: Full V3 knowledge routing architecture with graph-assisted navigation:
+#              Vector Entrance -> C7 Global Graph Routing -> Title Resolution ->
+#              E2-Lite Slot-Conditioned Lexical Descent ->
+#              E1 Coverage-Preserving Evidence Composition.
+# Finding: Evaluated on Mechanism Holdout-3 (S4: 64.17% vs S3: 69.58%, Delta: -5.42pp,
+#          p=0.0059). The graph traversal component was found to introduce distractor
+#          chunks that evict gold statutory articles. Retained for historical
+#          reproducibility and scientific ablation.
+# ==============================================================================
+
+system:
+  system_id: "S4"
+  name: "V3-TrueGraph (Historical Experimental)"
+  status: "HISTORICAL_EXPERIMENTAL_CONFIGURATION"
+  graph_enabled: true
+  frozen_commit: "4e5f40679086a5f403e0af42d120dcea79effc89"
+
+generator:
+  provider: "deepseek"
+  model: "deepseek-chat"
+  temperature: 0.0
+  max_evidence_tokens: 4000
+  prompt_template: "RAW_B0"
+
+retrieval:
+  top_k_fib: 5
+  shadow_rib_top_k: 20
+  lane_detection:
+    fast_path_threshold: 0.85
+    lanes: ["FAST_PATH", "TEMPORAL_BASIS", "COMPOSITE_EVIDENCE"]
+
+routing:
+  graph_traversal: true
+  max_hops: 2
+  parent_lift: true
+  doc_relation_resolve: true
+  scope_routing: true
+  hub_thresholds:
+    h_fanout: 11
+    h_in: 6
+    h_total: 13
+
+descent:
+  channel_mode: "lexical_only"
+  fts_top_k: 3
+  candidate_cap_per_doc: 3
+  heading_bonus:
+    structural_category: 0.010
+    keyword_match: 0.005
+
+composition:
+  composer_type: "coverage_preserving"
+  max_evidence_chunks: 5
+  max_replacements: 2
+  coverage_threshold: 0.40
+  eviction_penalty_prevention: true
+
+corpus:
+  primary: "D100"
+  nested_sets: ["D20", "D50", "D100"]

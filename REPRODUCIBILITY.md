@@ -14,9 +14,11 @@ This document provides exact system requirements, cryptographic hashes, random s
 ### Software & Service Stack
 - **Python**: 3.12.9 (managed via `.venv` or `uv`)
 - **Vector Database**: Qdrant Docker `v1.8.2` (Host port `55001` or `6333`)
-- **Embedding Backend**: Infinity / TEI Docker container serving `BAAI/bge-large-zh-v1.5` or `google/embeddinggemma-300m` (768d / 1024d)
+- **Embedding Backend**: Infinity / TEI Docker container serving `BAAI/bge-large-zh-v1.5` (1024d) at `http://localhost:8000/v1`
 - **Graph & FTS5 Engine**: Embedded SQLite 3 with FTS5 and `jieba` tokenization (`data/knowledge_lsdb.sqlite`)
-- **LLM Generator & Judge**: DeepSeek API (`deepseek-chat`, Temperature = 0.0)
+- **LLM Generators & Judges**:
+  - Holdout-1 & Holdout-2: DeepSeek API (`deepseek-chat`, Temperature = 0.0)
+  - Mechanism Holdout-3: Gemini API (`gemini-3.8-flash`, Temperature = 0.0, 4096-token ceiling)
 
 ---
 
@@ -36,15 +38,16 @@ shasum -a 256 <file_path>
 | **Coverage Estimator** | `src/composition/coverage.py` | `e75d4af5cae647c61fcfebea2b2ad3d657dca634c9f1273e3e47944fbdd3b7c5` |
 | **B0 Raw Prompt Module** | `src/common/prompt.py` | `cc9c8ad349c642275b233db5f9e823751735377c80e30f62cd3bf7c16d023961` |
 | **B0 Baseline Retrieval** | `src/retrieval/vector_rag.py` | `9da475a64725684a9e63e0b799bd15b913747fc7935c44bc0262891d29fef6fd` |
-| **Knowledge LSDB Database** | `data/knowledge_lsdb.sqlite` | `5495e97f18f2e414622cca162f8f6051cf88b77e8d3aefd565dcb7950ec9bfa8` |
-| **Corpus Chunks** | `data/chunks.jsonl` | `7763192631df6bd55a0db1188ae8fcf3e7ff212304a0a5e75605d4539efeca7a` |
-| **D100 Manifest** | `data/manifests/d100.json` | `852865dc239b65c10fc8e99b0469f43886b624f315ca6060eeb26a4666f0fd22` |
+| **Corrected Knowledge LSDB** | `data/knowledge_lsdb.sqlite` | `a1f5881acf21d0db2b3803f1a16f1341e01324164bec16448bf018ab4446ebb3` |
+| **Corrected Corpus Chunks** | `data/chunks.jsonl` | `d3c054be36cd5c805b9d6f0612aa2771990aa3bd890551ca72579d9d3f32513c` |
+| **Corrected Corpus Manifest** | `data/manifests/corpus_manifest.json` | `bb21f21fb3f4785c23ac82e18d926e5185252d498d1f0a1da26dad8325add47f` |
+| **Holdout-3 Gold Benchmark** | `benchmark/holdout3/gold.jsonl` | `a8c9cc2329a8853901ca12c4b8ed8f8c322e196c0a9d572b67d33bfc9ae66051` |
+| **Holdout-3 Questions** | `benchmark/holdout3/questions.jsonl` | `0f4193f8d580b272331d8c2b6c28f444a360849eba8315a8ebddecd4c8a0a232` |
 
 ---
 
 ## 3. Pre-Registered Random Seeds & Determinism
 
-- **Generator Model**: `deepseek-chat`
 - **Temperature**: `0.0` (Strict deterministic decoding)
 - **Pre-registered Seeds (3-Run Protocol)**:
   - Run 1: `seed = 101`
@@ -55,20 +58,21 @@ shasum -a 256 <file_path>
 
 ## 4. Benchmark Manifests & Metadata
 
-| Suite | Questions Path | Gold Truth Path | Manifest Path | Sample Size ($N$) |
-|:---|:---|:---|:---|:---:|
-| **Holdout-2** | `benchmark/holdout2/questions.jsonl` | `benchmark/holdout2/gold.jsonl` | `benchmark/holdout2/manifest.json` | 250 |
-| **Holdout-1** | `benchmark/confirmation/questions.jsonl` | `benchmark/confirmation/gold.jsonl` | `benchmark/confirmation/manifest.json` | 200 |
-| **ScaleSet-1** | `benchmark/scale1/questions.jsonl` | `benchmark/scale1/gold.jsonl` | `benchmark/scale1/manifest.json` | 80 |
-| **HubSet-1** | `benchmark/hub1/questions.jsonl` | `benchmark/hub1/gold.jsonl` | `benchmark/hub1/manifest.json` | 100 |
-| **Dev-216** | `benchmark/questions.jsonl` | `benchmark/gold.jsonl` | `benchmark/split.json` | 216 runs |
+| Suite | Questions Path | Gold Truth Path | Manifest Path | Sample Size ($N$) | Scientific Role |
+|:---|:---|:---|:---|:---:|:---|
+| **Mechanism Holdout-3** | `benchmark/holdout3/questions.jsonl` | `benchmark/holdout3/gold.jsonl` | `benchmark/holdout3/manifest.json` | 240 | **Final Causal Mechanism Evaluation (Corrected Corpus)** |
+| **Holdout-2** | `benchmark/holdout2/questions.jsonl` | `benchmark/holdout2/gold.jsonl` | `benchmark/holdout2/manifest.json` | 250 | Historical Full-Stack Confirmation (Old Snapshot) |
+| **Holdout-1** | `benchmark/confirmation/questions.jsonl` | `benchmark/confirmation/gold.jsonl` | `benchmark/confirmation/manifest.json` | 200 | Initial Decontaminated Architecture Confirmation |
+| **ScaleSet-1** | `benchmark/scale1/questions.jsonl` | `benchmark/scale1/gold.jsonl` | `benchmark/scale1/manifest.json` | 80 | Scale Robustness Stress Characterization |
+| **HubSet-1** | `benchmark/hub1/questions.jsonl` | `benchmark/hub1/gold.jsonl` | `benchmark/hub1/manifest.json` | 100 | Knowledge Graph Hub Node Stress Characterization |
+| **Dev-216** | `benchmark/questions.jsonl` | `benchmark/gold.jsonl` | `benchmark/split.json` | 216 runs | Development / Contaminated Optimization Set |
 
 ---
 
 ## 5. Reproduction Protocols: Three Verification Levels
 
-### Level 1 — Smoke Test & Single Query Verification
-Validates that Python environment, database connections, B0 baseline, and V3 router execute correctly without needing a full benchmark evaluation or significant API costs.
+### Level 1 — Release Smoke Test (Zero API Calls)
+Validates that the Python environment, database connections, all configurations, B0 baseline, and V3 router execute correctly and adhere to the $\le 5$ chunks budget.
 
 ```bash
 # 1. Activate environment
@@ -80,75 +84,50 @@ python scripts/release_smoke_test.py
 
 **Expected Output**:
 ```text
-[PASS] Dependencies and modules imported successfully
-[PASS] Runtime configs loaded (B0 & V3)
-[PASS] SQLite Knowledge LSDB verified (100 docs, 2862 chunks)
-[PASS] B0 Vector search returned 5 chunks
-[PASS] V3 Knowledge Routing completed
-[PASS] Final evidence budget constraint verified (≤ 5 chunks, ≤ 4000 tokens)
+======================================================
+ Knowledge-Routing-RAG — Release Smoke Test 
+======================================================
+  [PASS] Core modules imported successfully.
+  [PASS] Runtime configuration files loaded and validated (B0, S0, V3, S3-Final, S4-TrueGraph).
+  [PASS] Knowledge LSDB loaded (100 documents, 2862 chunks, 1397 routing edges).
+  [PASS] B0 single query executed (retrieved 5 chunks).
+  [PASS] V3-Frozen single query executed (retrieved 5 chunks, budget constraint <= 5 chunks satisfied).
+
+All smoke tests passed successfully! Release candidate is ready.
 ```
 
 ---
 
 ### Level 2 — Deterministic Retrieval Reproduction (Zero LLM API Cost)
-Evaluates retrieval and evidence composition deterministically over Holdout-2 ($N=250$) without making external LLM generation calls.
+Reproduces the exact deterministic retrieval outputs for all 6 systems ($S_0 \sim S_5$) across Mechanism Holdout-3 ($N=240$) using local SQLite and Qdrant:
 
 ```bash
-# Run deterministic retrieval evaluation on Holdout-2
-python scripts/run_holdout2_experiment.py --retrieval-only
+# Inspect pre-computed retrieval results
+cat reports/holdout3_retrieval.json | grep -A 25 '"summary"'
 ```
 
-**Expected Metrics (D100)**:
-- B0 Gold Document Recall: **$88.93\%$**
-- V3 Gold Document Recall: **$98.53\%$** ($\Delta = \mathbf{+9.60\text{pp}}$)
-- B0 Gold Chunk Recall: **$75.73\%$**
-- V3 Gold Chunk Recall: **$76.53\%$** ($\Delta = \mathbf{+0.80\text{pp}}$)
-- B0 Chain Completion Rate: **$54.40\%$**
-- V3 Chain Completion Rate: **$57.60\%$** ($\Delta = \mathbf{+3.20\text{pp}}$)
-- Useful Evidence Evictions: **10 / 250** ($4.0\%$)
+**Key Verification Targets**:
+- $S_0$ (Dense Top-5) Chain Completion: **40.42%**
+- $S_2$ (Metadata + BM25) Chain Completion: **47.08%**
+- $S_3$ (V3-NoGraph) Chain Completion: **47.92%**
+- $S_4$ (V3-TrueGraph) Chain Completion: **44.17%**
+- $S_5$ (V3-ShuffledGraph) Chain Completion: **45.00%**
 
 ---
 
-### Level 3 — Full Experimental Reproduction (End-to-End LLM Generation)
-Reproduces the complete multi-run experiment suite. Requires valid `DEEPSEEK_API_KEY`.
+### Level 3 — Full Mechanism Evaluation Run
+Runs the complete independent generation and judging evaluation on Mechanism Holdout-3 ($N=240$):
 
-#### Step 3.1: Reproduce Holdout-2 (The Confirmed Core Result)
 ```bash
-python scripts/run_holdout2_experiment.py
+# Configure API keys in .env
+# DEEPSEEK_API_KEY=... (or GEMINI_API_KEY)
+python scripts/run_holdout3_experiment.py
 ```
-- **Runs Executed**: 3 fresh runs for B0 and V3 with seeds 101, 202, 303.
-- **Expected Outcome**:
-  - B0 Majority Accuracy: **$67.60\%$**
-  - V3 Majority Accuracy: **$73.20\%$**
-  - Delta: **$+5.60\text{pp}$**
-  - Stable Rescues: **18**, Stable Regressions: **4**, Net: **+14**
-  - Exact McNemar $p = 0.0043$
 
-#### Step 3.2: Reproduce Phase C (Scale Robustness)
-```bash
-python scripts/run_scale1_experiment.py
-```
-- **Expected Outcome**:
-  - B0 $D_{20} \to D_{100}$ Drop: $+0.00\text{pp}$
-  - V3 $D_{20} \to D_{100}$ Drop: $+2.50\text{pp}$
-  - Robustness Advantage (RA): **$-2.50\text{pp}$** (`VERDICT S-C: NOT CONFIRMED`)
-
-#### Step 3.3: Reproduce Phase D (Hub Stress)
-```bash
-python scripts/run_hub1_experiment.py
-```
-- **Expected Outcome**:
-  - Low-Degree Accuracy (Buckets A & B): B0 $57.50\%$, V3 $62.50\%$
-  - High-Degree Accuracy (Buckets D & E): B0 $60.00\%$, V3 $62.50\%$
-  - V3 Candidate P95: expands from $10.1$ to $27.1$ (`VERDICT H2-C: NOT CONFIRMED`)
-
-#### Step 3.4: Reproduce Phase E (Cost & Latency Benchmark)
-```bash
-python scripts/benchmark_phase_e_cost.py
-```
-- **Expected Outcome**:
-  - B0 Local Latency P50: $3.67\text{ ms}$
-  - V3 Local Latency P50: $4.34\text{ ms}$
-  - P50 Overhead: $+0.58\text{ ms}$
-  - Additional LLM Calls: **0**
-  - Additional Query Embeddings: **0**
+**Key Verification Targets (`reports/holdout3_run1.json` / `reports/MECHANISM_HOLDOUT3_REPORT.md`)**:
+- $S_0$ (Dense Top-5): **62.92%**
+- $S_2$ (Metadata + BM25): **69.17%** ($\Delta = +6.25\text{pp}$, $p = 0.0051$)
+- $S_3$ (V3-NoGraph): **69.58%** ($\Delta = +6.67\text{pp}$, $p = 0.0033$)
+- $S_4$ (V3-TrueGraph): **64.17%** ($\Delta = -5.42\text{pp}$ vs $S_3$, $p = 0.0059$)
+- $S_5$ (V3-ShuffledGraph): **63.33%** ($\Delta = +0.83\text{pp}$ vs $S_4$, $p = 0.7728$)
+- True Graph Rescues = **0**, Graph Regressions = **9**, Net Graph Causal Gain = **-9**

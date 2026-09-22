@@ -1,0 +1,63 @@
+# ==============================================================================
+# Final Validated Configuration: S3 (Structured Retrieval Final / V3-NoGraph)
+# ==============================================================================
+# System ID: S3 (V3-NoGraph)
+# Status: RECOMMENDED VALIDATED CONFIGURATION
+# Description: Graph-free structured retrieval pipeline combining:
+#              1. Dense vector entrance (top-5)
+#              2. Shadow candidate recall (top-20)
+#              3. Document canonical title & metadata resolution
+#              4. Slot-conditioned local lexical descent (FTS5 BM25)
+#              5. Coverage-aware evidence composition (max 5 chunks)
+# Note: This is NOT a new system; it is the frozen S3 configuration evaluated
+#       in Mechanism Holdout-3 (achieving 69.58% accuracy vs 62.92% for S0).
+#       Graph traversal is explicitly disabled as causal ablations proved
+#       graph relations were unnecessary and caused distractor regressions.
+# ==============================================================================
+
+system:
+  system_id: "S3"
+  name: "Structured Retrieval Final (V3-NoGraph)"
+  status: "RECOMMENDED_VALIDATED_CONFIGURATION"
+  graph_enabled: false
+
+generator:
+  provider: "deepseek"
+  model: "deepseek-chat"
+  temperature: 0.0
+  max_evidence_tokens: 4000
+  prompt_template: "RAW_B0"
+
+retrieval:
+  top_k_fib: 5
+  shadow_rib_top_k: 20
+  lane_detection:
+    fast_path_threshold: 0.85
+    lanes: ["FAST_PATH", "TEMPORAL_BASIS", "COMPOSITE_EVIDENCE"]
+
+routing:
+  graph_traversal: false
+  max_hops: 0
+  parent_lift: false
+  doc_relation_resolve: false
+  metadata_title_matching: true
+  scope_routing: true
+
+descent:
+  channel_mode: "lexical_only"
+  fts_top_k: 3
+  candidate_cap_per_doc: 3
+  heading_bonus:
+    structural_category: 0.010
+    keyword_match: 0.005
+
+composition:
+  composer_type: "coverage_preserving"
+  max_evidence_chunks: 5
+  max_replacements: 2
+  coverage_threshold: 0.40
+  eviction_penalty_prevention: true
+
+corpus:
+  primary: "D100"
+  nested_sets: ["D20", "D50", "D100"]
