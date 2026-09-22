@@ -3,6 +3,8 @@
 > **Constrained Graph Navigation for Complex Regulatory Retrieval**  
 > *A research prototype exploring knowledge routing as a navigation plane rather than evidence context.*
 
+[English](README.md) | [中文说明](README_CN.md)
+
 [![Release](https://img.shields.io/badge/release-v3--research--final-blue.svg)](https://github.com/bilppppp/Knowledge-Routing-RAG/releases)
 [![Status](https://img.shields.io/badge/status-frozen__research-success.svg)](#10-limitations--scope-of-validity)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
