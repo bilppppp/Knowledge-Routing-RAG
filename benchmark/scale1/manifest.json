@@ -1,0 +1,71 @@
+{
+  "benchmark_name": "ScaleSet-1",
+  "phase": "Phase C — Scale & Distractor Robustness Confirmation",
+  "status": "SCALESET1_FROZEN",
+  "created_at": "2026-09-22T15:05:33+0800",
+  "total_questions": 80,
+  "target_corpus_suite": [
+    "D20",
+    "D50",
+    "D100"
+  ],
+  "all_gold_in_d20": true,
+  "hop_distribution": {
+    "1-hop": 24,
+    "2-hop": 32,
+    "3-hop+": 24
+  },
+  "tag_distribution": {
+    "1-hop": 24,
+    "procedure": 6,
+    "direct_factual": 11,
+    "high_fanout_hub": 43,
+    "sanction_consequence": 4,
+    "qualification_condition": 5,
+    "exception": 4,
+    "2-hop": 32,
+    "same_doc_multi_section": 14,
+    "cross_doc_reference": 42,
+    "3-hop+": 24
+  },
+  "document_coverage_in_d20": {
+    "total_d20_docs": 20,
+    "covered_docs": 20,
+    "doc_counts": {
+      "doc018": 6,
+      "doc009": 9,
+      "doc001": 6,
+      "doc020": 7,
+      "doc017": 6,
+      "doc007": 14,
+      "doc012": 4,
+      "doc010": 14,
+      "doc015": 6,
+      "doc016": 4,
+      "doc019": 7,
+      "doc014": 14,
+      "doc008": 6,
+      "doc002": 12,
+      "doc005": 15,
+      "doc006": 4,
+      "doc013": 3,
+      "doc004": 4,
+      "doc011": 2,
+      "doc003": 3
+    }
+  },
+  "hashes": {
+    "questions_sha256": "510ad0768746069a58729619bace988d53252b3c535f9ed71522eba38df396c8",
+    "gold_sha256": "1fd9c31a6521c4db76cb8ffcba150b6ec279da232dc30160b727774f3fec652f",
+    "d20_manifest_sha256": "e0e6b19097853c2856d86bc0b3ee8ac982a589ca1b6a256f0941f05b3f8e97e4",
+    "d50_manifest_sha256": "9673555854eb93180fbb530af50cd7a97b17c3ac25d7b5ae6071744b79c9a807",
+    "d100_manifest_sha256": "852865dc239b65c10fc8e99b0469f43886b624f315ca6060eeb26a4666f0fd22"
+  },
+  "guarantees": {
+    "all_gold_chunks_in_d20": true,
+    "answerable_in_d20_d50_d100": true,
+    "historical_decontamination_strict": true,
+    "exact_verbatim_spans_verified": true,
+    "independent_llm_answerability_verified": true
+  }
+}

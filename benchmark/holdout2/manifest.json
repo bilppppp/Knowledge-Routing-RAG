@@ -1,0 +1,21 @@
+{
+  "status": "HOLDOUT2_FROZEN",
+  "created_at": "2026-09-22 12:20:27",
+  "total_questions": 250,
+  "hop_distribution": {
+    "1": 94,
+    "2": 100,
+    "3": 56
+  },
+  "hashes": {
+    "questions_sha256": "a893e3d05f99ddc261541d9f20f96d8de518c33258ef74aa4b9cdac7a75741b3",
+    "gold_sha256": "9be7df8abb2fa462adb5b485fcd3e4ff49e21cce821f37785b257e70749de1d3",
+    "sqlite_sha256": "5495e97f18f2e414622cca162f8f6051cf88b77e8d3aefd565dcb7950ec9bfa8"
+  },
+  "decontamination_guarantees": {
+    "historical_questions_excluded": 320,
+    "max_jaccard_vs_historical": "< 0.35",
+    "max_jaccard_internal": "< 0.45",
+    "verbatim_span_assertion": "100% PASS"
+  }
+}

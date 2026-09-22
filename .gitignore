@@ -15,6 +15,7 @@ data/qdrant_storage/
 data/model_cache/
 *.sqlite
 *.sqlite-journal
+!data/knowledge_lsdb.sqlite
 
 # Raw Proprietary / Copyrighted Data (Only commit manifests & hashes per Plan §30)
 # data/documents/*.txt
@@ -27,9 +28,12 @@ runs/*
 # Reports & Visualizations
 reports/*.csv
 !reports/v2_candidate_results.csv
+!reports/c7_retrieval_opportunity_map.csv
+!reports/v3_a0_descent_failure_cases.csv
 reports/*.png
 reports/*.svg
 !reports/final_report.md
+!reports/FINAL_REPORT.md
 
 # macOS
 .DS_Store
