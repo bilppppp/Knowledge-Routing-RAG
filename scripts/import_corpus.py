@@ -12,12 +12,13 @@ Creates:
 import os
 import re
 import shutil
+import os
 import hashlib
 import json
 from pathlib import Path
 
-SRC_DIR = Path("/Users/gravity/Desktop/AI/ragflow/卫生法规文章/归档")
 BASE_DIR = Path(__file__).resolve().parent.parent
+SRC_DIR = Path(os.getenv("SRC_DIR", str(BASE_DIR / "data" / "raw_documents")))
 DOCS_DIR = BASE_DIR / "data" / "documents"
 MANIFESTS_DIR = BASE_DIR / "data" / "manifests"
 

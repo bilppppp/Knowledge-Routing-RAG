@@ -129,14 +129,14 @@ def generate_final_report_md():
 > **FINAL REPORT STATUS: PENDING HUMAN ADJUDICATION**
 > 
 > [!CAUTION]
-> **评审状态说明**: 本报告当前评测指标基于自动化评分（Auto Judge）。根据《实验方案.md §25》，LLM 评分不可作为唯一最终裁判，所有系统间分歧案例（共 23 组争议测试实例，展开为 31 组盲评对比对）已抽取形成待审盲评包 [`reports/blind_review_pack.json`](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/reports/blind_review_pack.json)。在独立双盲人工仲裁未正式完成并回填之前，本报告所有数据标记为**预备性学术评估**，不得作为最终已仲裁定论。
+> **评审状态说明**: 本报告当前评测指标基于自动化评分（Auto Judge）。根据《实验方案.md §25》，LLM 评分不可作为唯一最终裁判，所有系统间分歧案例（共 23 组争议测试实例，展开为 31 组盲评对比对）已抽取形成待审盲评包 [`reports/blind_review_pack.json`](blind_review_pack.json)。在独立双盲人工仲裁未正式完成并回填之前，本报告所有数据标记为**预备性学术评估**，不得作为最终已仲裁定论。
 
 ---
 
 ## 1. 实验基本信息与评估规范 (Experiment Status & Disclosures)
 
 - **实验编号**: EXP-20260921-KR-V1 (Strict Protocol Alignment)
-- **代码基准提交**: [`1aaafbb`](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG) (锁定 Dev/Test 防火墙与冻结参数)
+- **代码基准提交**: `1aaafbb` (锁定 Dev/Test 防火墙与冻结参数)
 - **评估数据集**: 120 题目全集（Dev=24 冻结参数验证集，Test=96 正式评估盲测集）
 - **测试语料库**: 严格嵌套语料集 $D20 \\subset D50 \\subset D100$（100 篇法规，2,862 Chunks，评测实例 $N=216$）
 - **嵌入模型**: `google/embeddinggemma-300m` (768 维)

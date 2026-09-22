@@ -467,7 +467,7 @@ def main():
 
 **生成时间**: 2026-09-21  
 **状态**: [✓] ALL PREFLIGHT CHECKS PASSED (经关系互斥审计与三维 Hub 统计严格拆分)  
-**依据文档**: [准备清单.md §27](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/%E5%87%86%E5%A4%87%E6%B8%85%E5%8D%95.md) 与 [实验方案.md §3, §5, §10, §11, §12, §13](file:///Users/gravity/Desktop/AI/Knowledge-Routing-RAG/%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%A1%88.md)
+**依据文档**: [准备清单.md §27](../准备清单.md) 与 [实验方案.md §3, §5, §10, §11, §12, §13](../实验方案.md)
 
 ---
 
