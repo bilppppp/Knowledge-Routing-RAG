@@ -5,8 +5,8 @@
 
 [English](README.md) | [中文说明](README_CN.md)
 
-[![Release](https://img.shields.io/badge/release-v1.0--research--final-blue.svg)](https://github.com/bilppppp/Knowledge-Routing-RAG/releases)
-[![Status](https://img.shields.io/badge/status-research__frozen-success.svg)](#10-limitations--scope-of-validity)
+[![Release](https://img.shields.io/badge/release-v1.0--research--final-blue.svg)](https://github.com/bilppppp/Knowledge-Routing-RAG/releases/tag/v1.0-research-final)
+[![Status](https://img.shields.io/badge/status-research__frozen-success.svg)](#final-research-verdict-matrix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](requirements.txt)
 
@@ -29,9 +29,46 @@
 
 ---
 
+## The Research Evolution Arc
+
+The scientific narrative of this project evolved through distinct, evidence-driven phases:
+
+```text
+Initially Proposed Network-Routing-Inspired Graph RAG (Autonomous K1–K4 Routers)
+                          │
+                          ▼
+            V1 Exploration Failed (NO-GO, -10.2pp vs Vector)
+                          │
+                          ▼
+  Shift to Control Plane Navigation: Candidate Space ≠ Evidence Context
+                          │
+                          ▼
+   V2/V3 Development: Shadow Candidate Plane + BM25 Descent + E1 Composer
+                          │
+                          ▼
+Historical Holdout-2 Confirmation: Full V3 (73.20%) > Dense Top-5 (67.60%, +5.60pp)
+                          │
+                          ▼
+    Gate I Integrity Audit (I-B): Corrected doc034/086 Metadata Misplacement;
+    Identified Holdout-2 Runner Same-Evidence Shortcut & 94.87% Explicitness Bias
+                          │
+                          ▼
+    Mechanism Holdout-3 (N=240, 6 Systems, 3 Strata on Corrected Frozen Corpus):
+    - S2 Metadata + BM25 (+6.25pp) & S3 V3-NoGraph (+6.67pp) explain historical gain
+    - S4 V3-TrueGraph underperforms S3 by -5.42pp (p = 0.0059)
+    - TrueGraph (64.17%) ≈ ShuffledGraph (63.33%, p = 0.7728)
+                          │
+                          ▼
+FINAL SCIENTIFIC VERDICT: Structured Retrieval Confirmed; Graph Routing Not Necessary
+```
+
+---
+
 ## Primary Results: Mechanism Holdout-3 ($N = 240$, Corrected Frozen Corpus)
 
 The definitive mechanism evaluation isolates the causal contribution of graph relations from non-graph structured baselines across 6 systems on the Corrected Frozen Corpus ($N = 240$, equally partitioned into 80 Explicit, 80 Partial, and 80 Implicit questions; evaluated with Gemini 3.8 Flash, Temperature = 0.0, 4096-token ceiling):
+
+### 1. Overall System Comparison
 
 | System | Architecture Description | Retrieval Chain Comp. | Precision | Recall | Accuracy ($N=240$) | vs Dense ($S_0$) | vs NoGraph ($S_3$) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -42,10 +79,34 @@ The definitive mechanism evaluation isolates the causal contribution of graph re
 | **$S_4$** | **V3-TrueGraph (Frozen V3 Real Graph)** | 44.17% | 28.58% | 52.08% | **64.17%** | +1.25pp | $\mathbf{-5.42\text{pp}}$ ($p=0.0059$) |
 | **$S_5$** | **V3-ShuffledGraph (Random Graph Control)**| 45.00% | 29.08% | 52.92% | **63.33%** | +0.41pp | -6.25pp |
 
-### Pre-Registered Primary Contrasts:
+### 2. Breakdown Across Explicitness Strata ($N = 80$ each)
+
+| System | Q-E: Explicit ($N=80$) | Q-P: Partial ($N=80$) | Q-I: Implicit ($N=80$) |
+| :--- | :---: | :---: | :---: |
+| **$S_0$ (Dense Top-5)** | 70.00% | 62.50% | 56.25% |
+| **$S_1$ (Dense Top-20 + Composer)** | 72.50% | 63.75% | 58.75% |
+| **$S_2$ (Metadata + BM25)** | $\mathbf{83.75\%}$ | 63.75% | 60.00% |
+| **$S_3$ (V3-NoGraph)** | 82.50% | $\mathbf{65.00\%}$ | $\mathbf{61.25\%}$ |
+| **$S_4$ (V3-TrueGraph)** | 75.00% | 60.00% | 57.50% |
+| **$S_5$ (V3-ShuffledGraph)** | 73.75% | 62.50% | 53.75% |
+
+- **Explicit (Q-E)**: Structured components ($S_2, S_3$) beat dense by $+12.5\sim 13.8\text{pp}$. Enabling the graph ($S_4$) caused a **$-7.50\text{pp}$** regression.
+- **Partial (Q-P)**: $S_3$ leads at 65.00%; $S_4$ (60.00%) underperformed even Dense Top-5 (62.50%).
+- **Implicit (Q-I)**: All systems hit an empirical ceiling (~61%), with structured retrieval showing modest resilience over dense.
+
+### 3. Pre-Registered Primary Contrasts
+- **C1 ($S_1 - S_0$, Dense Expansion)**: $+2.08\text{pp}$ ($p = 0.5322$, 95% CI `[-2.93pp, +7.08pp]`) $\to$ Dense expansion alone does not explain gains.
 - **C2 ($S_2 - S_0$, Metadata/Lexical vs Dense)**: $\mathbf{+6.25\text{pp}}$ ($p = 0.0051^{**}$, 95% CI `[+2.50pp, +10.42pp]`) $\to$ **Strong structured baseline explains historical gains.**
 - **C3 ($S_4 - S_3$, True Graph over Matched NoGraph)**: $\mathbf{-5.42\text{pp}}$ ($p = 0.0059^{**}$, 95% CI `[-9.17pp, -2.08pp]`) $\to$ **Graph expansion significantly degrades answer accuracy.**
 - **C4 ($S_4 - S_5$, True Graph vs Shuffled Graph)**: $\mathbf{+0.83\text{pp}}$ ($p = 0.7728$, 95% CI `[-2.08pp, +3.34pp]`) $\to$ **Real graph topology provides zero unique causal advantage over random noise.**
+- **Aux ($S_3 - S_0$, Structured NoGraph vs Dense)**: $\mathbf{+6.67\text{pp}}$ ($p = 0.0033^{**}$, 95% CI `[+2.50pp, +10.83pp]`) $\to$ **Full structured stack (no graph) is superior.**
+
+### 4. Same-Evidence Flips & Graph Causal Attribution
+- **Same-Evidence Flip Rate**: $S_4$ and $S_3$ shared identical evidence on **212 / 240 questions (88.33%)**. The independent generation flip rate was **9 / 212 (4.25%)**, confirming independent generation without runner shortcuts.
+- **Causal Attribution (19 Discordant Cases)**:
+  - `TRUE_GRAPH_CAUSAL_RESCUE`: **0** (Zero questions were rescued by graph edges retrieving a missing gold chunk).
+  - `GRAPH_CAUSAL_REGRESSION`: **9** (Graph neighbor evicted or diluted gold statutory text, causing generator failure).
+  - `Net Graph Causal Gain`: $0 - 9 = \mathbf{-9}$.
 
 ---
 
@@ -66,6 +127,15 @@ Before the Gate I audit and the Holdout-3 mechanism isolation, the full V3 stack
 > - **Explicitness Bias**: 94.87% (148/156) of Holdout-2 multi-hop queries explicitly named all target statutes (E2/E3), and 100% of the net multi-hop rescues occurred on these explicit queries. Holdout-2 measured explicit multi-statute retrieval, not implicit graph discovery.
 > - **Same-Evidence Flips = 0 was Structurally Forced**: The historical runner code copied baseline answers when final evidence chunk IDs were identical (`h1_ans = h0_ans`). Same-evidence flip rate was therefore not empirically measured in Holdout-2.
 > - **Useful Evidence Eviction**: Eviction on Holdout-2 was 4.0% (10/250), not 0% (which was true only on the development set).
+
+---
+
+## Gate I Data & Evaluation Integrity Audit
+
+A 100% census of the corpus, chunks, and gold labels was conducted (Verdict: **`I-B — CORRECTABLE INTEGRITY ISSUES`**):
+- **Verification**: 100/100 documents, 2862/2862 chunks, and 1425/1425 gold spans were 100% verified against raw sources.
+- **Identified Errata**: `doc034` (Red Cross Law labeled with doc033 title) and `doc086` (diagnostic equipment batch reply labeled with doc087 title). Corrected and frozen in [`CORPUS_CORRECTED_FREEZE.md`](CORPUS_CORRECTED_FREEZE.md).
+- **Verification on Holdout-2**: Removing the 2 affected queries confirmed $B_0 = 67.74\%$ vs $V_3 = 73.39\%$ ($\Delta = +5.65\text{pp}$), proving the historical gain was not an artifact of data errors.
 
 ---
 
